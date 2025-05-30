@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
-import { ButtonGroup } from '@mui/material';
+
 
 
 
@@ -92,13 +92,14 @@ function AppBarHeader({ pages, settings, isLogin = false }) {
             </Menu>
           </Box>
           {/* display menu with large screen */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent : 'center' }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
-                href={`/${page}`}
+                sx={{ my: 2, color: 'black', display: 'block', textAlign : 'center' }}
+                component={Link}
+                to={`/${page}`}
               >
                 {page}
               </Button>

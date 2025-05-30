@@ -6,11 +6,10 @@ import AppBarHeader from '../AppBarHeader';
 
 export default function DefaultLayout() {
     
-    const pages = ['Home', 'News', 'Question', 'Contact']
-    const settings = ['Profile', 'Account', 'Logout']
+    const pages = ['Home', 'News', 'FAQ', 'Contact']
     return (
         <>
-            <AppBarHeader pages={pages} settings={settings}/>
+            <AppBarHeader pages={pages} />
             <Outlet />
             <Footer></Footer>
         </>
