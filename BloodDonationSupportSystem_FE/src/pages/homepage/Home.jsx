@@ -1,5 +1,4 @@
 import { Box, Container, Typography } from "@mui/material";
-import BloodTypeSearch from "../../components/BloodTypeSearch";
 import BloodInformation from "./homepagedetail/BloodInformation";
 import Blog from "./homepagedetail/Blog";
 import Banner from "./homepagedetail/SlideShow";
