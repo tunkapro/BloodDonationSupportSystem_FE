@@ -3,15 +3,14 @@ import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
 import Home from "../pages/homepage/Home";
 import Contact from "../pages/DefautPage/DefaultDetails/Contact";
 import News from "../pages/DefautPage/DefaultDetails/News";
-import QuestionAndAns from "../pages/DefautPage/DefaultDetails/QuestionAndAns";
-
 import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPassword";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
-import MemberLayout from "../layouts/MemberLayout/Member";
-import LoginPageV2 from "../pages/LoginPage/LoginPageV2";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/staff/Overview";
 import BloodStorageTable from "../components/staff/BloodStorageTable";
+import MemberLayout from "../layouts/MemberLayout/MemberLayout";
+import LoginPage from "../pages/DefautPage/DefaultDetails/login/LoginPage";
+import QuestionPage from "../pages/DefautPage/DefaultDetails/question/QuestionPage";
 
 const CustomRoute = () => {
   return (
@@ -33,6 +32,9 @@ const CustomRoute = () => {
         <Route path="news" element={<News />} />
         <Route path="Q-A" element={<QuestionAndAns />} />
       </Route>
+
+
+
 
       <Route path="/staff/*" element={<StaffLayout />}>
         {/* Các route staff khác */}

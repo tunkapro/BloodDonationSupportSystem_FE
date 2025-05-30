@@ -18,11 +18,10 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { GoogleLogin } from '@react-oauth/google';
-import login from '../../api/login2';
+import login from '../../../../api/login2';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-export default function LoginPageV2() {
+export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
@@ -43,12 +42,8 @@ export default function LoginPageV2() {
    }
   };
 
-  const handleGoogleLogin = async () => {
-        const res = await axios.post("http://localhost:8090/api/auth/google", {
-          
-          
-    });
-    console.log(res.data);
+  const handleGoogleLogin = (credentialResponse) => {
+    console.log('Google Credential:', credentialResponse);
     // Call Google login API here
   };
 
@@ -130,7 +125,7 @@ export default function LoginPageV2() {
 
           <Divider sx={{ my: 3 }}>Hoặc tiếp tục với</Divider>
 
-          <Button onClick={handleGoogleLogin} onError={() => console.log("Google login error")} >Click Me</Button>
+          <GoogleLogin onSuccess={handleGoogleLogin} onError={() => console.log("Google login error")} />
 
           <Grid container justifyContent="center" sx={{ mt: 3 }}>
             <Grid >
