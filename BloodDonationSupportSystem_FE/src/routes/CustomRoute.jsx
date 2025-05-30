@@ -9,30 +9,39 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage/ForgotPassword";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MemberLayout from "../layouts/MemberLayout/Member";
 import LoginPageV2 from "../pages/LoginPage/LoginPageV2";
+import StaffLayout from "../layouts/StaffLayout/StaffLayout";
+import Overview from "../pages/staff/Overview";
+import BloodStorageTable from "../components/staff/BloodStorageTable";
 
 const CustomRoute = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<DefaultLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/Home" element={<Home />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/news" element={<News />} />
-                <Route path="/Q-A" element={<QuestionAndAns />} />
+  return (
+    <Routes>
+      <Route path="/" element={<DefaultLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/Q-A" element={<QuestionAndAns />} />
 
-                <Route path="/login" element={<LoginPageV2/>} />
-                <Route path="/reset-password" element={<ForgotPasswordPage/>} />
-                <Route path="/signup" element={<RegisterPage/>} />
-            </Route>
-            <Route path="/user/*" element={<MemberLayout />}>
-                <Route path="home" element={<Home />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="news" element={<News />} />
-                <Route path="Q-A" element={<QuestionAndAns />} />
-    
-            </Route>
-        </Routes>
-    );
-}
+        <Route path="/login" element={<LoginPageV2 />} />
+        <Route path="/reset-password" element={<ForgotPasswordPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
+      </Route>
+      <Route path="/user/*" element={<MemberLayout />}>
+        <Route path="home" element={<Home />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="news" element={<News />} />
+        <Route path="Q-A" element={<QuestionAndAns />} />
+      </Route>
 
-export default CustomRoute
+      <Route path="/staff/*" element={<StaffLayout />}>
+        {/* Các route staff khác */}
+        <Route index element={<Overview />} />
+        <Route path="overview" element={<Overview />}/>
+        <Route path="storage" element={<BloodStorageTable/>} />
+      </Route>
+    </Routes>
+  );
+};
+
+export default CustomRoute;
