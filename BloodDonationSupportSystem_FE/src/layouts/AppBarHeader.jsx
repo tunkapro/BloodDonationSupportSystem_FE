@@ -18,7 +18,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function AppBarHeader() {
 
-  const pages = ['Home', 'News', 'FAQ', 'Contact']
+  const pages = ['Home', 'News', 'q-a', 'Contact']
   const settings = ['Profile', 'Account', 'Logout']
 const isLogin = true;
   // handle Link
