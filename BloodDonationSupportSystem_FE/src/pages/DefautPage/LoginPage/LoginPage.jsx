@@ -2,11 +2,8 @@ import { useState } from 'react';
 import {
   Box,
   Button,
-
   Container,
- 
   Divider,
-  
   Grid,
   IconButton,
   InputAdornment,
@@ -18,7 +15,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { GoogleLogin } from '@react-oauth/google';
-import login from '../../../../api/login2';
+import { login } from '../../../api/AuthService';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
@@ -36,9 +33,9 @@ export default function LoginPage() {
 
   const onSubmit = (data) => {
     console.log('Form Data:', data);
-   const flag = login(data)
-   if(flag){
-    navigate('/user')
+   const isSuccess = login(data)
+   if(isSuccess){
+    navigate('/')
    }
   };
 
@@ -61,14 +58,14 @@ export default function LoginPage() {
             <TextField
               margin="normal"
               fullWidth
-              id="account"
+              id="phoneNumber"
               label="Số điện thoại"
-              name="account"
+              name="phoneNumber"
               autoComplete="tel"
               autoFocus
               error={!!errors.account}
               helperText={errors.account?.message}
-              {...register('account', {
+              {...register('phoneNumber', {
                 required: 'Số điện thoại là bắt buộc',
                 pattern: {
                   value: /^[0-9]{10,15}$/,

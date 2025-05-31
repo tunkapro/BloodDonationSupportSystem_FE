@@ -11,10 +11,7 @@ const slides = [
     image: "/banner/banner2.jpg",
     caption: "Hinh 2",
   },
-  {
-    image: "/banner/banner3.jpg",
-    caption: "Hinh 3",
-  },
+
 ];
 
 const Banner = () => {

@@ -16,8 +16,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-function AppBarHeader({ pages, settings, isLogin = false }) {
+function AppBarHeader() {
 
+  const pages = ['Home', 'News', 'FAQ', 'Contact']
+  const settings = ['Profile', 'Account', 'Logout']
+const isLogin = true;
   // handle Link
 
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ function AppBarHeader({ pages, settings, isLogin = false }) {
     navigate('/login')
   };
   const handleClickSignup = () => {
-    navigate('/signup')
+    navigate('/register')
   };
 
 
@@ -54,7 +57,7 @@ function AppBarHeader({ pages, settings, isLogin = false }) {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* logo */}
-          <img src="/logo/logo.png" alt="Logo" style={{ height: 100 }} />
+          <img src="/logo/logo.png" alt="Logo" style={{ height: 64 }} />
           {/* display menu icon and menu small screen*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

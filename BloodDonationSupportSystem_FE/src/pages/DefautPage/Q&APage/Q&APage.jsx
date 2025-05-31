@@ -32,7 +32,7 @@ const importantNotes = [
   },
 ];
 
-export default function QuestionPage() {
+export default function QuestionAndAnswer() {
  return (
   <Box sx={{margin : '120px'}}>
     <ImportantNotes data={importantNotes} />

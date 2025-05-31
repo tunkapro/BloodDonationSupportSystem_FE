@@ -3,6 +3,7 @@ import Footer from '../../components/Footer';
 import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBarHeader from '../AppBarHeader';
+import { Toolbar } from '@mui/material';
 
 export default function MemberLayout() {
 
@@ -20,11 +21,10 @@ export default function MemberLayout() {
     checkLogin;
   }, [navigate]);
 
-   const pages = ['Home', 'News', 'Question', 'Contact', 'Histories'];
-   const settings = ['Profile', 'Account', 'Logout']
     return (
         <>
-            <AppBarHeader pages={pages} settings={settings} />
+            <AppBarHeader/>
+            <Toolbar />
             <Outlet />
             <Footer></Footer>
         </>
