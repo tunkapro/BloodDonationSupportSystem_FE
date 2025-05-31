@@ -3,6 +3,7 @@ import Footer from '../../components/Footer';
 import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBarHeader from '../AppBarHeader';
+import { Toolbar } from '@mui/material';
 
 export default function MemberLayout() {
     const [openSignin, setIsOpenLogin] = useState(false);
@@ -25,6 +26,7 @@ export default function MemberLayout() {
     return (
         <>
             <AppBarHeader pages={pages} settings={settings} />
+            <Toolbar />
             <Outlet />
             <Footer></Footer>
         </>

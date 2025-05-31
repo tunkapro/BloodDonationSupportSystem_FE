@@ -12,11 +12,12 @@ import BloodStorageTable from "../components/staff/BloodStorageTable";
 import UserProfile from "../pages/user/ProfilePage";
 import QuestionAndAns from "../pages/DefautPage/DefaultDetails/question/QuestionPage";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
+import BloodDonateHistory  from "../pages/user/BloodDonateHistory";
 
 const CustomRoute = () => {
     return (
         <Routes>
-            <Route path="/" element={<DefaultLayout />}>
+            <Route path="/user/*" element={<DefaultLayout />}>
                 <Route index element={<Home />} />
                 <Route path="Home" element={<Home />} />
                 <Route path="contact" element={<Contact />} />
@@ -27,12 +28,14 @@ const CustomRoute = () => {
                 <Route path="reset-password" element={<ForgotPasswordPage />} />
                 <Route path="signup" element={<RegisterPage />} />
             </Route>
-            <Route path="/user/*" element={<MemberLayout />}>
+            <Route path="/" element={<MemberLayout />}>
+                <Route index element={<BloodDonateHistory />} />
                 <Route path="home" element={<Home />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="news" element={<News />} />
                 <Route path="Q-A" element={<QuestionAndAns />} />
                 <Route path="profile" element={<UserProfile />} />
+                <Route path="donate-history" element={<BloodDonateHistory />} />
             </Route>
             <Route path="/staff/*" element={<StaffLayout />}>
                 {/* Các route staff khác */}
