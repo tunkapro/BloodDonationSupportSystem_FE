@@ -6,7 +6,7 @@ import AppBarHeader from '../AppBarHeader';
 import { Toolbar } from '@mui/material';
 
 export default function MemberLayout() {
-    const [openSignin, setIsOpenLogin] = useState(false);
+
      const navigate = useNavigate();
 
   //auth
@@ -21,11 +21,13 @@ export default function MemberLayout() {
     checkLogin;
   }, [navigate]);
 
-   const pages = ['Home', 'News', 'Question', 'Contact', 'Histories'];
-   const settings = ['Profile', 'Account', 'Logout']
     return (
         <>
+<<<<<<< HEAD:BloodDonationSupportSystem_FE/src/layouts/MemberLayout/MemberLayout.jsx
+            <AppBarHeader/>
+=======
             <AppBarHeader pages={pages} settings={settings} />
+>>>>>>> 67eceeca5834bf91922c43d449ebb425f22ee2aa:src/layouts/MemberLayout/MemberLayout.jsx
             <Toolbar />
             <Outlet />
             <Footer></Footer>

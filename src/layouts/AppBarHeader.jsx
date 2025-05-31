@@ -16,8 +16,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-function AppBarHeader({ pages, settings, isLogin = false }) {
+function AppBarHeader() {
 
+  const pages = ['Home', 'News', 'FAQ', 'Contact']
+  const settings = ['Profile', 'Account', 'Logout']
+const isLogin = true;
   // handle Link
 
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ function AppBarHeader({ pages, settings, isLogin = false }) {
     navigate('/login')
   };
   const handleClickSignup = () => {
-    navigate('/signup')
+    navigate('/register')
   };
 
 

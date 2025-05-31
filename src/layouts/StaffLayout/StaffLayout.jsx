@@ -1,7 +1,8 @@
-import React from 'react';
+
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import StaffSidebar from '../../components/staff/StaffSidebar';
+import StaffSidebar from './StaffSidebar';
+
 
 const StaffLayout = () => {
   return (
@@ -14,7 +15,7 @@ const StaffLayout = () => {
           borderRight: '1px solid #ddd',
         }}
       >
-        <StaffSidebar />
+        <StaffSidebar/>
       </Box>
 
       {/* Nội dung chiếm 80% */}

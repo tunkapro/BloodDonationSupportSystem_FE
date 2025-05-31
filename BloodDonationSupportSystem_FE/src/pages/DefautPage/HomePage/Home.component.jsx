@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-<<<<<<<< HEAD:BloodDonationSupportSystem_FE/src/pages/DefautPage/HomePage/Home.component.jsx
+
 
 import BloodInformation from "./HomePageDetails/BloodInformation";
 import Blog from "./HomePageDetails/Blog";
@@ -7,14 +7,7 @@ import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
 import ImportantNotes from '../../../components/ImportantNotes';
 
-========
-import BloodInformation from "./homepagedetail/BloodInformation";
-import Blog from "./homepagedetail/Blog";
-import Banner from "./homepagedetail/SlideShow";
-import DonationTips from "./homepagedetail/DonationTip";
-import ImportantNotes from '../../components/ImportantNotes';
-import DateSearch from "./homepagedetail/DateSearch";
->>>>>>>> 67eceeca5834bf91922c43d449ebb425f22ee2aa:src/pages/homepage/Home.jsx
+
 
 export default function Home() {
   return (
@@ -31,15 +24,11 @@ export default function Home() {
           <Banner />
         </Box>
       </Container>
-<<<<<<<< HEAD:BloodDonationSupportSystem_FE/src/pages/DefautPage/HomePage/Home.component.jsx
+
       {/* <Box sx={{ backgroundColor: '#0D47A1', padding: 2, display: 'flex', justifyContent: 'center' }}>
         <DateSearch />
       </Box> */}
-========
-      <Box sx={{ backgroundColor: '#0D47A1', padding: 2, display: 'flex', justifyContent: 'center' }}>
-        <DateSearch />
-      </Box>
->>>>>>>> 67eceeca5834bf91922c43d449ebb425f22ee2aa:src/pages/homepage/Home.jsx
+
       <Box sx={{ marginTop: 5 }}>
         <Box
           sx={{

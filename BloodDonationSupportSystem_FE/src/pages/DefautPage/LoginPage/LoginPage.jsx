@@ -15,7 +15,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { GoogleLogin } from '@react-oauth/google';
-import { login } from '../../../api/AuthService';
+import { login } from '../../api/AuthService';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
