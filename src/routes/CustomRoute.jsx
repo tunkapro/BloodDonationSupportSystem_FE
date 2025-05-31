@@ -17,7 +17,7 @@ import BloodDonateHistory  from "../pages/user/BloodDonateHistory";
 const CustomRoute = () => {
     return (
         <Routes>
-            <Route path="/user/*" element={<DefaultLayout />}>
+            <Route path="/" element={<DefaultLayout />}>
                 <Route index element={<Home />} />
                 <Route path="Home" element={<Home />} />
                 <Route path="contact" element={<Contact />} />
@@ -28,9 +28,8 @@ const CustomRoute = () => {
                 <Route path="reset-password" element={<ForgotPasswordPage />} />
                 <Route path="signup" element={<RegisterPage />} />
             </Route>
-            <Route path="/" element={<MemberLayout />}>
-                <Route index element={<BloodDonateHistory />} />
-                <Route path="home" element={<Home />} />
+            <Route path="/user/*" element={<MemberLayout />}>
+                <Route index element={<Home />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="news" element={<News />} />
                 <Route path="Q-A" element={<QuestionAndAns />} />
