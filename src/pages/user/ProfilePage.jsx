@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProfileView from "../../pages/user/userdetail/ProfileView";
-import ProfileEdit from "../../pages/user/userdetail/ProfileEdit";
+import ProfileView from "./userdetail/ProfileView";
+import ProfileEdit from "./userdetail/ProfileEdit";
 
 const ProfilePage = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -9,7 +9,7 @@ const ProfilePage = ({ userId }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
-    axios.get(`/api/users/${userId}`, {
+    axios.get(`/api/user/profile`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -20,7 +20,7 @@ const ProfilePage = ({ userId }) => {
 
   const handleSave = (updatedData) => {
     const token = localStorage.getItem('jwt_token');
-    axios.put(`/api/users/${userId}`, updatedData, {
+    axios.put(`/api/user/profile`, updatedData, {
       headers: {
         Authorization: `Bearer ${token}`
       }

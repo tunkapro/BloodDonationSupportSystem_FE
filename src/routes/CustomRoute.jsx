@@ -9,14 +9,9 @@ import MemberLayout from "../layouts/MemberLayout/MemberLayout";
 import LoginPageV2 from "../pages/DefautPage/DefaultDetails/login/LoginPage";
 import Overview from "../pages/staff/Overview";
 import BloodStorageTable from "../components/staff/BloodStorageTable";
-import UserProfile from "../pages/user/UserPage";
+import UserProfile from "../pages/user/ProfilePage";
 import QuestionAndAns from "../pages/DefautPage/DefaultDetails/question/QuestionPage";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
-
-const UserProfileWrapper = () => {
-    const { userId } = useParams();
-    return <UserProfile userId={userId} />;
-};
 
 const CustomRoute = () => {
     return (
@@ -33,12 +28,11 @@ const CustomRoute = () => {
                 <Route path="signup" element={<RegisterPage />} />
             </Route>
             <Route path="/user/*" element={<MemberLayout />}>
-                <Route index element={<UserProfile />} />
                 <Route path="home" element={<Home />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="news" element={<News />} />
                 <Route path="Q-A" element={<QuestionAndAns />} />
-                <Route path="profile/:phone" element={<UserProfileWrapper />} />
+                <Route path="profile" element={<UserProfile />} />
             </Route>
             <Route path="/staff/*" element={<StaffLayout />}>
                 {/* Các route staff khác */}
