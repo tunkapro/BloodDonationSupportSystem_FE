@@ -3,7 +3,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import ImportantNotes from '../../../../components/ImportantNotes';
+import ImportantNotes from '../../../components/ImportantNotes';
 
 const importantNotes = [
   {

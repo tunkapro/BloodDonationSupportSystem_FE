@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import AppBarHeader from '../AppBarHeader';
 
 export default function MemberLayout() {
-    const [openSignin, setIsOpenLogin] = useState(false);
+
      const navigate = useNavigate();
 
   //auth

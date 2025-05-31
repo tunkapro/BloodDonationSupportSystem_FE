@@ -20,9 +20,9 @@ const CustomRoute = () => {
         <Route path="/Home" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/news" element={<News />} />
-        <Route path="/Q-A" element={<QuestionAndAns />} />
+        <Route path="/faq" element={<QuestionPage />} />
 
-        <Route path="/login" element={<LoginPageV2 />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/reset-password" element={<ForgotPasswordPage />} />
         <Route path="/signup" element={<RegisterPage />} />
       </Route>
@@ -30,7 +30,7 @@ const CustomRoute = () => {
         <Route path="home" element={<Home />} />
         <Route path="contact" element={<Contact />} />
         <Route path="news" element={<News />} />
-        <Route path="Q-A" element={<QuestionAndAns />} />
+        <Route path="faq" element={<QuestionPage />} />
       </Route>
 
 

@@ -5,7 +5,7 @@ import Footer from '../../components/Footer';
 import { useEffect, useState } from 'react';
 
 export default function Layout() {
-    const [openSignin, setIsOpenLogin] = useState(false);
+    
     const navigate = useNavigate();
 
 
@@ -19,7 +19,7 @@ export default function Layout() {
 
     return (
         <>
-            <Header ></Header>
+            <Header></Header>
             <NavBar></NavBar>
             <Outlet />
             <Footer></Footer>

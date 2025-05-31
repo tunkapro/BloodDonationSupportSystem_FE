@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from "@mui/material";
-import BloodInformation from "./homepagedetail/BloodInformation";
-import Blog from "./homepagedetail/Blog";
-import Banner from "./homepagedetail/SlideShow";
-import DonationTips from "./homepagedetail/DonationTip";
-import ImportantNotes from '../../components/ImportantNotes';
+import BloodInformation from "./HomePageDetails/BloodInformation";
+import Blog from "./HomePageDetails/Blog";
+import Banner from "./HomePageDetails/SlideShow";
+import DonationTips from "./HomePageDetails/DonationTip";
+import ImportantNotes from '../../../components/ImportantNotes';
 
 export default function Home() {
   return (
