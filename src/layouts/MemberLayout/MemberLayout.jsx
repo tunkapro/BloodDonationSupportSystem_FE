@@ -23,7 +23,11 @@ export default function MemberLayout() {
 
     return (
         <>
+<<<<<<< HEAD:BloodDonationSupportSystem_FE/src/layouts/MemberLayout/MemberLayout.jsx
             <AppBarHeader/>
+=======
+            <AppBarHeader pages={pages} settings={settings} />
+>>>>>>> 67eceeca5834bf91922c43d449ebb425f22ee2aa:src/layouts/MemberLayout/MemberLayout.jsx
             <Toolbar />
             <Outlet />
             <Footer></Footer>
