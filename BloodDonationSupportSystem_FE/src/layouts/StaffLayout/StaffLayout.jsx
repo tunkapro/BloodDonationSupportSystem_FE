@@ -2,7 +2,7 @@
 import { Box } from '@mui/material';
 
 import { Outlet, useNavigate } from 'react-router-dom';
-import StaffSidebar from './StaffSidebar';
+import StaffSidebar from '../../components/staff/StaffSidebar';
 import { useEffect } from 'react';
 import axios from 'axios';
 
