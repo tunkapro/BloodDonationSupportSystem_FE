@@ -46,9 +46,7 @@ const CustomRoute = () => {
 
             {/* Error Route */}
             <Route path="/404" element={<ErrorPage/>}></Route>
-
-            </Route>
-
+            
         </Routes>
     );
 };
