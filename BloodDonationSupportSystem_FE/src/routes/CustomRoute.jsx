@@ -9,6 +9,9 @@ import ForgotPasswordPage from "../pages/DefautPage/ForgotPasswordPage/ForgotPas
 import RegisterPage from "../pages/DefautPage/RegisterPage/RegisterPage";
 import MemberLayout from "../layouts/MemberLayout/MemberLayout";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import StaffLayout from "../layouts/StaffLayout/StaffLayout";
+import Overview from "../pages/StaffPage/Overview";
+
 const CustomRoute = () => {
     return (
         <Routes>
@@ -26,12 +29,12 @@ const CustomRoute = () => {
                 </Route>
             </Route>
            
-            {/* <Route path="/staff/*" element={<StaffLayout />}>
+            <Route path="/staff/*" element={<StaffLayout />}>
                
                 <Route index element={<Overview />} />
                 <Route path="overview" element={<Overview />} />
-                <Route path="storage" element={<BloodStorageTable />} />
-            </Route> */}
+                {/* <Route path="storage" element={<BloodStorageTable />} /> */}
+            </Route>
         </Routes>
     );
 };
