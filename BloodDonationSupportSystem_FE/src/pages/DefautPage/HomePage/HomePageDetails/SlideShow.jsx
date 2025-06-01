@@ -26,7 +26,7 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 2000);
+    const timer = setInterval(nextSlide, 10000);
     return () => clearInterval(timer);
   }, []);
 
