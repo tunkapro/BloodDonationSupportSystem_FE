@@ -9,6 +9,11 @@ import ForgotPasswordPage from "../pages/DefautPage/ForgotPasswordPage/ForgotPas
 import RegisterPage from "../pages/DefautPage/RegisterPage/RegisterPage";
 import MemberLayout from "../layouts/MemberLayout/MemberLayout";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import AdminLayout from "../layouts/AdminLayout/AdminLayout";
+import StaffLayout from "../layouts/StaffLayout/StaffLayout";
+import Overview from "../pages/StaffPage/Overview";
+import BloodStorageTable from "../components/staff/BloodStorageTable";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 const CustomRoute = () => {
     return (
         <Routes>
@@ -22,16 +27,21 @@ const CustomRoute = () => {
                 <Route path="reset-password" element={<ForgotPasswordPage />} />
                 <Route path="signup" element={<RegisterPage />} />
                 <Route path="/user" element={<MemberLayout/>}>
-                    <Route path="histories" element={<BloodDonateHistory/>}/>
+                    <Route path="donation-histories" element={<BloodDonateHistory/>}/>
                 </Route>
             </Route>
            
-            {/* <Route path="/staff/*" element={<StaffLayout />}>
-               
+            <Route path="/staff/*" element={<StaffLayout />}>
                 <Route index element={<Overview />} />
                 <Route path="overview" element={<Overview />} />
                 <Route path="storage" element={<BloodStorageTable />} />
-            </Route> */}
+            </Route>
+
+            {/* Admin Route */}
+            <Route path="/admin" element={<AdminLayout/>}/>
+
+            {/* Error Route */}
+            <Route path="/404" element={<ErrorPage/>}></Route>
         </Routes>
     );
 };

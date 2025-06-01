@@ -23,14 +23,8 @@ export default function MemberLayout() {
 
     return (
         <>
-
-            <AppBarHeader/>
-
-            <AppBarHeader />
-
             <Toolbar />
             <Outlet />
-            <Footer></Footer>
         </>
     );
 }
