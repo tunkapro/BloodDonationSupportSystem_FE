@@ -1,20 +1,72 @@
 {
   "data": {
-    "value" : true
+    "value": true
   },
   "user": {
-    "phoneNumber" : "0343056189",
-    "fullName" : "Trương Anh Tuấn",
-    "gender" : "Nam",
-    "address" : "12 Trương Định, TP. Hồ Chí Minh",
-    "bloodType" : "A+"
+    "phoneNumber": "0343056189",
+    "fullName": "Trương Anh Tuấn",
+    "gender": "Nam",
+    "address": "12 Trương Định, TP. Hồ Chí Minh",
+    "bloodType": "A+"
+  },
+  "admin": {
+    "fullName": "Admin",
+    "role": "admin"
+  },
+  "staff": {
+    "fullName": "Staff",
+    "role": "staff"
+  },
+  "BloodSchedule": [
+    {
+      "id": "1",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
     },
-    "admin" : {
-      "fullName" : "Admin",
-      "role": "admin"
+    {
+      "id": "2",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
     },
-    "staff" : {
-      "fullName" : "Staff",
-      "role" : "staff"
+    {
+      "id": "3",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "4",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "5",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
     }
+  ]
 }

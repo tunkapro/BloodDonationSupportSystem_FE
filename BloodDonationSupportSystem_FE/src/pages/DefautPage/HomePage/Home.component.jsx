@@ -6,6 +6,7 @@ import Blog from "./HomePageDetails/Blog";
 import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
 import ImportantNotes from '../../../components/ImportantNotes';
+import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
 
 
 
@@ -28,6 +29,9 @@ export default function Home() {
       {/* <Box sx={{ backgroundColor: '#0D47A1', padding: 2, display: 'flex', justifyContent: 'center' }}>
         <DateSearch />
       </Box> */}
+      <Box sx={{  padding: 2, display: 'flex', justifyContent: 'center' }}>
+        <BloodDonationRegister/>
+      </Box>
 
       <Box sx={{ marginTop: 5 }}>
         <Box
