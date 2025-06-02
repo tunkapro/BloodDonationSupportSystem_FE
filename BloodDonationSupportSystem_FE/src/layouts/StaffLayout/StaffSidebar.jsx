@@ -21,6 +21,7 @@ const StaffSidebar = () => {
         { label: 'Tổng quan', path: '/staff/overview' ,icon: <DashboardIcon /> },
         { label: 'Yêu cầu hiến máu', path: '/staff/request' ,icon: <ListAltIcon/>},
         { label: 'Quản lí hiến máu', path: '/staff/blood-management',icon:<ManageSearchIcon/> },
+        { label: 'Lịch Hiến Máu', path: '/staff/blood-donation-schedule',icon:<ManageSearchIcon/> },
         { label: 'Kho máu', path: '/staff/storage' ,icon:<AccountBalanceIcon/>},
         { label: 'Tìm theo khoảng cách', path: '/staff/search' ,icon: <RoomIcon/> },
       ],

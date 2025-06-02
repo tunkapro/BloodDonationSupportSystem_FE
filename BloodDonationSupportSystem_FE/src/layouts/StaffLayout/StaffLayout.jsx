@@ -1,8 +1,9 @@
 
+
 import { Box } from '@mui/material';
 
 import { Outlet, useNavigate } from 'react-router-dom';
-import StaffSidebar from '../../components/staff/StaffSidebar';
+import StaffSidebar from './StaffSidebar';
 import { useEffect } from 'react';
 import axios from 'axios';
 
@@ -42,7 +43,6 @@ const StaffLayout = () => {
       <Box
         sx={{
           flex: 8,
-          p: 2,
           overflowX: 'hidden',
           bgcolor: 'background.default',
         }}
