@@ -13,14 +13,15 @@ import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/Blood
 import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
-import BloodStorageTable from "../components/staff/BloodStorageTable";
+
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import DonationManagement from "../pages/StaffPage/DonationManagement";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import DashboardLayoutAccount from "../layouts/AdminLayout/AdminNavBar";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
-
+import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
+import CreateBloodBagPage from "../pages/StaffPage/CreateBloodBagPage";
 
 
 const CustomRoute = () => {
@@ -46,7 +47,8 @@ const CustomRoute = () => {
 
                 <Route index element={<Overview />} />
                 <Route path="overview" element={<Overview />} />
-                <Route path="storage" element={<BloodStorageTable />} />
+                <Route path="storage" element={<BloodStoragePage/>} />
+                <Route path="storage/create" element={<CreateBloodBagPage />} />
                 <Route path="blood-management" element={<DonationManagement/>} />
                 <Route path="blood-donation-schedule" element={<BloodDonationScheduleComponent/>} />
             </Route>
