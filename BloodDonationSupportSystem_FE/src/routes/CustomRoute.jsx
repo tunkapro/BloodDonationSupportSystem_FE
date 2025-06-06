@@ -20,6 +20,7 @@ import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedule
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import DashboardLayoutAccount from "../layouts/AdminLayout/AdminNavBar";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
+import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 
 
@@ -52,9 +53,10 @@ const CustomRoute = () => {
             </Route>
 
             {/* Admin Route */}
-            <Route path="/admin/*" element={<AdminLayout/>}>
+            {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
                 <Route path="overview" element={<BloodDonorReport/>}/>
-            </Route>
+                <Route path="posts" element={<AdminPosts></AdminPosts>}/>
+            {/* </Route> */}
 
             {/* Error Route */}
             <Route path="/404" element={<ErrorPage/>}></Route>

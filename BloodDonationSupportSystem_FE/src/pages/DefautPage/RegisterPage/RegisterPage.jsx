@@ -1,11 +1,22 @@
-
 import {
-  Container, Box, TextField, Button, Typography, Divider
+  Container,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Divider,
+} from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import axios from "../../../config/axios"
 
 const RegisterPage = () => {
   const {
@@ -16,16 +27,18 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm();
 
-  const password = watch('password');
+  const password = watch("password");
 
   const onSubmit = (data) => {
-    console.log('Dữ liệu đăng ký:', data);
+    
     // Gửi dữ liệu tới backend API tại đây
   };
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ mt: 8, p: 4, boxShadow: 3, borderRadius: 2, bgcolor: 'white' }}>
+      <Box
+        sx={{ mt: 8, p: 4, boxShadow: 3, borderRadius: 2, bgcolor: "white" }}
+      >
         <Typography variant="h5" align="center" gutterBottom>
           Đăng ký tài khoản
         </Typography>
@@ -39,9 +52,12 @@ const RegisterPage = () => {
             fullWidth
             label="Số điện thoại"
             margin="normal"
-            {...register('phone', {
-              required: 'Vui lòng nhập số điện thoại',
-              pattern: { value: /^\d{10}$/, message: 'Số điện thoại không hợp lệ' },
+            {...register("phoneNumber", {
+              required: "Vui lòng nhập số điện thoại",
+              pattern: {
+                value: /^\d{10}$/,
+                message: "Số điện thoại không hợp lệ",
+              },
             })}
             error={!!errors.phone}
             helperText={errors.phone?.message}
@@ -52,9 +68,9 @@ const RegisterPage = () => {
             label="Mật khẩu"
             type="password"
             margin="normal"
-            {...register('password', {
-              required: 'Vui lòng nhập mật khẩu',
-              minLength: { value: 6, message: 'Mật khẩu tối thiểu 6 ký tự' },
+            {...register("password", {
+              required: "Vui lòng nhập mật khẩu",
+              minLength: { value: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
@@ -65,10 +81,10 @@ const RegisterPage = () => {
             label="Xác nhận mật khẩu"
             type="password"
             margin="normal"
-            {...register('confirmPassword', {
-              required: 'Vui lòng nhập lại mật khẩu',
+            {...register("confirmPassword", {
+              required: "Vui lòng nhập lại mật khẩu",
               validate: (value) =>
-                value === password || 'Mật khẩu xác nhận không khớp',
+                value === password || "Mật khẩu xác nhận không khớp",
             })}
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
@@ -84,15 +100,33 @@ const RegisterPage = () => {
             fullWidth
             label="Họ và tên"
             margin="normal"
-            {...register('name', { required: 'Vui lòng nhập họ và tên' })}
+            {...register("fullName", { required: "Vui lòng nhập họ và tên" })}
             error={!!errors.name}
             helperText={errors.name?.message}
           />
+          <FormControl fullWidth margin="normal" error={!!errors.gender}>
+            <InputLabel id="gender-label">Giới tính</InputLabel>
+            <Select
+              labelId="gender-label"
+              label="Giới tính"
+              defaultValue=""
+              {...register("gender", { required: "Vui lòng chọn giới tính" })}
+            >
+              <MenuItem value="Nam">Nam</MenuItem>
+              <MenuItem value="Nữ">Nữ</MenuItem>
+              <MenuItem value="Khác">Khác</MenuItem>
+            </Select>
+            {errors.gender && (
+              <Typography variant="caption" color="error">
+                {errors.gender.message}
+              </Typography>
+            )}
+          </FormControl>
 
-          <Controller
+          <Controller 
             name="birthday"
             control={control}
-            rules={{ required: 'Vui lòng chọn ngày sinh' }}
+            rules={{ required: "Vui lòng chọn ngày sinh" }}
             render={({ field }) => (
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -117,7 +151,7 @@ const RegisterPage = () => {
             fullWidth
             label="Địa chỉ"
             margin="normal"
-            {...register('address', { required: 'Vui lòng nhập địa chỉ' })}
+            {...register("address", { required: "Vui lòng nhập địa chỉ" })}
             error={!!errors.address}
             helperText={errors.address?.message}
           />
