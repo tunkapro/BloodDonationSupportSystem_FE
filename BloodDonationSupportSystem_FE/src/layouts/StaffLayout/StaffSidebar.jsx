@@ -52,7 +52,7 @@ const StaffSidebar = () => {
         },
         {
           label: "Tìm theo khoảng cách",
-          path: "/staff/search",
+          path: "/staff/find-by-distance",
           icon: <RoomIcon />,
         },
       ],
