@@ -83,7 +83,7 @@ function CreateBloodBagForm() {
     <Box
       component="form"
       onSubmit={handleSubmit}
-      sx={{ m: 2, mx: "auto", width: "700px" }}
+      sx={{ m: 2, mx: "auto", width: "700px",height:'100vh' }}
     >
       <Typography sx={{ textAlign: "center", fontSize: 24, mb: 2 }}>
         Form tạo túi máu
@@ -186,7 +186,7 @@ function CreateBloodBagForm() {
         <Button type="submit" variant="contained">
           Tạo túi máu
         </Button>
-        <Button variant="outlined" onClick={() => navigate("/staff/storage")}>
+        <Button variant="outlined" onClick={() => navigate(-1)}>
           Hủy
         </Button>
       </Box>
