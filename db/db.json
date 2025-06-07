@@ -1,0 +1,154 @@
+{
+  "data": {
+    "value": true
+  },
+  "member": {
+    "profile": {
+      "phoneNumber": "0343056189",
+      "fullName": "Lê Hoàng Minh Đức",
+      "gender": "MALE",
+      "dateOfBirth": "2004-01-01",
+      "address": "12 Trương Định, TP. Hồ Chí Minh",
+      "bloodType": "A+",
+      "avatar": "https://via.placeholder.com/150"
+    }
+  },
+  "admin": {
+    "fullName": "Admin",
+    "role": "admin"
+  },
+  "staff": {
+    "fullName": "Staff",
+    "role": "staff"
+  },
+  "BloodDonateHistory": [
+    {
+      "donationHistoryId": 1,
+      "donationDate": "2025-01-01",
+      "processStatus": "COLLECTING",
+      "location": "Hanoi Red Cross Center",
+      "id": "c19d"
+    },
+    {
+      "donationHistoryId": 2,
+      "donationDate": "2025-03-15",
+      "processStatus": "SCREENING",
+      "location": "District 1 Hospital",
+      "id": "0505"
+    },
+    {
+      "donationHistoryId": 3,
+      "donationDate": "2025-05-20",
+      "processStatus": "FAIL",
+      "location": "National Hospital of Hematology",
+      "id": "096d"
+    }
+  ],
+  "BloodSchedule": [
+    {
+      "id": "1",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "2",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "3",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "4",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "5",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30",
+      "numberRegister": "20",
+      "capcity": "150"
+    },
+    {
+      "id": "c944",
+      "title": "a",
+      "address": "12 Trương Định, TP. Vũng Tàu",
+      "numberRegister": "0",
+      "capcity": "15",
+      "operatingDate": "5/6/2025",
+      "startTime": "12:00",
+      "endTime": "15:00"
+    }
+  ],
+  "blood_donations": [
+    {
+      "id": "1",
+      "userId": 1,
+      "donationDate": "2024-10-12",
+      "location": "Hanoi Red Cross Center",
+      "volume": 350
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "donationDate": "2025-04-20",
+      "location": "National Hospital of Hematology",
+      "volume": 450
+    },
+    {
+      "id": "3",
+      "userId": 2,
+      "donationDate": "2025-01-15",
+      "location": "District 1 Hospital",
+      "volume": 350
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "a@gmail.com",
+      "phoneNumber": "0901234567",
+      "gender": "Nam",
+      "role": "member",
+      "address": "Hà Nội",
+      "created_at": "2024-06-01T10:00:00"
+    },
+    {
+      "id": 2,
+      "name": "Trần Thị B",
+      "email": "b@gmail.com",
+      "phoneNumber": "0912345678",
+      "gender": "Nữ",
+      "role": "staff",
+      "address": "TP. HCM",
+      "created_at": "2024-06-02T11:00:00"
+    }
+  ]
+}
