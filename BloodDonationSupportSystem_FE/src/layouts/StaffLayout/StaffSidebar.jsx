@@ -47,7 +47,7 @@ const StaffSidebar = () => {
         },
         {
           label: "Kho máu",
-          path: "/staff/storage",
+          path: "/staff/storage/dashboard",
           icon: <AccountBalanceIcon />,
         },
         {

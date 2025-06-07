@@ -19,6 +19,7 @@ function BloodStoragePage() {
         <BloodStorageTable
            data={bloodBags}
            onCreateBloodBag={() => navigate('/staff/storage/create')}
+           onViewDashBoard={() => navigate('/staff/storage/dashboard')}
         />     
       </Box>
     );

@@ -4,15 +4,19 @@ import {
   Container, Paper, TableContainer, Table,
   TableHead, TableRow, TableCell, TableBody
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-function BloodStorageTable({ data, onCreateBloodBag}) {
-
+function BloodStorageTable({ data,onViewDashBoard,onCreateBloodBag}) {
+ const navigate = useNavigate();
   return (
     <Box>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6">Kho máu</Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Button color="inherit" onClick={onViewDashBoard} >Tổng quan</Button>
+          {/* chưa clear là sài  onClick={()=>navigate("/staff/storage") hay onclick={onStorage} */}
+          <Button color="inherit" onClick={()=>navigate("/staff/storage/blood-bag-list", { state: { shouldReload: true }})}>Danh mục máu</Button>
           <Button color="inherit" onClick={onCreateBloodBag}>Tạo túi máu</Button>
           <Button color="inherit">Xuất bịch máu</Button>
         </Toolbar>
@@ -57,8 +61,7 @@ function BloodStorageTable({ data, onCreateBloodBag}) {
 }
 BloodStorageTable.defaultProps = {
   onCreateBloodBag: () => {},
-  onAddBloodBag: () => {},
-  onExportBloodBag: () => {},
+  onViewDashBoard:()=>{},
 };
 export default BloodStorageTable;
 
