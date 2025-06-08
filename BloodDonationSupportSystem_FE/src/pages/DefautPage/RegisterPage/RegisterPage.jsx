@@ -5,20 +5,23 @@ import {
   Button,
   Typography,
   Divider,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material';
-import axios from "../../../config/axios"
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { registerAccount } from "../../../api/authService";
+import { stringifyLocalDate } from "../../../../utils/dayFormat";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     control,
@@ -26,12 +29,27 @@ const RegisterPage = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const password = watch("password");
 
-  const onSubmit = (data) => {
-    
-    // Gửi dữ liệu tới backend API tại đây
+  const onSubmit = async (data) => {
+    try {
+      const info = {
+        ...data,
+        dateOfBirth: JSON.parse(stringifyLocalDate(data.dateOfBirth)),
+        status: "HOẠT ĐỘNG",
+      };
+      const reponse = await registerAccount(info);
+      if (reponse.status == 200) {
+        setOpenSnackbar(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -59,8 +77,8 @@ const RegisterPage = () => {
                 message: "Số điện thoại không hợp lệ",
               },
             })}
-            error={!!errors.phone}
-            helperText={errors.phone?.message}
+            error={!!errors.phoneNumber}
+            helperText={errors.phoneNumber?.message}
           />
 
           <TextField
@@ -123,8 +141,8 @@ const RegisterPage = () => {
             )}
           </FormControl>
 
-          <Controller 
-            name="birthday"
+          <Controller
+            name="dateOfBirth"
             control={control}
             rules={{ required: "Vui lòng chọn ngày sinh" }}
             render={({ field }) => (
@@ -167,6 +185,20 @@ const RegisterPage = () => {
           </Button>
         </form>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Đăng ký thành công! Đang chuyển hướng...
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
