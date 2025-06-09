@@ -1,7 +1,81 @@
 {
-  "data": {
-    "value": true
-  },
+  "account": [
+    {
+      "id": "1",
+      "fullName": "Lê Hoàng Minh Đức",
+      "phoneNumber": "03333222",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "longtitude": "0",
+      "dateOfBirth": "01-01-2004",
+      "gender": "Name",
+      "bloodType": "A+",
+      "createdAt": "6-3-2025",
+      "updateAt": "6-3-2025",
+      "status": "Active",
+      "role": "Member"
+    },
+    {
+      "id": "2",
+      "fullName": "Trương Anh Tuấn",
+      "phoneNumber": "03333222",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "longtitude": "0",
+      "dateOfBirth": "01-01-2004",
+      "gender": "Name",
+      "bloodType": "A+",
+      "createdAt": "6-3-2025",
+      "updateAt": "6-3-2025",
+      "status": "Active",
+      "role": "Member"
+    }
+  ],
+  "bloodDonationRegister": [
+    {
+      "id": "1",
+      "phoneNumber": "0343056189",
+      "fullName": "Trương Anh Tuấn",
+      "gender": "Nam",
+      "address1": "12 Trương Định, TP. Hồ Chí Minh",
+      "bloodType": "A+",
+      "bloodSchedule": "1",
+      "status": "Đang Chờ",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address2": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30"
+    },
+    {
+      "id": "b504",
+      "phoneNumber": "0343056189",
+      "fullName": "Trương Anh Tuấn",
+      "gender": "Nam",
+      "address1": "12 Trương Định, TP. Hồ Chí Minh",
+      "bloodType": "A+",
+      "bloodSchedule": "2",
+      "status": "Đang Chờ",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address2": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30"
+    },
+    {
+      "id": "009d",
+      "phoneNumber": "0343056189",
+      "fullName": "Trương Anh Tuấn",
+      "gender": "Nam",
+      "address1": "12 Trương Định, TP. Hồ Chí Minh",
+      "bloodType": "A+",
+      "bloodSchedule": "2",
+      "status": "Đang Chờ",
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "address2": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "operatingDate": "12/06/2025",
+      "startTime": "07:00",
+      "endTime": "11:30"
+    }
+  ],
   "user": {
     "phoneNumber": "0343056189",
     "fullName": "Trương Anh Tuấn",
@@ -67,6 +141,72 @@
       "endTime": "11:30",
       "numberRegister": "20",
       "capcity": "150"
+    },
+    {
+      "id": "0757",
+      "title": "abc",
+      "address": "12314 nguyễn trãi",
+      "numberRegister": "0",
+      "capcity": "12",
+      "operatingDate": "19/6/2025",
+      "startTime": "14:15",
+      "endTime": "12:45"
+    },
+    {
+      "id": "25cc",
+      "title": "a",
+      "address": "12314 nguyễn trãi",
+      "numberRegister": "0",
+      "capcity": "12",
+      "operatingDate": "19/6/2025",
+      "startTime": "14:15",
+      "endTime": "12:45"
+    }
+  ],
+  "waitingDonors": [
+    {
+      "id": "D-01",
+      "name": "Emily Wilson",
+      "time": "10:15 AM",
+      "status": "Pending"
+    },
+    {
+      "id": "D-02",
+      "name": "James Brown",
+      "time": "10:30 AM",
+      "status": "Pending"
+    },
+    {
+      "id": "D-03",
+      "name": "Sophia Martinez",
+      "time": "10:45 AM",
+      "status": "Pending"
+    }
+  ],
+  "newsList": [
+    {
+      "id": "1",
+      "img": "https://giotmauvang.org.vn/assets/images/271b5fe5f864d480023593de2e8aaf3a.png",
+      "caption": "",
+      "title": "KHỞI ĐỘNG THÁNG NHÂN ĐẠO NĂM 2025: HÀNH TRÌNH NHÂN ĐẠO - LAN TỎA YÊU THƯƠNG",
+      "desc": "Ngày 8-5, tại TPHCM, Trung ương Hội Chữ thập đỏ Việt Nam và UBND TPHCM phối hợp tổ chức lễ phát động Tháng Nhân đạo cấp quốc gia năm 2025 với chủ đề 'Hành trình nhân đạo - Lan tỏa yêu thương'.",
+      "link": "/news/1"
+    },
+    {
+      "id": "2",
+      "img": "https://file.hstatic.net/1000115152/article/untitled_20a7b5fd50384d83bc4f8928efc9a7af_large.png",
+      "caption": "",
+      "title": "NGÀY TOÀN DÂN HIẾN MÁU TÌNH NGUYỆN 7/4/2025",
+      "desc": "Ngày 7/4, chúng ta cùng nhau hướng về một ngày ý nghĩa – Ngày Toàn dân hiến máu tình nguyện.",
+      "link": "/news/2"
+    },
+    {
+      "id": "3",
+      "img": "https://giotmauvang.org.vn/assets/images/da5501e9bb4fde7f2a6c831c04eae5e7.jpg",
+      "caption": "",
+      "title": "ÁP DỤNG CÔNG NGHỆ SỐ TRONG HOẠT ĐỘNG HIẾN MÁU TÌNH NGUYỆN",
+      "desc": "Ngày 04/3, tại Trung tâm Hiến máu nhân đạo, Hội Chữ thập đỏ Thành phố phối hợp Hội Tin học Thành phố cùng với sự đồng hành của c...",
+      "link": "/news/3"
     }
   ]
 }

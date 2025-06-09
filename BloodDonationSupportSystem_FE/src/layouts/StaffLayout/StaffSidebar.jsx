@@ -43,7 +43,7 @@ const StaffSidebar = () => {
   ];
 
   return (
-    <Box sx={{ width: '100%', bgcolor: '#1a51a3', height: '100vh', color: 'white' }}>
+    <Box sx={{ width: '100%', bgcolor: '#1a51a3', color: 'white' }}>
       {menuItems.map((section, idx) => (
         <Box key={idx}>
           <List subheader={<div style={{ padding: '10px 16px', fontWeight: 'bold' }}>{section.title}</div>}>
@@ -51,7 +51,7 @@ const StaffSidebar = () => {
               <ListItemButton
                 key={i}
                 onClick={() => navigate(item.path)}
-                sx={{ color: 'white', '&:hover': { bgcolor: '#4949ff' }}}
+               sx={{ color: 'white',height:'44px' ,'&:hover': { bgcolor: '#4949ff' }}}
               >
                 <ListItemIcon sx={{ color: 'white' }}>
                 {item.icon}

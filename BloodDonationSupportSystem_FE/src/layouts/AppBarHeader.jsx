@@ -40,7 +40,7 @@ function AppBarHeader() {
       path : "user/profile"
     },
     {title : "Lịch Sử Hiến Máu",
-      path : "user/donation-histories"
+      path : "user/appointment-histories"
     }
   ]
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.

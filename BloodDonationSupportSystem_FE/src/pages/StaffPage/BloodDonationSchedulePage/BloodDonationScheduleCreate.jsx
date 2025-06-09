@@ -36,7 +36,6 @@ const BloodDonationScheduleCreate = () => {
         } catch (err) {
             console.log("eror");
         }
-
     }
     const onSubmit = (data) => {
         const formattedData = {

@@ -1,12 +1,49 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { People } from "@mui/icons-material";
+import axios from "axios";
 
-export default function BloodeDonationEventCard ({item}) {
-    function onBook () {
-        alert('Đã đặt lịch!')
+export default function BloodeDonationEventCard({ item }) {
+
+  const hanldeDate = (item, account) => {
+    console.log(item);
+    return ({
+      phoneNumber: account.phoneNumber,
+      fullName: account.fullName,
+      gender: account.gender,
+      address1: account.address,
+      bloodType: account.bloodType,
+      bloodSchedule: item.id,
+      status: "Đang Chờ",
+      title: item.title,
+      address2: item.address,
+      operatingDate: item.operatingDate,
+      startTime: item.startTime,
+      endTime: item.endTime
+    })
+  }
+
+  const booking = async (item) => {
+    try {
+      const currentAccount = await axios.get('http://localhost:3001/user');
+      if (currentAccount) {
+        const data = hanldeDate(item,currentAccount.data);
+        const res = await axios.post('http://localhost:3001/bloodDonationRegister', data);
+        if(res.data){
+          console.log("succes")
+        }else{
+          console.log("error")
+        }
+      }
+    } catch (err) {
+
     }
-    
-      return (
+  }
+  function onBook() {
+    booking(item);
+    alert('Đã đặt lịch!');
+  }
+
+  return (
     <Box
       sx={{
         p: 2,
@@ -51,11 +88,11 @@ export default function BloodeDonationEventCard ({item}) {
           {item.numberRegister}/{item.capacity} <Typography variant="body2" component="span">Người</Typography>
         </Typography>
 
-        <Button variant="contained" onClick={onBook}>
+        <Button variant="contained" onClick={ onBook}>
           Đặt lịch
         </Button>
       </Stack>
     </Box>
-      );
+  );
 
 }
