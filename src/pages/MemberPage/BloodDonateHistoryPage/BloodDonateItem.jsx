@@ -8,20 +8,20 @@ import {
 
 const getColor = (status) => {
     switch (status) {
-        case 'COLLECTING': return 'success';
-        case 'SCREENING': return 'warning';
-        case 'FAIL': return 'error';
+        case 'Đã hiến': return 'success';
+        case 'Chưa hiến': return 'warning';
+        case 'Hủy': return 'error';
         default: return 'default';
     }
 };
 
 const getStatusIcon = (status) => {
     switch (status) {
-        case 'COLLECTING':
+        case 'Đã hiến':
             return <CheckCircle fontSize="large" />;
-        case 'SCREENING':
+        case 'Chưa hiến':
             return <HourglassEmpty fontSize="large" />;
-        case 'FAIL':
+        case 'Hủy':
             return <ErrorOutline fontSize="large" />;
         default:
             return <Bloodtype fontSize="large" />;
@@ -30,11 +30,11 @@ const getStatusIcon = (status) => {
 
 const getStatusColor = (status) => {
   switch (status) {
-    case 'COLLECTING':
+    case 'Đã hiến':
       return '#4caf50';
-    case 'SCREENING':
+    case 'Chưa hiến':
       return '#ff9800';
-    case 'FAIL':
+    case 'Hủy':
       return '#f44336';
     default:
       return '#9e9e9e';

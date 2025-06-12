@@ -9,7 +9,7 @@ import {
   MenuItem
 } from '@mui/material';
 
-const genders = ['MALE', 'FEMALE', 'OTHER'];
+const genders = ['Nam', 'Nữ', 'Khác'];
 
 const ProfileEdit = ({ user, onSave, onCancel }) => {
   const [formData, setFormData] = useState({ ...user });

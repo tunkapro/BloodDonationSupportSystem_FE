@@ -31,7 +31,7 @@ const ProfilePage = () => {
       return;
     }
     const token = localStorage.getItem('jwt_token');
-    axios.put('/api/member/profile', editableData, {
+    axios.put(`http://localhost:3001/member}`, editableData, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {

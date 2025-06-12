@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from '../../../config/axios';
 import BloodDonateList from './BloodDonateList';
 
-const STATUS_LABELS = ['COLLECTING', 'SCREENING', 'FAIL'];
+const STATUS_LABELS = ['Đã hiến', 'Chưa hiến', 'Hủy'];
 
 export default function BloodDonateTabs() {
   const [history, setHistory] = useState([]);

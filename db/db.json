@@ -6,7 +6,7 @@
     "profile": {
       "phoneNumber": "0343056189",
       "fullName": "Lê Hoàng Minh Đức",
-      "gender": "MALE",
+      "gender": "Nam",
       "dateOfBirth": "2004-01-01",
       "address": "12 Trương Định, TP. Hồ Chí Minh",
       "bloodType": "A+",
@@ -25,21 +25,28 @@
     {
       "donationHistoryId": 1,
       "donationDate": "2025-01-01",
-      "processStatus": "COLLECTING",
+      "processStatus": "Đã hiến",
       "location": "Hanoi Red Cross Center",
       "id": "c19d"
     },
     {
+      "donationHistoryId": 4,
+      "donationDate": "2025-06-10",
+      "processStatus": "Đã hiến",
+      "location": "Bệnh viện Đa Khoa Vũng Tàu",
+      "id": "m11d"
+    },
+    {
       "donationHistoryId": 2,
       "donationDate": "2025-03-15",
-      "processStatus": "SCREENING",
+      "processStatus": "Chưa hiến",
       "location": "District 1 Hospital",
       "id": "0505"
     },
     {
       "donationHistoryId": 3,
       "donationDate": "2025-05-20",
-      "processStatus": "FAIL",
+      "processStatus": "Hủy",
       "location": "National Hospital of Hematology",
       "id": "096d"
     }
@@ -131,24 +138,51 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nguyễn Văn A",
-      "email": "a@gmail.com",
-      "phoneNumber": "0901234567",
+      "phoneNumber": "0912345678",
       "gender": "Nam",
       "role": "member",
-      "address": "Hà Nội",
-      "created_at": "2024-06-01T10:00:00"
+      "address": "Huế",
+      "bloodType": "O+",
+      "status": "BỊ CẤM"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Trần Thị B",
-      "email": "b@gmail.com",
-      "phoneNumber": "0912345678",
+      "phoneNumber": "0987654321",
       "gender": "Nữ",
       "role": "staff",
       "address": "TP. HCM",
-      "created_at": "2024-06-02T11:00:00"
+      "status": "HOẠT ĐỘNG"
+    },
+    {
+      "id": "3",
+      "name": "Lê Văn C",
+      "phoneNumber": "0909090909",
+      "gender": "Nam",
+      "role": "member",
+      "address": "Đà Nẵng",
+      "bloodType": "B+",
+      "status": "BỊ CẤM"
+    },
+    {
+      "id": "4",
+      "name": "Phạm Thị D",
+      "phoneNumber": "0978123456",
+      "gender": "Nữ",
+      "role": "staff",
+      "address": "1334/28/28 Đường 30/4 Phường 12 Thành phố Vũng Tàu",
+      "status": "HOẠT ĐỘNG"
+    }
+  ],
+  "report": [
+    {
+      "donationStatus": {
+        "daHien": 65,
+        "chuaHien": 25,
+        "biHuy": 10
+      }
     }
   ]
 }
