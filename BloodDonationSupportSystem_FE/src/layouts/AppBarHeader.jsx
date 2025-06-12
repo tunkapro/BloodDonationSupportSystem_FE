@@ -179,7 +179,7 @@ function AppBarHeader() {
                 selected={selectedItem === title}
                 onClick={() => { setSelectedItem(title); navigate(path) }}
                 sx={{
-                  my: 2, color: 'black', display: 'block', textAlign: 'center', color: selectedItem === title ? 'white' : 'black',
+                  my: 2, color: selectedItem === title ? 'white' : 'black',
                   bgcolor: selectedItem === title ? '#1976d2' : 'transparent',
                   '&:hover': {
                     bgcolor: selectedItem === title ? '#1565c0' : '#f5f5f5'
@@ -225,7 +225,15 @@ function AppBarHeader() {
                 <MenuItem key={title} onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: 'center' }} component={Link} to={path}>{title}</Typography>
                 </MenuItem>
+                
               ))}
+              <MenuItem key={"logout"} onClick={() => {handleCloseUserMenu();handleLogout();}}>
+                  <Typography
+                    sx={{ textAlign: "center" }}
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
             </Menu>
           </Box>}
 
