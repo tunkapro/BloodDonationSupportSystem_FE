@@ -16,16 +16,27 @@ export default function AdminLayout() {
 
 
     return (
-        <Box>
-            <Typography variant='h1' textAlign={'center'}>Admin</Typography>
-            <Grid container spacing={2}>
-                <Grid size={2}>
-                    <AdminNavBar />
-                </Grid>
-                <Grid size={8}>
-                    <Outlet />
-                </Grid>
-            </Grid>
-        </Box>
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <Box
+        sx={{
+          flex: 1,
+          bgcolor: "background.paper",
+          borderRight: "1px solid #ddd",
+          height: "100",
+        }}
+      >
+        <AdminNavBar />
+      </Box>
+
+      <Box
+        sx={{
+          flex: 9,
+          overflowX: "hidden",
+          bgcolor: "background.default",
+        }}
+      >
+        <Outlet />
+      </Box>
+    </Box>
     );
 }

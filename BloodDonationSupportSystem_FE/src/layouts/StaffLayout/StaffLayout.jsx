@@ -1,5 +1,4 @@
 
-
 import { Box } from '@mui/material';
 
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -15,25 +14,27 @@ const StaffLayout = () => {
     if (!user) return <Navigate to="/"/>
     if (user.role !== "ROLE_STAFF") return <Navigate to="/404" />
 
+
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
       {/* Sidebar chiếm 20% */}
       <Box
         sx={{
           flex: 2,
-          bgcolor: 'background.paper',
-          borderRight: '1px solid #ddd',
+          bgcolor: "background.paper",
+          borderRight: "1px solid #ddd",
+          height: "100",
         }}
       >
-        <StaffSidebar/>
+        <StaffSidebar />
       </Box>
 
       {/* Nội dung chiếm 80% */}
       <Box
         sx={{
           flex: 8,
-          overflowX: 'hidden',
-          bgcolor: 'background.default',
+          overflowX: "hidden",
+          bgcolor: "background.default",
         }}
       >
         <Outlet />

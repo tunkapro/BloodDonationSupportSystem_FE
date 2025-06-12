@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,6 +14,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import Header from '../components/Header';
+
+
 
 
 function AppBarHeader() {
@@ -36,13 +40,20 @@ function AppBarHeader() {
       path: "/contact",
     },
   ];
+  // Register User
+  const manage = [
+    { title: "Đơn Đăng Ký", path: "/user/blood-donation-register" },
+    { title: "Lịch Sử Hiến Máu", path: "/user/appointment-histories" }
+  ]
   //'Profile', 'Account', 'Logout'
   const settings = [
+
     { title: "Hồ Sơ", path: "user/profile" },
     { title: "Lịch Sử Hiến Máu", path: "user/donation-histories" },
   ];
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.
   //  if get Token is null will dont display permission of member like avata name
+
   // handle Link
   useEffect(() => {
     loadUser();
@@ -62,6 +73,7 @@ function AppBarHeader() {
   };
 
   //  handle UI
+  const [selectedItem, setSelectedItem] = useState('Trang Chủ');
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -81,13 +93,15 @@ function AppBarHeader() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ bgcolor: "white" }}>
+    <AppBar position='fixed' sx={{bgcolor: 'white'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* logo */}
-          <img src="/logo/logo.png" alt="Logo" style={{ height: 64 }} />
+          <Box sx={{margin: "0px 50px 0px 10px"}}><img src="/logo/logo.png" alt="Logo" style={{ height: 64 }} /></Box>
           {/* display menu icon and menu small screen*/}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
+
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -116,6 +130,13 @@ function AppBarHeader() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map(({ title, path }) => (
+
+                <MenuItem key={title} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: 'center', color: "black" }} to={path} component={Link} >{title}</Typography>
+                </MenuItem>
+              ))}
+              {user && manage.map(({ title, path }) => (
+
                 <MenuItem key={title} onClick={handleCloseNavMenu}>
                   <Typography
                     sx={{ textAlign: "center", color: "black" }}
@@ -129,83 +150,85 @@ function AppBarHeader() {
             </Menu>
           </Box>
           {/* display menu with large screen */}
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "center",
-            }}
-          >
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'left' }}>
             {pages.map(({ title, path }) => (
               <Button
                 key={title}
-                onClick={handleCloseNavMenu}
+                selected={selectedItem === title}
+                onClick={() => { setSelectedItem(title); navigate(path) }}
                 sx={{
-                  my: 2,
-                  color: "black",
-                  display: "block",
-                  textAlign: "center",
+                  my: 2, mx : 1,display: 'block', textAlign: 'center',
+                  color: selectedItem === title ? 'white' : 'black',
+                  bgcolor: selectedItem === title ? '#1976d2' : 'transparent',
+                  '&:hover': {
+                    bgcolor: selectedItem === title ? '#1565c0' : '#f5f5f5'
+                  }
+
                 }}
                 component={Link}
                 to={path}
               >
-                <Typography>{title}</Typography>
+
+                <Typography >{title}</Typography>
+              </Button>
+            ))}
+            {user && manage.map(({ title, path }) => (
+              <Button
+                key={title}
+                selected={selectedItem === title}
+                onClick={() => { setSelectedItem(title); navigate(path) }}
+                sx={{
+                  my: 2, color: 'black', display: 'block', textAlign: 'center', color: selectedItem === title ? 'white' : 'black',
+                  bgcolor: selectedItem === title ? '#1976d2' : 'transparent',
+                  '&:hover': {
+                    bgcolor: selectedItem === title ? '#1565c0' : '#f5f5f5'
+                  }
+                }}
+                component={Link}
+                to={path}
+              >
+                <Typography >{title}</Typography>
+
               </Button>
             ))}
           </Box>
           {/* display when login success */}
-          {user && (
-            <Box sx={{ flexGrow: 0 }}>
-              {/* display avatar */}
-              <Tooltip title="Open settings">
-                <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="/static/images/avatar/2.jpg"
-                    sx={{ marginRight: "10px" }}
-                  />
-                  <Typography color="black">{user.fullName}</Typography>
-                </Button>
-              </Tooltip>
-              {/* display settings */}
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(({ title, path }) => (
-                  <MenuItem key={title} onClick={handleCloseUserMenu}>
-                    <Typography
-                      sx={{ textAlign: "center" }}
-                      component={Link}
-                      to={path}
-                    >
-                      {title}
-                    </Typography>
-                  </MenuItem>
-                ))}
-                {/* button logout */}
-                <MenuItem key={"logout"} onClick={() => {handleCloseUserMenu(); handleLogout(); }}>
-                  <Typography
-                    sx={{ textAlign: "center" }}
-                  >
-                    Logout
-                  </Typography>
+
+          {user && <Box sx={{ flexGrow: 0 }}>
+            {/* display avatar */}
+            <Tooltip title="Open settings">
+
+              <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{ marginRight: '10px' }} />
+                <Typography color='black'>{user.fullName}</Typography>
+              </Button>
+            </Tooltip>
+            {/* display settings */}
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map(({ title, path }) => (
+                <MenuItem key={title} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }} component={Link} to={path}>{title}</Typography>
                 </MenuItem>
-              </Menu>
-            </Box>
-          )}
+              ))}
+            </Menu>
+          </Box>}
+
           {/* display box login or signup */}
           {!user && (
             <Button
