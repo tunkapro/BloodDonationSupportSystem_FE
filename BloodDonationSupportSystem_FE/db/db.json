@@ -2,13 +2,6 @@
   "data": {
     "value": true
   },
-  "user": {
-    "phoneNumber": "0343056189",
-    "fullName": "Trương Anh Tuấn",
-    "gender": "Nam",
-    "address": "12 Trương Định, TP. Hồ Chí Minh",
-    "bloodType": "A+"
-  },
   "admin": {
     "fullName": "Admin",
     "role": "admin"
@@ -17,6 +10,7 @@
     "fullName": "Staff",
     "role": "staff"
   },
+
   "BloodSchedule": [
     {
       "id": "1",
