@@ -46,7 +46,7 @@ function AppBarHeader() {
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.
   //  if get Token is null will dont display permission of member like avata name
   const [user, setUser] = useState({
-    fullName : "Trương Anh Tuấn",
+    fullName : "Lê Hoàng Minh Đức",
     role : "member"
   });
   // handle Link

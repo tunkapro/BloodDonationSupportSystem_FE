@@ -9,7 +9,6 @@ import LoginPage from "../pages/DefautPage/LoginPage/LoginPage";
 import ForgotPasswordPage from "../pages/DefautPage/ForgotPasswordPage/ForgotPassword";
 import RegisterPage from "../pages/DefautPage/RegisterPage/RegisterPage";
 import MemberLayout from "../layouts/MemberLayout/MemberLayout";
-import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
 import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
@@ -23,7 +22,12 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
 import CreateBloodBagPage from "../pages/StaffPage/CreateBloodBagPage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
-import BloodStorageChart from "../pages/StaffPage/BloodStorageChart";
+import BloodStorageChart from "../pages/StaffPage/BloodStorageChart"
+
+import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
+import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
+
 
 const CustomRoute = () => {
   return (
@@ -41,6 +45,7 @@ const CustomRoute = () => {
         <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="/user" element={<MemberLayout />}>
           <Route path="donation-histories" element={<BloodDonateHistory />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
@@ -61,6 +66,7 @@ const CustomRoute = () => {
       {/* Admin Route */}
       <Route path="/admin/*" element={<AdminLayout />}>
         <Route path="overview" element={<BloodDonorReport />} />
+        <Route path="user-management" element={<UserManagement />} />
       </Route>
 
       {/* Error Route */}

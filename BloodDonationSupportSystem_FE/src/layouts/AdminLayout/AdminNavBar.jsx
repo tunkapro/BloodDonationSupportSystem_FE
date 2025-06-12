@@ -26,8 +26,8 @@ export default function Sidebar() {
             title: 'Danh mục',
             items: [
                 { text: 'Tổng quan',path: '/admin/overview', icon: <DashboardIcon /> },
-                { text: 'Quản Lí Người Dùng',path: '/user-management', icon: <AssignmentIcon /> },
-                { text: 'Quản Lí Kho Máu',path: '/blood-inventory', icon: <ManageSearchIcon /> },
+                { text: 'Quản Lí Người Dùng',path: '/admin/user-management', icon: <AssignmentIcon /> },
+                { text: 'Quản Lí Kho Máu',path: '/admin/blood-inventory', icon: <ManageSearchIcon /> },
                 { text: 'Quản Lí Trang',path: '/staff/overview', icon: <CalendarMonthIcon /> }
             ],
         }
