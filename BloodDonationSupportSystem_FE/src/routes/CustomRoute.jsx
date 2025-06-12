@@ -29,7 +29,7 @@ import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage
 import BloodStorageChart from "../pages/StaffPage/BloodStorageChart";
 import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
 
-import BloodStorageChart from "../pages/StaffPage/BloodStorageChart"
+
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
@@ -55,6 +55,7 @@ const CustomRoute = () => {
          <Route path="appointment-histories" element={<AppointmentHistory />} />
                     <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
                     <Route path="blood-donation-register" element={<BloodDonationRegisterContainer/>} />
+                     <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
