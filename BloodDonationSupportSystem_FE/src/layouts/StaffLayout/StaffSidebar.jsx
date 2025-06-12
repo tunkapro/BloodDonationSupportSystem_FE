@@ -26,11 +26,6 @@ const StaffSidebar = () => {
       title: "Danh mục",
       items: [
         {
-          label: "Tổng quan",
-          path: "/staff/overview",
-          icon: <DashboardIcon />,
-        },
-        {
           label: "Yêu cầu hiến máu",
           path: "/staff/request",
           icon: <ListAltIcon />,

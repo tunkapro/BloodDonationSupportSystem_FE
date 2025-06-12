@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   Box,
   FormControl,
@@ -7,7 +7,6 @@ import {
   Select,
   Typography,
   Paper,
-  Container,
 } from '@mui/material';
 
 const bloodTypeCompatibility = {
@@ -35,7 +34,6 @@ const BloodTypeSearch = () => {
         px: 2,
         display: 'flex',
         justifyContent: 'center',
-        // đặt minHeight để trang không bị quá nhỏ nếu muốn
         minHeight: '60vh',
         backgroundColor: '#fafafa',
       }}
@@ -43,8 +41,8 @@ const BloodTypeSearch = () => {
       <Box
         sx={{
           width: '100%',
-          maxWidth: 800, // Giới hạn chiều ngang max 800px, vừa phải với desktop
-          mx: 'auto', // canh giữa ngang
+          maxWidth: 800, 
+          mx: 'auto', 
         }}
       >
         <Typography
