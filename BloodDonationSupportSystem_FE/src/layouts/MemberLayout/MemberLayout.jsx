@@ -4,22 +4,13 @@ import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBarHeader from '../AppBarHeader';
 import { Toolbar } from '@mui/material';
+import { useAuth } from '../../context/authContext';
 
 export default function MemberLayout() {
 
-     const navigate = useNavigate();
-
-  //auth
-  useEffect(() => {
-    const checkLogin = async () => {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        navigate("/403");
-      }
-    };
-
-    checkLogin;
-  }, [navigate]);
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/"/>
+  if (user.role !== "ROLE_MEMBER") return <Navigate to="/404" />
 
     return (
         <>

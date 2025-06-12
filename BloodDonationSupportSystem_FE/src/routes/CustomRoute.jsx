@@ -22,6 +22,8 @@ import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedule
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
+
+import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
 import CreateBloodBagPage from "../pages/StaffPage/CreateBloodBagPage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
@@ -33,6 +35,7 @@ import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationReg
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
+
 
 
 
@@ -59,6 +62,13 @@ const CustomRoute = () => {
         </Route>
       </Route>
 
+
+            {/* Admin Route */}
+            {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
+                <Route path="overview" element={<BloodDonorReport/>}/>
+                <Route path="posts" element={<AdminPosts></AdminPosts>}/>
+            {/* </Route> */}
+
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
         <Route path="overview" element={<Overview />} />
@@ -72,6 +82,7 @@ const CustomRoute = () => {
           element={<BloodDonationScheduleComponent />}
         />
       </Route>
+
 
       {/* Admin Route */}
       <Route path="/admin/*" element={<AdminLayout />}>

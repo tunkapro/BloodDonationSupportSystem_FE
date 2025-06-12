@@ -1,26 +1,19 @@
-import { Box } from "@mui/material";
 
-import { Outlet, useNavigate } from "react-router-dom";
-import StaffSidebar from "./StaffSidebar";
-import { useEffect } from "react";
-import axios from "axios";
+import { Box } from '@mui/material';
+
+import { Outlet, useNavigate } from 'react-router-dom';
+import StaffSidebar from './StaffSidebar';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../context/authContext';
+
 
 const StaffLayout = () => {
-  const navigate = useNavigate();
-  // get permission by call permission from authService or ManagementAPI to get Role to access this page
-  useEffect(() => {
-    const permision = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/staff");
-        if (res.data.role !== "staff") {
-          navigate("/404");
-        }
-      } catch (err) {
-        navigate("/404");
-      }
-    };
-    permision();
-  });
+
+  const { user } = useAuth();
+    if (!user) return <Navigate to="/"/>
+    if (user.role !== "ROLE_STAFF") return <Navigate to="/404" />
+
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>

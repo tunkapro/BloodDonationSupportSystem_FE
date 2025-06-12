@@ -1,4 +1,9 @@
 {
+
+  "data": {
+    "value": true
+  },
+
   "account": [
     {
       "id": "1",
@@ -105,6 +110,7 @@
     "fullName": "Staff",
     "role": "staff"
   },
+
   "BloodDonateHistory": [
     {
       "donationHistoryId": 1,
