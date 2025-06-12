@@ -10,7 +10,6 @@ import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
 
 
 
-
 export default function Home() {
   return (
     <>
@@ -32,7 +31,6 @@ export default function Home() {
       </Box> */}
       <Box sx={{  padding: 2, display: 'flex', justifyContent: 'center' }}>
         <BloodDonationRegister/>
-       
       </Box>
 
       <Box sx={{ marginTop: 5 }}>

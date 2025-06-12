@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  { useState } from 'react';
 import { 
   Box, 
   Tabs, 
@@ -22,7 +22,6 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import axios from 'axios';
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -48,8 +47,6 @@ const DonationManagement = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [collectedAmount, setCollectedAmount] = useState('');
   const [amountError, setAmountError] = useState('');
-
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -132,21 +129,12 @@ const DonationManagement = () => {
     setCollectedAmount('');
     setAmountError('');
   };
-  const [waitingDonors, setWaitingDonors] = useState([])
-  useEffect(() => {
-    const getWaitingDonors = async () => {
-      try{
-        const res = await axios.get('http://localhost:3001/waitingDonors');
-        if(res.data){
-          setWaitingDonors(res.data);
-        }
-      }catch(err){
-        console.log("error")
-      }
 
-    }
-    getWaitingDonors();
-  }, [])
+  const waitingDonors = [
+    { id: 'D-1028', name: 'Emily Wilson', time: '10:15 AM', status: 'Pending' },
+    { id: 'D-1029', name: 'James Brown', time: '10:30 AM', status: 'Pending' },
+    { id: 'D-1030', name: 'Sophia Martinez', time: '10:45 AM', status: 'Pending' }
+  ];
 
   const inProgressDonors = [
     { id: 'D-1023', name: 'John Smith', time: '09:30 AM', status: 'Collecting' },

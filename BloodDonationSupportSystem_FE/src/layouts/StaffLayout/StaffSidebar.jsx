@@ -26,11 +26,6 @@ const StaffSidebar = () => {
       title: "Danh mục",
       items: [
         {
-          label: "Tổng quan",
-          path: "/staff/overview",
-          icon: <DashboardIcon />,
-        },
-        {
           label: "Yêu cầu hiến máu",
           path: "/staff/request",
           icon: <ListAltIcon />,
@@ -86,9 +81,14 @@ const StaffSidebar = () => {
   ];
 
   return (
-
-    <Box sx={{ width: '100%', bgcolor: '#1a51a3', color: 'white' }}>
-
+    <Box
+      sx={{
+        width: "100%",
+        bgcolor: "#1a51a3",
+        height: "100vh",
+        color: "white",
+      }}
+    >
       {menuItems.map((section, idx) => (
         <Box key={idx}>
           <List
@@ -102,8 +102,7 @@ const StaffSidebar = () => {
               <ListItemButton
                 key={i}
                 onClick={() => navigate(item.path)}
-               sx={{ color: 'white',height:'44px' ,'&:hover': { bgcolor: '#4949ff' }}}
-
+                sx={{ color: "white", "&:hover": { bgcolor: "#4949ff" } }}
               >
                 <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />

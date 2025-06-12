@@ -158,20 +158,6 @@ export default function BloodDonationSurveyForm() {
             )}
           />
         </QuestionBlock>
-
-        {/* Buttons */}
-        <Grid container spacing={2} mt={3}>
-          <Grid item xs={6}>
-            <Button variant="outlined" fullWidth>
-              Quay về
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Tiếp tục
-            </Button>
-          </Grid>
-        </Grid>
       </form>
     </Box>
   );

@@ -10,7 +10,6 @@ export default function BloodDonationRegister() {
     return (
         <Box>
             <Button onClick={handleBloodDonationRegis}>Đăng Ký Hiến Máu</Button>
-            
         </Box>
     );
 }
