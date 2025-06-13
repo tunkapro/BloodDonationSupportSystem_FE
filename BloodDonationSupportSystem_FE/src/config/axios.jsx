@@ -1,7 +1,7 @@
 // services/axios.js
 import axios from "axios";
 
-const baseUrl = "http://localhost:8090/api"
+const baseUrl = "http://localhost:8090"
 
 const config = {
   baseURL: baseUrl
@@ -12,8 +12,7 @@ const api = axios.create(config)
 api.defaults.baseURL = baseUrl;
 
 const handleBefore = (config) => {
-  const token = localStorage.getItem("token");
-  console.log(token);
+  const token = localStorage.getItem('token')?.replace('"', '');
   config.headers['Authorization'] = `Bearer ${token}`
   return config;
 }
