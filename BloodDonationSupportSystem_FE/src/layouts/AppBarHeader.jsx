@@ -1,44 +1,39 @@
-
-import { useState, useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useState, useEffect } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 
 
 
 function AppBarHeader() {
-  const { user, loadUser } = useAuth();
   //'Home', 'News', 'q-a', 'Contact'
   const pages = [
     {
       title: "Trang Chủ",
-      path: "/home",
-    },
-    {
+      path: "/home"
+    }, {
       title: "Tin Tức",
-      path: "/news",
+      path: "/news"
     },
     {
       title: "Hỏi - Đáp",
-      path: "/q-a",
-    },
-    {
+      path: "/q-a"
+    }, {
       title: "Liên Hệ",
-      path: "/contact",
-    },
+      path: "/contact"
+    }
   ];
   // Register User
   const manage = [
@@ -47,30 +42,37 @@ function AppBarHeader() {
   ]
   //'Profile', 'Account', 'Logout'
   const settings = [
-
-    { title: "Hồ Sơ", path: "user/profile" },
-    { title: "Lịch Sử Hiến Máu", path: "user/donation-histories" },
-  ];
+    {
+      title: "Hồ Sơ",
+      path: "user/profile"
+    },
+    {
+      title: "Logout",
+      path: "user/logout"
+    }
+  ]
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.
   //  if get Token is null will dont display permission of member like avata name
-
+  const [user, setUser] = useState({
+    fullName: "Trương Anh Tuấn",
+    role: "member"
+  });
   // handle Link
-  useEffect(() => {
-    loadUser();
-  }, []);
 
   const navigate = useNavigate();
 
   const handleClickSignin = () => {
-    navigate("/login");
+    navigate('/login')
   };
-
-  const handleLogout = async () => {
-    localStorage.removeItem("token");
-    await loadUser();
-    navigate("/");
-
+  const handleClickSignup = () => {
+    navigate('/register')
   };
+  const handleLogout = () => {
+    setUser(null);
+    navigate('/')
+  }
+
+
 
   //  handle UI
   const [selectedItem, setSelectedItem] = useState('Trang Chủ');
@@ -99,16 +101,14 @@ function AppBarHeader() {
           {/* logo */}
           <Box sx={{margin: "0px 50px 0px 10px"}}><img src="/logo/logo.png" alt="Logo" style={{ height: 64 }} /></Box>
           {/* display menu icon and menu small screen*/}
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'} }}>
-
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="black"
+              color='black'
             >
               <MenuIcon />
             </IconButton>
@@ -117,40 +117,31 @@ function AppBarHeader() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map(({ title, path }) => (
-
                 <MenuItem key={title} onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: 'center', color: "black" }} to={path} component={Link} >{title}</Typography>
                 </MenuItem>
               ))}
               {user && manage.map(({ title, path }) => (
-
                 <MenuItem key={title} onClick={handleCloseNavMenu}>
-                  <Typography
-                    sx={{ textAlign: "center", color: "black" }}
-                    to={path}
-                    component={Link}
-                  >
-                    {title}
-                  </Typography>
+                  <Typography sx={{ textAlign: 'center', color: "black" }} to={path} component={Link} >{title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           {/* display menu with large screen */}
-
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'left' }}>
             {pages.map(({ title, path }) => (
               <Button
@@ -164,12 +155,10 @@ function AppBarHeader() {
                   '&:hover': {
                     bgcolor: selectedItem === title ? '#1565c0' : '#f5f5f5'
                   }
-
                 }}
                 component={Link}
                 to={path}
               >
-
                 <Typography >{title}</Typography>
               </Button>
             ))}
@@ -189,12 +178,10 @@ function AppBarHeader() {
                 to={path}
               >
                 <Typography >{title}</Typography>
-
               </Button>
             ))}
           </Box>
           {/* display when login success */}
-
           {user && <Box sx={{ flexGrow: 0 }}>
             {/* display avatar */}
             <Tooltip title="Open settings">
@@ -236,22 +223,21 @@ function AppBarHeader() {
                 </MenuItem>
             </Menu>
           </Box>}
-
           {/* display box login or signup */}
-          {!user && (
+          {!user &&
             <Button
               color="black"
               variant="outlined"
               onClick={handleClickSignin}
               sx={{
-                "&:hover": {
-                  backgroundColor: "rgba(30, 191, 219, 0.1)",
-                },
+                '&:hover': {
+                  backgroundColor: 'rgba(30, 191, 219, 0.1)'
+                }
               }}
             >
-              <Typography sx={{ color: "black" }}>Đăng nhập</Typography>
+              <Typography sx={{ color: 'black' }}>Đăng nhập</Typography>
             </Button>
-          )}
+          }
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,13 +1,6 @@
 import { Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
 
 export default function ArticleList({ articles, types, onEdit, onDelete }) {
-
-
-
-
-
-
-
   return (
     <Table>
       <TableHead>
