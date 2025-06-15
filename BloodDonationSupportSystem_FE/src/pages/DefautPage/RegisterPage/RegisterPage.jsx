@@ -53,7 +53,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Box sx={{ padding : '50px' }}>
+      <Container maxWidth="sm">
       <Box
         sx={{ mt: 8, p: 4, boxShadow: 3, borderRadius: 2, bgcolor: "white" }}
       >
@@ -200,6 +201,7 @@ const RegisterPage = () => {
         </Alert>
       </Snackbar>
     </Container>
+    </Box>
   );
 };
 

@@ -188,12 +188,14 @@ function AppBarHeader() {
                 selected={selectedItem === title}
                 onClick={() => { setSelectedItem(title); navigate(path) }}
                 sx={{
-                  my: 2, color: selectedItem === title ? 'white' : 'black',
-                  borderBottom : '2px solid red',
-                  bgcolor: selectedItem === title ? '#1976d2' : 'transparent',
+                  my: 2, mx: 1, display: 'block', textAlign: 'center',
+                  color: selectedItem === title ? 'black' : 'black',
+                  borderBottom : '5px solid',
+                  borderColor : selectedItem === title ? 'red' : 'transparent',
                   '&:hover': {
-                    bgcolor: selectedItem === title ? '#1565c0' : '#f5f5f5'
+                    bgcolor:  '#f5f5f5'
                   }
+
                 }}
                 component={Link}
                 to={path}
