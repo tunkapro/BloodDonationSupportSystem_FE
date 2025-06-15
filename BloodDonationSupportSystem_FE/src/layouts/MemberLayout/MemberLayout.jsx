@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import AppBarHeader from '../AppBarHeader';
 import { Toolbar } from '@mui/material';
 import { useAuth } from '../../context/authContext';
+import { Navigate } from 'react-router-dom';
 
 export default function MemberLayout() {
 

@@ -127,7 +127,7 @@ const BloodInformation = () => {
                   image={item.image}
                   alt={item.title}
                   sx={{
-                    width: "40%",
+                    width: "30%",
                     height: "100%",
                     objectFit: "cover",
                     
@@ -158,11 +158,16 @@ const BloodInformation = () => {
                   Có thể cho:
                 </Typography>
                 <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ mb: 1, mt: 0.5 }}>
-                {item.canDonateTo.map((subItem ) => {
+                {item.canDonateTo.map((type, idx) => {
                   return (
-                    <Box sx={{border: '1px solid red', height: '40px', width: '40px', borderRadius:'50%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                      <Typography  sx={{color: 'red'}}>{subItem}</Typography>
-                    </Box>
+                    <Chip
+                      key={idx}
+                      label={type}
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      icon={<FavoriteIcon sx={{ fontSize: 14 }} />}
+                    />
                       
                   )
                   

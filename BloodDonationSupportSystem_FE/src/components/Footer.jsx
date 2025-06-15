@@ -6,7 +6,7 @@ export default function Footer() {
         <div>
             <Box bgcolor={"gray"} maxWidth="100%" height={50} display="flex" justifyContent="center" alignItems="center" color={"white"}>
                 <Typography variant="h6" component="div">
-                    Giọt máu vàng
+                    Trung Tâm Hiến Máu
                 </Typography>
             </Box>
             <div style={{ padding: 20, backgroundColor: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white' }}>
@@ -19,13 +19,10 @@ export default function Footer() {
                 <a href="">
 
                 </a>
-                <Typography variant="body1" component="div" sx={{ marginLeft: 2 }}>
-                    Giọt máu vàng là một tổ chức phi lợi nhuận, hoạt động vì cộng đồng, với sứ mệnh kết nối những người hiến máu và những người cần máu.
-                </Typography>
             </div>
             <Container maxWidth="lg" sx={{ padding: 2 }}>
                 <Typography variant="body1" color="textSecondary" align="center">
-                    © 2025 Giọt máu vàng. All rights reserved.
+                    © 2025 Trung Tâm Hiến Máu. All rights reserved.
                 </Typography>
             </Container>
         </div>

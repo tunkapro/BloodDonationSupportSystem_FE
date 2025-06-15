@@ -45,22 +45,13 @@ const BloodTypeSearch = () => {
           mx: 'auto', 
         }}
       >
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          sx={{ mb: 4, fontWeight: 'bold' }}
-        >
-          Blood Type Compatibility Checker
-        </Typography>
-
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h5" gutterBottom fontWeight="medium">
-            Blood Type Compatibility Search
+            Tìm Kiếm Loại Máu Tương Thích
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel id="blood-type-label">Select Blood Type</InputLabel>
+            <InputLabel id="blood-type-label">Chọn Loại Máu</InputLabel>
             <Select
               labelId="blood-type-label"
               id="blood-type-select"
@@ -79,7 +70,7 @@ const BloodTypeSearch = () => {
           {selectedBloodType && (
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" gutterBottom>
-                Compatible Blood Types for {selectedBloodType}:
+                Loại Máu Phù Hợp Cho {selectedBloodType}:
               </Typography>
               <Box
                 sx={{
