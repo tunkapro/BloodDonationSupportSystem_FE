@@ -70,8 +70,6 @@ export default function Home() {
                 <DonationTips></DonationTips>
             </div>
         </div>
-
-        
       </Box>
     </>
   );

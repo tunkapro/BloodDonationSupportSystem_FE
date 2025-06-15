@@ -37,13 +37,13 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     setLoginError("");
     try {
-      console.log("hehekakak");
+  
       const res = await login(data);
       
       if (res.data != null) {       
         await loadUser();
       }
-      console.log("hehe");
+
       navigate("/");
     } catch (error) {
       const message =
