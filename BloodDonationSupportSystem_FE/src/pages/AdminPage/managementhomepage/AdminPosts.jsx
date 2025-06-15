@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Typography, Button } from "@mui/material";
 import ArticleList from "./managementhomepagedetail/ArticleList";
 
-import useFetchData from "../../../../hook/customHook";
+// import useFetchData from "../../../../hook/customHook";
 import { getArticles } from "../../../api/articleService";
 
 export default function AdminPosts() {

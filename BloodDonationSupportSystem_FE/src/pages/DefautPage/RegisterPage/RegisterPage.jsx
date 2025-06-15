@@ -14,7 +14,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { registerAccount } from "../../../api/authService";
-import { stringifyLocalDate } from "../../../../utils/dayFormat";
+// import { stringifyLocalDate } from "../../../../utils/dayFormat";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ const RegisterPage = () => {
     try {
       const info = {
         ...data,
-        dateOfBirth: JSON.parse(stringifyLocalDate(data.dateOfBirth)),
+        // dateOfBirth: JSON.parse(stringifyLocalDate(data.dateOfBirth)),
         status: "HOẠT ĐỘNG",
       };
       const reponse = await registerAccount(info);
