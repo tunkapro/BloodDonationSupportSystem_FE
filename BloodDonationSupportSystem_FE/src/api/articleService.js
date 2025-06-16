@@ -1,7 +1,9 @@
-import axiosCustom from "../config/axios"
+import axios from "../config/axios"
 
-const API_URL = '/api/admin/articles'
+const API_URL = 'api/admin';
 
-export const getArticles = () => axiosCustom.get(API_URL).then(res => res.data);
-
-export const deleteArticle = (id) => axiosCustom.delete(`${API_URL}/${id}`).then(res => res.data)
+export const getAllArticles = () => axios.get(`${API_URL}/articles`);
+export const getArticleById = (id) => axios.get(`${API_URL}/${id}`);
+export const createArticle = (data) => axios.post(API_URL, data);
+export const updateArticle = (id, data) => axios.put(`${API_URL}/${id}`, data);
+export const deleteArticle = (id) => axios.delete(`${API_URL}/${id}`);
