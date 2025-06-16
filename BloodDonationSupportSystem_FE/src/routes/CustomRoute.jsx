@@ -20,10 +20,9 @@ import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedule
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import DashboardLayoutAccount from "../layouts/AdminLayout/AdminNavBar";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
-import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
-import CreateBloodBagPage from "../pages/StaffPage/CreateBloodBagPage";
+import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
-import BloodStorageChart from "../pages/StaffPage/BloodStorageChart";
+
 
 const CustomRoute = () => {
   return (
@@ -47,9 +46,7 @@ const CustomRoute = () => {
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
         <Route path="overview" element={<Overview />} />
-        <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
-        <Route path="storage/create" element={<CreateBloodBagPage />} />
-        <Route path="storage/dashboard" element={<BloodStorageChart/>}/>
+        <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
         <Route path="blood-management" element={<DonationManagement />} />
         <Route

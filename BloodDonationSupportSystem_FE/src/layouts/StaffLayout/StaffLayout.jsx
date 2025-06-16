@@ -23,14 +23,14 @@ const StaffLayout = () => {
   });
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex",height:"100vh" ,overflow: "hidden" }}>
       {/* Sidebar chiếm 20% */}
       <Box
         sx={{
           flex: 2,
           bgcolor: "background.paper",
           borderRight: "1px solid #ddd",
-          height: "100",
+          height: "100vh",
         }}
       >
         <StaffSidebar />
