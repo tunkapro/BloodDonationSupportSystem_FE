@@ -7,6 +7,7 @@ import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
 import ImportantNotes from '../../../components/ImportantNotes';
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
+import BloodCompatibility from "../../../components/BloodCompatibility";
 
 
 
@@ -32,7 +33,9 @@ export default function Home() {
       <Box sx={{  padding: 2, display: 'flex', justifyContent: 'center' }}>
         <BloodDonationRegister/>
       </Box>
-
+        <Box>
+          <BloodCompatibility/>
+        </Box>
       <Box sx={{ marginTop: 5 }}>
         <Box
           sx={{
@@ -42,9 +45,6 @@ export default function Home() {
           }}
         >
         </Box>
-
-        
-
         <Box
           component="section"
           sx={{
@@ -64,9 +64,12 @@ export default function Home() {
 
         <Blog></Blog>
 
-        <DonationTips></DonationTips>
-
-        
+        <div className="relative min-h-screen w-full bg-blue-400/40">
+            <div className="absolute inset-0 backdrop-blur-sm z-0" />
+            <div className="relative z-10 flex items-center justify-center min-h-screen w-full px-4">
+                <DonationTips></DonationTips>
+            </div>
+        </div>
       </Box>
     </>
   );

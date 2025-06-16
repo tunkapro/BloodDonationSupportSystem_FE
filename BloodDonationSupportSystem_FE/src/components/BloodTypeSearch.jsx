@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
   Box,
   FormControl,
@@ -7,7 +7,6 @@ import {
   Select,
   Typography,
   Paper,
-  Container,
 } from '@mui/material';
 
 const bloodTypeCompatibility = {
@@ -35,7 +34,6 @@ const BloodTypeSearch = () => {
         px: 2,
         display: 'flex',
         justifyContent: 'center',
-        // đặt minHeight để trang không bị quá nhỏ nếu muốn
         minHeight: '60vh',
         backgroundColor: '#fafafa',
       }}
@@ -43,26 +41,17 @@ const BloodTypeSearch = () => {
       <Box
         sx={{
           width: '100%',
-          maxWidth: 800, // Giới hạn chiều ngang max 800px, vừa phải với desktop
-          mx: 'auto', // canh giữa ngang
+          maxWidth: 800, 
+          mx: 'auto', 
         }}
       >
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          sx={{ mb: 4, fontWeight: 'bold' }}
-        >
-          Blood Type Compatibility Checker
-        </Typography>
-
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h5" gutterBottom fontWeight="medium">
-            Blood Type Compatibility Search
+            Tìm Kiếm Loại Máu Tương Thích
           </Typography>
 
           <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel id="blood-type-label">Select Blood Type</InputLabel>
+            <InputLabel id="blood-type-label">Chọn Loại Máu</InputLabel>
             <Select
               labelId="blood-type-label"
               id="blood-type-select"
@@ -81,7 +70,7 @@ const BloodTypeSearch = () => {
           {selectedBloodType && (
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" gutterBottom>
-                Compatible Blood Types for {selectedBloodType}:
+                Loại Máu Phù Hợp Cho {selectedBloodType}:
               </Typography>
               <Box
                 sx={{
