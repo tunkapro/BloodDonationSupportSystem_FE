@@ -25,9 +25,9 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 
 
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
-import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
 
-import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
+
+
 
 
 import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
