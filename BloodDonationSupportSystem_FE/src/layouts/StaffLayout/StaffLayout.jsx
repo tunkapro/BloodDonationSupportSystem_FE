@@ -6,7 +6,7 @@ import StaffSidebar from './StaffSidebar';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
-
+import { Navigate } from 'react-router-dom';
 
 const StaffLayout = () => {
 
