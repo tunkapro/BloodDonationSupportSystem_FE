@@ -1,110 +1,87 @@
-import { Dialog } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Box,
+  Select,
+  InputLabel,
+  FormControl,
+  MenuItem,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 
-export default function AriticleForm ({editArticle, types, open, onCancel, onSave}) {
-  const [formData, setFormData] = useState({
-    article_id: '',
-    title: '',
-    type_id: '',
-    status: '',
-    picture: ''
-  });
+export default function ArticleForm({
+  onSubmit,
+  initialValues = { title: "", content: "", articleType: "" },
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm();
 
-  useEffect(() => {
-    if (editArticle) {
-      setFormData(editArticle);
-    } else {
-      setFormData({
-        article_id: '',
-        title: '',
-        type_id: '',
-        status: '',
-        picture: ''
-      });
-    }
-
-
-  }, [editArticle])
-
-  const handleChange = (e) => {
-    const {name, value} = e.taget;
-    setFormData(pre => ({...pre, [name]: value}))
-  };
-
-  const handleSubmit = () => {
-    onSave(formData);
-  };
-
-
-
-
-
-
-
-  return (
-    
-          <Dialog open={open} onClose={onCancel} maxWidth="sm" fullWidth>
-      <DialogTitle>{article ? 'Chỉnh sửa bài viết' : 'Tạo bài viết mới'}</DialogTitle>
-
-      <DialogContent dividers>
-        <TextField
-          fullWidth
-          margin="normal"
-          name="title"
-          label="Tiêu đề"
-          value={formData.title}
-          onChange={handleChange}
-        />
-
-        <TextField
-          select
-          fullWidth
-          margin="normal"
-          name="type_id"
-          label="Loại bài viết"
-          value={formData.type_id}
-          onChange={handleChange}
-        >
-          {types.map(type => (
-            <MenuItem key={type.article_type_id} value={type.article_type_id}>
-              {type.name}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <TextField
-          fullWidth
-          margin="normal"
-          name="status"
-          label="Trạng thái"
-          value={formData.status}
-          onChange={handleChange}
-        />
-
-        <TextField
-          fullWidth
-          margin="normal"
-          name="picture"
-          label="URL ảnh"
-          value={formData.picture}
-          onChange={handleChange}
-        />
-      </DialogContent>
-
-      <DialogActions>
-        <Button onClick={onCancel}>Hủy</Button>
-        <Button onClick={handleSubmit} variant="contained" color="primary">
-          Lưu
-        </Button>
-      </DialogActions>
-    </Dialog>
-
-
-    
-
-
+  const articleTypes = ["Tin tức", "Thông báo", "Hướng dẫn", "Blog"];
+  const [selectedType, setSelectedType] = useState(
+    initialValues.articleType || ""
   );
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setSelectedType(value);
+    setValue("articleType", value); // Gán giá trị vào form
+  };
 
+  const handleFormSubmit = (data) => {
+    data.articleType = selectedType; // Thêm articleType vào dữ liệu
+    onSubmit(data);
+  };
 
+  useEffect(() => {
+    reset(initialValues);
+    setSelectedType(initialValues.articleType || "");
+  }, [initialValues, reset]);
+
+  return (
+    <Box component="form" onSubmit={handleSubmit(handleFormSubmit)} sx={{ mt: 2 }}>
+      <TextField
+        fullWidth
+        label="Tiêu đề"
+        {...register("title", { required: "Tiêu đề không được để trống" })}
+        error={!!errors.title}
+        helperText={errors.title?.message}
+        margin="normal"
+      />
+      <TextField
+        fullWidth
+        label="Nội dung"
+        multiline
+        rows={4}
+        {...register("content", { required: "Nội dung không được để trống" })}
+        error={!!errors.content}
+        helperText={errors.content?.message}
+        margin="normal"
+      />
+      <FormControl margin="normal" fullWidth required {...register("articleType", { required: "Yêu cầu chọn thể lo"})}>
+        <InputLabel id="select-label">Thể loại</InputLabel>
+        <Select
+          labelId="select-label"
+          value={articleTypes}
+          label="Thể loại"
+          onChange={handleChange}
+        >
+          {articleTypes.map((type) => (
+            <MenuItem key={type} value={type}>
+              {type}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+          
+      <Button  type="submit" variant="contained">
+        {initialValues?.id ? "Cập nhật" : "Thêm bài viết"}
+      </Button>
+    </Box>
+  );
 }
