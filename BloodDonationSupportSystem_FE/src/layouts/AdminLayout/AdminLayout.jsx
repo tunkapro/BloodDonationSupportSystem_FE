@@ -10,9 +10,9 @@ import { useAuth } from '../../context/authContext';
 
 export default function AdminLayout() {
 
-    const { user } = useAuth();
-    if (!user) return <Navigate to="/"/>
-    if (user.role !== "ROLE_ADMIN") return <Navigate to="/404" />
+    // const { user } = useAuth();
+    // if (!user) return <Navigate to="/"/>
+    // if (user.role !== "ROLE_ADMIN") return <Navigate to="/404" />
 
 
     return (

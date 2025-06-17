@@ -8,11 +8,13 @@ import { useAuth } from "../../context/authContext";
 import { Navigate } from "react-router-dom";
 
 const StaffLayout = () => {
-  // const { user } = useAuth();
-  // if (!user) return <Navigate to="/" />;
-  // console.log(user);
-  // if (user.role !== "ROLE_STAFF") return <Navigate to="/404" />;
-  // console.log(user.role);
+  const { user } = useAuth();
+  setTimeout(() => {
+    if (!user) return <Navigate to="/" />;
+    console.log(user);
+    if (user.role !== "ROLE_STAFF") return <Navigate to="/404" />;
+    console.log(user.role);
+  },[500]);
   return (
     <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
       {/* Sidebar chiếm 20% */}
