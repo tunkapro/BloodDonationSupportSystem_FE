@@ -3,9 +3,9 @@ import axios from "../config/axios";
 
 export const login = async (data) => {
   console.log(data);
-    const res = await axios.post("/auth/login", data);
-    localStorage.setItem("token", res.data.data.token);
-    return res.data;
+  const res = await axios.post("/auth/login", data);
+  localStorage.setItem("token", res.data.data.token);
+  return res.data;
 };
 
 export const registerAccount = async (infor) => {
@@ -20,3 +20,5 @@ export const registerAccount = async (infor) => {
 export const logout = () => {
   localStorage.removeItem("token");
 };
+
+

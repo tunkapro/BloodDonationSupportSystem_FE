@@ -28,6 +28,7 @@ const StaffLayout = () => {
         >
           <Outlet />
         </Box>
+
       </Box>
     </RequireAuth>
   );

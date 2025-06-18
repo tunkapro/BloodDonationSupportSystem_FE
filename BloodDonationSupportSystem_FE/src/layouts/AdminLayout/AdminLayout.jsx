@@ -1,7 +1,7 @@
+
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import AdminNavBar from "./AdminNavBar";
-
 import RequireAuth from "../../components/RequireAuth";
 
 export default function AdminLayout() {

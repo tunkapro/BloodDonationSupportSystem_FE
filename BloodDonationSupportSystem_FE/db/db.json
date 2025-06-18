@@ -328,5 +328,81 @@
       },
       "id": "7d1f"
     }
+  ],
+  "blood_inventory": [
+    {
+      "volume_ml": 12750,
+      "id": "A+"
+    },
+    {
+      "volume_ml": 5700,
+      "id": "A-"
+    },
+    {
+      "id": "B+",
+      "volume_ml": 2000
+    },
+    {
+      "id": "B-",
+      "volume_ml": 3000
+    },
+    {
+      "id": "AB+",
+      "volume_ml": 4000
+    },
+    {
+      "id": "AB-",
+      "volume_ml": 3000
+    },
+    {
+      "volume_ml": 2350,
+      "id": "O+"
+    },
+    {
+      "id": "O-",
+      "volume_ml": 2000
+    }
+  ],
+  "donation_process": [
+    {
+      "registration_id": "1",
+      "created_at": "2025-04-06",
+      "volume": "350",
+      "is_passed": "CHƯA KIỂM TRA",
+      "blood_type_id": "A+",
+      "id": "rd1"
+    },
+    {
+      "registration_id": "2",
+      "created_at": "2025-04-06",
+      "volume": "450",
+      "is_passed": "ĐÃ ĐẠT",
+      "blood_type_id": "A+",
+      "id": "rd2"
+    },
+    {
+      "registration_id": "3",
+      "created_at": "2025-04-06",
+      "volume": "450",
+      "is_passed": "CHƯA KIỂM TRA",
+      "blood_type_id": "A+",
+      "id": "rd3"
+    },
+    {
+      "registration_id": "4",
+      "created_at": "2025-04-06",
+      "volume": "450",
+      "is_passed": "CHƯA KIỂM TRA",
+      "blood_type_id": "A+",
+      "id": "rd4"
+    },
+    {
+      "registration_id": "5",
+      "created_at": "2025-04-06",
+      "volume": "450",
+      "is_passed": "ĐÃ ĐẠT",
+      "blood_type_id": "A+",
+      "id": "rd5"
+    }
   ]
 }

@@ -17,7 +17,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import LogoutIcon from "@mui/icons-material/Logout";
 import EmergencyIcon from "@mui/icons-material/Emergency";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
+import ChecklistIcon from '@mui/icons-material/Checklist';
 const StaffSidebar = () => {
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const StaffSidebar = () => {
         {
           label: "Quản lí hiến máu",
           path: "/staff/blood-management",
-          icon: <ManageSearchIcon />,
+          icon: <ChecklistIcon />,
         },
         {
           label: "Lịch Hiến Máu",
@@ -42,7 +42,7 @@ const StaffSidebar = () => {
         },
         {
           label: "Kho máu",
-          path: "/staff/storage/dashboard",
+          path: "/staff/storage/blood-donation-list",
           icon: <AccountBalanceIcon />,
         },
         {
@@ -50,20 +50,10 @@ const StaffSidebar = () => {
           path: "/staff/find-by-distance",
           icon: <RoomIcon />,
         },
-      ],
-    },
-    {
-      title: "Báo cáo",
-      items: [
         {
           label: "Trường hợp khẩn cấp",
           path: "/staff/emergency",
           icon: <EmergencyIcon />,
-        },
-        {
-          label: "Lịch sử quyên góp",
-          path: "/staff/history",
-          icon: <ManageHistoryIcon />,
         },
       ],
     },

@@ -23,12 +23,13 @@ import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSche
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 
-import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
-import BloodStoragePage from "../pages/StaffPage/BloodStoragePage";
-import CreateBloodBagPage from "../pages/StaffPage/CreateBloodBagPage";
-import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 
-import BloodStorageChart from "../pages/StaffPage/BloodStorageChart";
+import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
+
+
+
+
+
 import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
 
 
@@ -36,6 +37,8 @@ import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationReg
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
 
+import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
+import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 
 
 
@@ -72,9 +75,7 @@ const CustomRoute = () => {
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
         <Route path="overview" element={<Overview />} />
-        <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
-        <Route path="storage/create" element={<CreateBloodBagPage />} />
-        <Route path="storage/dashboard" element={<BloodStorageChart/>}/>
+        <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
         <Route path="blood-management" element={<DonationManagement />} />
         <Route
