@@ -19,6 +19,7 @@ import { login } from "../../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/authContext";
 
+import axios from "axios";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -37,10 +38,9 @@ export default function LoginPage() {
   const onSubmit = async (data) => {
     setLoginError("");
     try {
-  
       const res = await login(data);
-      
-      if (res.data != null) {       
+
+      if (res.data != null) {
         await loadUser();
       }
 
@@ -54,12 +54,32 @@ export default function LoginPage() {
       setLoginError(message);
     }
   };
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8090/api/auth/google/callback",
+        { credential: credentialResponse.credential },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            'Accept': "application/json",
+          },
+        }
+      );
+      console.log("Debug này xem Backend response:", response.data);
+      if (response.data.data) {
+        const token = response.data.data;
+        console.log("JWT Token received:", token);
+        localStorage.setItem("token", response.data.data);
 
-  const handleGoogleLogin = (credentialResponse) => {
-    console.log("Google Credential:", credentialResponse);
-    // Call Google login API here
+        await loadUser();
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Google login failed:", error);
+      setLoginError("Đăng nhập Google thất bại");
+    }
   };
-
   return (
     <Container
       component=""
@@ -166,11 +186,30 @@ export default function LoginPage() {
 
           <Divider sx={{ my: 3 }}>Hoặc tiếp tục với</Divider>
 
-          <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={() => console.log("Google login error")}
-          />
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              mt: 2,
+            }}
+          >
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={(error) => {
+                console.error("Google login error:", error);
+                setLoginError("Đăng nhập Google thất bại");
+              }}
+              useOneTap
+              flow="implicit"
+            />
+          </Box>
 
+          {loginError && (
+            <Typography color="error" align="center" sx={{ mt: 2 }}>
+              {loginError}
+            </Typography>
+          )}
           <Grid container justifyContent="center" sx={{ mt: 3 }}>
             <Grid>
               <Typography variant="body2">

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { DataGrid } from "@mui/x-data-grid";
 import {
   Box,
   TextField,
@@ -12,6 +10,9 @@ import {
   Typography,
   FormHelperText,
 } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const bloodTypes = [
   { value: "A+", label: "A+" },
@@ -24,48 +25,60 @@ const bloodTypes = [
   { value: "O-", label: "O-" },
 ];
 
-const defaultFilters = {
-  distance: 10,
-  bloodTypes: [],
-};
+const DistanceSearchWithDataGrid = () => {
 
-const FindByDistanceCreate = () => {
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters, setFilters] = useState({ distance: 10, bloodTypes: [] });
   const [results, setResults] = useState([]);
-  const [errors, setErrors] = useState({ bloodTypes: "" });
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (newFilters) => {
-    setFilters(newFilters);
-  };
+  const [customError, setCustomError] = useState("");
+const mockData = [
+      {
+        id: 1,
+        fullname: "Nguyễn Văn A",
+        bloodType: "A+",
+        lastDonation: "2024-12-01",
+        phoneNumber: "0912345678",
+      },
+      {
+        id: 2,
+        fullname: "Trần Thị B",
+        bloodType: "O-",
+        lastDonation: "2025-02-15",
+        phoneNumber: "0987654321",
+      },
+      {
+        id: 3,
+        fullname: "Lê Văn C",
+        bloodType: "B+",
+        lastDonation: "2025-05-10",
+        phoneNumber: "0901122334",
+      },
+    ];
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const handleBloodTypeChange = (value) => {
-    const updatedTypes = filters.bloodTypes.includes(value)
-      ? filters.bloodTypes.filter((type) => type !== value)
+    const updated = filters.bloodTypes.includes(value)
+      ? filters.bloodTypes.filter((t) => t !== value)
       : [...filters.bloodTypes, value];
-    setFilters({ ...filters, bloodTypes: updatedTypes });
+    setFilters({ ...filters, bloodTypes: updated });
   };
 
-  const handleSearch = async () => {
-    let hasError = false;
-    const newErrors = { bloodTypes: "" };
+  const onSubmit = async () => {
+    setCustomError("");
 
     if (filters.bloodTypes.length === 0) {
-      newErrors.bloodTypes = "Vui lòng chọn ít nhất một nhóm máu.";
-      hasError = true;
+      setCustomError("Vui lòng chọn ít nhất một nhóm máu.");
+      return;
     }
-
-    setErrors(newErrors);
-    if (hasError) return;
 
     setLoading(true);
     try {
-      const response = await axios.post("/api/donors/search", {
-        distance: filters.distance,
-        bloodTypes: filters.bloodTypes,
-      });
+      const response = await axios.post("/staff/donors-search", filters);
 
-      // Gán id tự động cho DataGrid
+    
       const dataWithIds = response.data.map((item, index) => ({
         id: index + 1,
         ...item,
@@ -73,7 +86,6 @@ const FindByDistanceCreate = () => {
 
       setResults(dataWithIds);
     } catch (error) {
-      console.error("Lỗi khi gọi API:", error);
       alert("Không thể tìm kiếm. Vui lòng thử lại sau.");
     } finally {
       setLoading(false);
@@ -82,20 +94,23 @@ const FindByDistanceCreate = () => {
 
   const columns = [
     { field: "fullname", headerName: "Họ tên", flex: 1 },
-    { field: "lastDonation", headerName: "Lần gần nhất", flex: 1 },
     { field: "bloodType", headerName: "Nhóm máu", flex: 1 },
+    { field: "lastDonation", headerName: "Lần hiến gần nhất", flex: 1 },
     { field: "phoneNumber", headerName: "Số điện thoại", flex: 1 },
   ];
 
   return (
-    <Box sx={{ p: 2, mx: "auto" }}>
-      <Box sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}>
+    <Box sx={{ maxWidth: 900, mx: "auto", p: 3 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        sx={{ border: "1px solid #ccc", borderRadius: 2, p: 2 }}
+      >
         <Typography gutterBottom>Khoảng cách tìm kiếm (km)</Typography>
         <Slider
           value={filters.distance}
-          onChange={(e, newVal) =>
-            handleChange({ ...filters, distance: newVal })
-          }
+          onChange={(e, val) => setFilters({ ...filters, distance: val })}
           min={1}
           max={50}
           step={1}
@@ -124,36 +139,36 @@ const FindByDistanceCreate = () => {
             />
           ))}
         </FormGroup>
-        {errors.bloodTypes && (
-          <FormHelperText sx={{ color: "red", ml: 2 }}>
-            {errors.bloodTypes}
+        {customError && (
+          <FormHelperText sx={{ color: "red", ml: 1.5 }}>
+            {customError}
           </FormHelperText>
         )}
 
-        <Box sx={{ mt: 3, textAlign: "center" }}>
-          <Button
-            variant="contained"
-            onClick={handleSearch}
-            disabled={loading}
-            sx={{ minWidth: 300 }}
-          >
-            {loading ? "Đang tìm..." : "Tìm kiếm"}
-          </Button>
-        </Box>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3 }}
+          disabled={loading}
+        >
+          {loading ? "Đang tìm..." : "Tìm kiếm"}
+        </Button>
       </Box>
 
+     
       {results.length > 0 && (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 4 }}>
           <Typography variant="h6" gutterBottom>
-            Kết quả tìm thấy: {results.length} người
+            Kết quả: {results.length} người
           </Typography>
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid
-              columns={columns}
               rows={results}
+              columns={columns}
               pageSizeOptions={[5]}
               initialState={{
-                pagination: { paginationModel: { pageSize: 8 } },
+                pagination: { paginationModel: { pageSize: 5 } },
               }}
             />
           </div>
@@ -163,4 +178,4 @@ const FindByDistanceCreate = () => {
   );
 };
 
-export default FindByDistanceCreate;
+export default DistanceSearchWithDataGrid;
