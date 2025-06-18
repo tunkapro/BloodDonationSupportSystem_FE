@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import RoomIcon from "@mui/icons-material/Room";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -27,7 +26,7 @@ const StaffSidebar = () => {
       items: [
         {
           label: "Yêu cầu hiến máu",
-          path: "/staff/request",
+          path: "/staff/donation-request",
           icon: <ListAltIcon />,
         },
         {

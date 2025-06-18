@@ -30,10 +30,9 @@ const BloodTypeSearch = () => {
   return (
     <Box
       sx={{
-        py: 4,
-        px: 2,
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         minHeight: '60vh',
         backgroundColor: '#fafafa',
       }}

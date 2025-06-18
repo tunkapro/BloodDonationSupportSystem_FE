@@ -9,9 +9,9 @@ import { Navigate } from 'react-router-dom';
 
 export default function MemberLayout() {
 
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/"/>
-  if (user.role !== "ROLE_MEMBER") return <Navigate to="/404" />
+//   const { user } = useAuth();
+//   if (!user) return <Navigate to="/"/>
+//   if (user.role !== "ROLE_MEMBER") return <Navigate to="/404" />
 
     return (
         <>

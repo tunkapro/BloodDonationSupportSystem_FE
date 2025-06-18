@@ -75,7 +75,7 @@ function AppBarHeader() {
 
   //  handle UI
   const location = useLocation();
-  const allItems = [...pages, ...(user ? manage : [])];
+  const allItems = [...pages, ...(true ? manage : [])];
   const selectedItemCurrent = allItems.find((item) => location.pathname.startsWith(item.path))?.title ?? 'Trang Chủ';
   const [selectedItem, setSelectedItem] = useState(selectedItemCurrent);
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -182,7 +182,7 @@ function AppBarHeader() {
                 <Typography variant="h6" sx={{ textTransform: "none" }}>{title}</Typography>
               </Button>
             ))}
-            {user && manage.map(({ title, path }) => (
+            {true && manage.map(({ title, path }) => (
               <Button
                 key={title}
                 selected={selectedItem === title}

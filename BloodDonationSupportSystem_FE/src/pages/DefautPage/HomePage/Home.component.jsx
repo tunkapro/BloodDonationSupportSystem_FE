@@ -5,9 +5,8 @@ import BloodInformation from "./HomePageDetails/BloodInformation";
 import Blog from "./HomePageDetails/Blog";
 import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
-import ImportantNotes from '../../../components/ImportantNotes';
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
-import BloodCompatibility from "../../../components/BloodCompatibility";
+import BloodTypeSearch from "../../../components/BloodTypeSearch";
 
 
 
@@ -34,7 +33,7 @@ export default function Home() {
         <BloodDonationRegister/>
       </Box>
         <Box>
-          <BloodCompatibility/>
+          <BloodTypeSearch/>
         </Box>
       <Box sx={{ marginTop: 5 }}>
         <Box
