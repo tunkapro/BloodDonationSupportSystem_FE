@@ -13,7 +13,7 @@ export default function ErrorPage() {
                 margin: 'auto'
             }}>
             </Box>
-            <Typography variant="h2" color="error">404 Page Not Found</Typography>
+            <Typography variant="h2" color="error">404 Not Found</Typography>
         </Container>
     );
 }
