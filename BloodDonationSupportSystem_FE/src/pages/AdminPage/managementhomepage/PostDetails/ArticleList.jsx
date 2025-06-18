@@ -20,8 +20,8 @@ export default function ArticleList({ onEdit, onDelete }) {
       title: "Bài viết đầu tiên",
       content: "Nội dung tóm tắt của bài viết đầu tiên.",
       status: "CHỜ DUYỆT",
-      imageUrl: "https://via.placeholder.com/100",
-      articleType: "Tin tức",
+      imageUrl: "",
+      articleType: "TIN TỨC",
     },
     {
       id: "2",
@@ -29,7 +29,7 @@ export default function ArticleList({ onEdit, onDelete }) {
       content: "Thông tin các đợt hiến máu trong tháng 7.",
       status: "ĐÃ DUYỆT",
       imageUrl: "https://via.placeholder.com/100",
-      articleType: "Thông báo",
+      articleType: "TIN TỨC",
     },
   ];
 

@@ -13,7 +13,6 @@ api.defaults.baseURL = baseUrl;
 
 const handleBefore = (config) => {
   const token = localStorage.getItem("token");
-  console.log(token);
   config.headers['Authorization'] = `Bearer ${token}`
   return config;
 }
