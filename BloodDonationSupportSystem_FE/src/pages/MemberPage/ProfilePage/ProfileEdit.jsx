@@ -20,8 +20,8 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
   };
 
   return (
-    <Paper sx={{ width: '100%', height: 'auto', m : 'auto', p: 5 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2}}>
+    <Paper sx={{ width: '100%', height: 'auto', m: 'auto', p: 5 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
         <strong>Chỉnh sửa thông tin tài khoản</strong>
       </Box>
       <Stack spacing={2}>
@@ -58,11 +58,10 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
         </TextField>
         <TextField
           fullWidth
-          label="Ngày sinh"
-          name="dateOfBirth"
           type="date"
-          shrink="true"
-          value={formData.dateOfBirth || ''}
+          label="Ngày sinh"
+          name="dayOfBirth"
+          value={formData.dayOfBirth || ''}
           onChange={handleChange}
         />
         <TextField

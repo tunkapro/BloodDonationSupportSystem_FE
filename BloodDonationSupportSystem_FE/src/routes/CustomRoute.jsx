@@ -56,21 +56,22 @@ const CustomRoute = () => {
         <Route path="reset-password" element={<ForgotPasswordPage />} />
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
-
+        <Route path="profile" element={<ProfilePage />} />
+        
         <Route path="/user" element={<MemberLayout />}>
-         <Route path="appointment-histories" element={<AppointmentHistory />} />
-                    <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-                    <Route path="blood-donation-register" element={<BloodDonationRegisterContainer/>} />
-                     <Route path="profile" element={<ProfilePage />} />
+          <Route path="appointment-histories" element={<AppointmentHistory />} />
+          <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
+          <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
 
-            {/* Admin Route */}
-            {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
-                <Route path="overview" element={<BloodDonorReport/>}/>
-                <Route path="posts" element={<AdminPosts></AdminPosts>}/>
-            {/* </Route> */}
+      {/* Admin Route */}
+      {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
+      <Route path="overview" element={<BloodDonorReport />} />
+      <Route path="posts" element={<AdminPosts></AdminPosts>} />
+      {/* </Route> */}
 
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
