@@ -17,10 +17,14 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import LogoutIcon from "@mui/icons-material/Logout";
 import EmergencyIcon from "@mui/icons-material/Emergency";
-import ChecklistIcon from '@mui/icons-material/Checklist';
+import ChecklistIcon from "@mui/icons-material/Checklist";
+
 const StaffSidebar = () => {
   const navigate = useNavigate();
-
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   const menuItems = [
     {
       title: "Danh mục",
@@ -65,8 +69,7 @@ const StaffSidebar = () => {
           path: "/staff/profile",
           icon: <ManageAccountsIcon />,
         },
-        { label: "Đăng xuất", path: "/logout", icon: <LogoutIcon /> },
-      ],
+      ]
     },
   ];
 
@@ -102,6 +105,17 @@ const StaffSidebar = () => {
           {idx < menuItems.length - 1 && <Divider sx={{ bgcolor: "#ccc" }} />}
         </Box>
       ))}
+      <List>
+        <ListItemButton
+          onClick={() => handleLogout()}
+          sx={{ color: "white", "&:hover": { bgcolor: "#4949ff" } }}
+        >
+          <ListItemIcon sx={{ color: "white" }}>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary="Đăng Xuất" />
+        </ListItemButton>
+      </List>
     </Box>
   );
 };
