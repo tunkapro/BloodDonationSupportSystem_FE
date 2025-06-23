@@ -11,7 +11,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { searchDonorsApi } from "../../../api/staffService";
 import { useForm } from "react-hook-form";
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 const bloodTypes = [
   { value: "A+", label: "A+" },
   { value: "A-", label: "A-" },
@@ -61,6 +61,7 @@ const DistanceSearchWithDataGrid = () => {
 
       const dataWithIds = response.data.data.map((item, index) => ({
         id: index + 1,
+        stt: index + 1,
         ...item,
       }));
 
@@ -74,6 +75,14 @@ const DistanceSearchWithDataGrid = () => {
 
   const columns = [
     {
+      field: "stt",
+      headerName: "STT",
+      width: 80,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+    },  
+    {
       field: "donorName",
       headerName: "Họ tên",
       flex: 1,
@@ -81,20 +90,26 @@ const DistanceSearchWithDataGrid = () => {
       disableColumnMenu: true,
     },
     { field: "bloodType", headerName: "Nhóm máu", flex: 1,   sortable:false,
-    disableColumnMenu: true, },
+    disableColumnMenu: true,  },
     { field: "lastDonationDate", headerName: "Lần hiến gần nhất", flex: 1,   sortable:false,
-    disableColumnMenu: true, },
+    disableColumnMenu: true, renderCell: (params) => {
+      const getDate = params.value;
+      const date = new Date(getDate);
+      return date.toLocaleDateString("vi-VN");
+    }},
     { field: "phoneNumber", headerName: "Số điện thoại", flex: 1 ,   sortable:false,
     disableColumnMenu: true,},
   ];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: "auto", background: "white" }}>
+    <Box sx={{ maxWidth: 1000, mx: "auto", background: "white" }}>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{ border: "1px solid #ccc", borderRadius: 2, p: 3 }}
       >
+        <Typography variant="h6" sx={{mb:1}}><LocationOnIcon sx={{color: "#4949ff"}}/>Tìm kiếm người  hiến máu theo khoảng cách</Typography>
+     
         <Typography gutterBottom>Khoảng cách tìm kiếm (km)</Typography>
         <Slider
           value={filters.distance}
@@ -109,6 +124,8 @@ const DistanceSearchWithDataGrid = () => {
             { value: 50, label: "50km" },
           ]}
         />
+
+      
 
         <Typography gutterBottom sx={{ mt: 1 }}>
           Nhóm máu cần tìm kiếm
@@ -128,20 +145,20 @@ const DistanceSearchWithDataGrid = () => {
               value={type.value}
               sx={{
                 m: 0.5,
-                width: 100,
+                width: 115,
                 height: 36,
                 color: "black",
-
+                flex:1,
                 backgroundColor: filters.bloodTypes.includes(type.value)
                   ? "#ccc"
                   : "white",
                 "&.Mui-selected": {
                   color: "white",
-                  backgroundColor: "#1976d3",
+                  backgroundColor: "#fa0001",
                 },
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#1976d3",
+                  backgroundColor: "#fa0001",
                 },
               }}
             >
@@ -171,13 +188,15 @@ const DistanceSearchWithDataGrid = () => {
 
       {results.length > 0 && (
         <Box sx={{ mt: 1 }}>
-          <div style={{ height: 630, width: "100%" }}>
+          <div style={{ height: 600, width: "100%" }}>
             <DataGrid
+            sx={{'.MuiDataGrid-columnHeader':{background:"#1976d3",color:"white"}}}
               rows={results}
               columns={columns}
               localeText={vietnameseText}
+              pagination
               initialState={{
-                pagination: { paginationModel: { page: 0, pageSize: 10 } },
+                pagination: { paginationModel: { page: 0, pageSize: 9 } },
               }}
             />
           </div>
