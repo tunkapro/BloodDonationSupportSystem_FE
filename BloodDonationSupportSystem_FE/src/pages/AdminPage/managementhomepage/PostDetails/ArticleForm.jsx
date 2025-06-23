@@ -28,18 +28,18 @@ export default function ArticleForm({
   const statusOptions = ["CHỜ DUYỆT", "ĐÃ DUYỆT", "BỊ TỪ CHỐI"];
 
   const [selectedType, setSelectedType] = useState(
+
     initialValues.articleType
   );
 
   const [selectedStatus, setSelectedStatus] = useState(
     initialValues.status
+
   );
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [imagePreview, setImagePreview] = useState(
-    initialValues
-  );
+  const [imagePreview, setImagePreview] = useState( initialValues );
 
     // Convert File → base64
   const toBase64 = (file) =>
@@ -73,17 +73,21 @@ export default function ArticleForm({
   //   setImagePreview(initialValues?.imageUrl || null);
   // }, [initialValues, reset]);
 
+
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmitForm)}
       noValidate
+
       sx={{ mt: 2 }}
     >
       <TextField
         fullWidth
         label="Tiêu đề"
+
         defaultValue={title}
+
         {...register("title", { required: "Tiêu đề không được để trống" })}
         error={!!errors.title}
         helperText={errors.title?.message}
@@ -193,6 +197,7 @@ export default function ArticleForm({
       <Button sx={{ marginTop: "20px" }} type="submit" variant="contained">
         {initialValues?.id ? "Cập nhật" : "Thêm bài viết"}
       </Button>
+
 
 
 

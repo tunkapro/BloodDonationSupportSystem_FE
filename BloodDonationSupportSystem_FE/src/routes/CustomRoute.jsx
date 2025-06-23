@@ -45,7 +45,6 @@ const CustomRoute = () => {
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="profile" element={<ProfilePage />} />
-
         <Route path="/user" element={<MemberLayout />}>
           <Route path="appointment-histories" element={<AppointmentHistory />} />
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
@@ -53,6 +52,7 @@ const CustomRoute = () => {
           <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Route>
+
 
 
 

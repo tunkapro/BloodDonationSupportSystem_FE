@@ -15,7 +15,10 @@ import ArticleList from "./PostDetails/ArticleList";
 import {
   getAllArticles,
   createArticle,
+
   createArticleV2,
+
+
   updateArticle,
   deleteArticle,
 } from "../../../api/articleService";
@@ -25,7 +28,10 @@ export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [openForm, setOpenForm] = useState(false);
+
   const { user } = useAuth();
+
+
   const loadArticles = async () => {
     const res = await getAllArticles();
     console.log(res.data);
@@ -56,9 +62,11 @@ export default function ArticlePage() {
     loadArticles();
   };
 
+
   const handleSubmit = async (data, image, fileName) => {
     data.imageUrl = image;
     data.fileName = fileName;
+
     console.log(data);
     const cleanData = {
       title: data.title,
@@ -110,7 +118,9 @@ export default function ArticlePage() {
           <ArticleForm
             onSubmit={handleSubmit}
             initialValues={
+
               selectedArticle 
+
             }
           ></ArticleForm>
         </DialogContent>

@@ -308,11 +308,22 @@
     },
     {
       "id": "4",
-      "name": "Phạm Thị D",
+      "name": "Phạm Thị D4",
       "phoneNumber": "0978123456",
       "gender": "Nữ",
-      "role": "staff",
+      "role": "member",
       "address": "1334/28/28 Đường 30/4 Phường 12 Thành phố Vũng Tàu",
+      "bloodType": "",
+      "status": "HOẠT ĐỘNG"
+    },
+    {
+      "id": "5",
+      "name": "Phạm Thị D5",
+      "phoneNumber": "0978123456",
+      "gender": "Nữ",
+      "role": "member",
+      "address": "133 Đường Lê Văn Việt, Thành phố Thủ Đức",
+      "bloodType": "",
       "status": "HOẠT ĐỘNG"
     }
   ],
@@ -419,5 +430,46 @@
       "bloodType": "A+",
       "statusDonation": "Khẩn Cấp"
     }
+  "donation_registration":[
+    {
+     "id":"1",
+     "registration_date":"2025-04-06",
+     "status":"Đã hiến",
+     "start_desired_time":"",
+     "end_desired_time":"",
+     "donor_id":"5",
+     "staff_id":"",
+     "blood_donation_schedule_id":""
+    },
+    {
+      "id":"2",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"2",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     },
+     {
+      "id":"3",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"3",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     },
+     {
+      "id":"4",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"4",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     }
   ]
 }
