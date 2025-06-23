@@ -6,6 +6,7 @@ import {
   ListItemText,
   Divider,
   Box,
+  Typography,
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,7 @@ import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import LogoutIcon from "@mui/icons-material/Logout";
 import EmergencyIcon from "@mui/icons-material/Emergency";
 import ChecklistIcon from "@mui/icons-material/Checklist";
-
+import { useLocation } from "react-router-dom";
 const StaffSidebar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -82,6 +83,22 @@ const StaffSidebar = () => {
         color: "white",
       }}
     >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center', 
+          gap: 1,
+          p:1
+        }}
+      >
+        <Box
+          component="img"
+          src="/logo/logo.png"
+          alt="Logo"
+          sx={{ width: 24, height: 24 }}
+        />
+        <Typography variant="h6">Trung tâm hiến máu</Typography>
+      </Box>
       {menuItems.map((section, idx) => (
         <Box key={idx}>
           <List
@@ -95,7 +112,11 @@ const StaffSidebar = () => {
               <ListItemButton
                 key={i}
                 onClick={() => navigate(item.path)}
-                sx={{ color: "white", "&:hover": { bgcolor: "#4949ff" } }}
+                selected={location.pathname === item.path}
+                sx={{ color: "white", "&:hover": { bgcolor: "#4949ff" },"&.Mui-selected": {
+                  color: "white",
+                  backgroundColor: "#4949ff",
+                } }}
               >
                 <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />
@@ -105,7 +126,7 @@ const StaffSidebar = () => {
           {idx < menuItems.length - 1 && <Divider sx={{ bgcolor: "#ccc" }} />}
         </Box>
       ))}
-      <List>
+      <List sx={{p:0}}>
         <ListItemButton
           onClick={() => handleLogout()}
           sx={{ color: "white", "&:hover": { bgcolor: "#4949ff" } }}
