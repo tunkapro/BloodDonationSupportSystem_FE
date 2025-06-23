@@ -1,16 +1,33 @@
 
+import { Grid, Paper, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 
 export default function BloodDonorReport() {
   return (
-    <LineChart
-      xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-      series={[
-        {
-          data: [2, 5.5, 2, 8.5, 1.5, 5],
-        },
-      ]}
-      height={300}
-    />
+    <Grid container>
+      <Grid container size={12} justifyContent={'center'}>
+        <Grid size={3}> 
+          <Paper>
+            <Typography>Thành viên</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={3}> 
+          <Paper>
+            <Typography>Thành viên</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={3}> 
+          <Paper>
+            <Typography>Thành viên</Typography>
+          </Paper>
+        </Grid>
+        <Grid size={3}> 
+          <Paper>
+            <Typography>Thành viên</Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+      
+    </Grid>
   );
 }

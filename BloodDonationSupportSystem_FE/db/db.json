@@ -1,7 +1,4 @@
 {
-  
-
-
   "account": [
     {
       "id": "1",
@@ -311,11 +308,22 @@
     },
     {
       "id": "4",
-      "name": "Phạm Thị D",
+      "name": "Phạm Thị D4",
       "phoneNumber": "0978123456",
       "gender": "Nữ",
-      "role": "staff",
+      "role": "member",
       "address": "1334/28/28 Đường 30/4 Phường 12 Thành phố Vũng Tàu",
+      "bloodType": "",
+      "status": "HOẠT ĐỘNG"
+    },
+    {
+      "id": "5",
+      "name": "Phạm Thị D5",
+      "phoneNumber": "0978123456",
+      "gender": "Nữ",
+      "role": "member",
+      "address": "133 Đường Lê Văn Việt, Thành phố Thủ Đức",
+      "bloodType": "",
       "status": "HOẠT ĐỘNG"
     }
   ],
@@ -335,7 +343,7 @@
       "id": "A+"
     },
     {
-      "volume_ml": 5700,
+      "volume_ml": 6050,
       "id": "A-"
     },
     {
@@ -368,8 +376,8 @@
       "registration_id": "1",
       "created_at": "2025-04-06",
       "volume": "350",
-      "is_passed": "CHƯA KIỂM TRA",
-      "blood_type_id": "A+",
+      "is_passed": "ĐÃ ĐẠT",
+      "blood_type_id": "A-",
       "id": "rd1"
     },
     {
@@ -404,5 +412,64 @@
       "blood_type_id": "A+",
       "id": "rd5"
     }
+  ],
+  "bloodRequestList": [
+    {
+      "id" : 1,
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "name": "Nguyễn Văn A",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "bloodType": "A+",
+      "statusDonation": "Bình Thường"
+    },
+    {
+      "id" : 2,
+      "title": "Hiến Máu - Trung Tâm Hiến Máu Nhân Đạo Tp.HCM",
+      "name": "Nguyễn Văn B",
+      "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
+      "bloodType": "A+",
+      "statusDonation": "Khẩn Cấp"
+    }
+  "donation_registration":[
+    {
+     "id":"1",
+     "registration_date":"2025-04-06",
+     "status":"Đã hiến",
+     "start_desired_time":"",
+     "end_desired_time":"",
+     "donor_id":"5",
+     "staff_id":"",
+     "blood_donation_schedule_id":""
+    },
+    {
+      "id":"2",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"2",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     },
+     {
+      "id":"3",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"3",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     },
+     {
+      "id":"4",
+      "registration_date":"2025-04-06",
+      "status":"Đã hiến",
+      "start_desired_time":"",
+      "end_desired_time":"",
+      "donor_id":"4",
+      "staff_id":"",
+      "blood_donation_schedule_id":""
+     }
   ]
 }
