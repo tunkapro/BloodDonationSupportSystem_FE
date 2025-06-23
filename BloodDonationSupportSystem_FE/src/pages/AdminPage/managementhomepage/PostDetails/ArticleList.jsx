@@ -13,7 +13,9 @@ import {
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
-export default function ArticleList({ onEdit, onDelete }) {
+
+export default function ArticleList({  onEdit, onDelete }) {
+
   const articles = [
     {
       id: "1",
@@ -64,7 +66,9 @@ export default function ArticleList({ onEdit, onDelete }) {
           {articles.map((article) => (
             <TableRow key={article.id}>
               <TableCell align="center">
-                <Avatar variant="rounded" src={article.imageUrl} alt={article.title} />
+
+                <Avatar variant="rounded" src={"http://localhost:8090/" + article.imageUrl} alt={article.title} />
+
               </TableCell>
               <TableCell align="center">{article.title}</TableCell>
               <TableCell align="center">{article.articleType}</TableCell>
@@ -81,7 +85,9 @@ export default function ArticleList({ onEdit, onDelete }) {
                 <IconButton color="primary" onClick={() => onEdit(article)}>
                   <Edit />
                 </IconButton>
-                <IconButton color="error" onClick={() => onDelete(article.id)}>
+
+                <IconButton color="error" onClick={() => onDelete(article)}>
+
                   <Delete />
                 </IconButton>
               </TableCell>
