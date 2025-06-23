@@ -30,7 +30,7 @@ const StaffLayout = () => {
         </Box>
 
       </Box>
-    // </RequireAuth>
+     </RequireAuth>
   );
 };
 
