@@ -35,11 +35,11 @@ import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationReg
 
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
-import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
+import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
 
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
-
+import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
 
 
 const CustomRoute = () => {
@@ -56,19 +56,20 @@ const CustomRoute = () => {
         <Route path="reset-password" element={<ForgotPasswordPage />} />
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
-        <Route path="profile" element={<ProfilePage />} />
-        
-        <Route path="/user" element={<MemberLayout />}>
+
+        {/* <Route path="/user" element={<MemberLayout />}> */}
           <Route path="appointment-histories" element={<AppointmentHistory />} />
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
           <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
           <Route path="profile" element={<ProfilePage />} />
-        </Route>
+          <Route path="donation-histories" element={<BloodDonateHistory />} />
+        {/* </Route> */}
       </Route>
 
 
       {/* Admin Route */}
       {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
+      <Route path="/user-management" element={<UserManagement />} />
       <Route path="overview" element={<BloodDonorReport />} />
       <Route path="posts" element={<AdminPosts></AdminPosts>} />
       {/* </Route> */}
