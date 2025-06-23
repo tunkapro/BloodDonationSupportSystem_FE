@@ -27,6 +27,7 @@ import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodSto
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
 import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
+import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
 
 
 
@@ -46,10 +47,11 @@ const CustomRoute = () => {
         <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="/user" element={<MemberLayout />}>
-          <Route path="appointment-histories" element={<AppointmentHistory />} />
-          <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-          <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
-          <Route path="profile" element={<ProfilePage />} />
+           <Route path="appointment-histories" element={<AppointmentHistory />} />
+           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
+           <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
+           <Route path="profile" element={<ProfilePage />} />
+           <Route path="donation-histories" element={<BloodDonateHistory />} />
         </Route>
       </Route>
 
