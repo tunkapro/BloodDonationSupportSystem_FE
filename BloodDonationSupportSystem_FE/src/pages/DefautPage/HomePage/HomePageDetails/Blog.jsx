@@ -55,7 +55,7 @@ const Blog = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Typography variant="body2" color="text.secondary">
-                {post.description}
+                {post.content}
               </Typography>
             </AccordionDetails>
           </Accordion>

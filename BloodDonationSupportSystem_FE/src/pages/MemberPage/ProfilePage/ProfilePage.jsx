@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/axios';
 import ProfileView from './ProfileView';
 import ProfileEdit from './ProfileEdit';
 import { Typography, Snackbar, Alert, CircularProgress, Box, Container } from '@mui/material';
@@ -13,34 +13,31 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
-    axios.get('http://localhost:3001/member', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => setUser(res.data.profile))
+    axios.get('/member/profile')
+      .then((res) => setUser(res.data.data))
       .catch(() => setError('Không thể tải hồ sơ người dùng.'))
       .finally(() => setLoading(false));
   }, []);
 
   const handleSave = (updatedData) => {
-    const { phoneNumber, bloodType, ...editableData } = updatedData;
-    const selectedDate = new Date(editableData.dateOfBirth);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (selectedDate > today) {
-      setError('Ngày sinh không được lớn hơn ngày hiện tại.');
-      return;
-    }
-    const token = localStorage.getItem('jwt_token');
-    axios.put(`http://localhost:3001/member}`, editableData, {
-      headers: { Authorization: `Bearer ${token}` },
+  const { phoneNumber, bloodType, ...editableData } = updatedData;
+  const selectedDate = new Date(editableData.dayOfBirth);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (selectedDate > today) {
+    setError('Ngày sinh không được lớn hơn ngày hiện tại.');
+    return;
+  }
+
+  axios.put('/member/profile', editableData)
+    .then((res) => {
+      setUser(res.data.data);
+      setEditing(false);
+      setSuccess('Cập nhật hồ sơ thành công.');
     })
-      .then((res) => {
-        setUser(res.data);
-        setEditing(false);
-        setSuccess('Cập nhật hồ sơ thành công.');
-      })
-      .catch(() => setError('Cập nhật hồ sơ thất bại.'));
-  };
+    .catch(() => setError('Cập nhật hồ sơ thất bại.'));
+};
 
   if (loading) {
     return (

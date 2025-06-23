@@ -185,7 +185,7 @@ function AppBarHeader() {
             {true && manage.map(({ title, path }) => (
               <Button
                 key={title}
-                selected={selectedItem === title}
+                selected={selectedItem}
                 onClick={() => { setSelectedItem(title); navigate(path) }}
                 sx={{
                   my: 2, mx: 1, display: 'block', textAlign: 'center',

@@ -26,6 +26,7 @@ import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
+import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 
 
 
@@ -43,6 +44,8 @@ const CustomRoute = () => {
         <Route path="reset-password" element={<ForgotPasswordPage />} />
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
+        <Route path="profile" element={<ProfilePage />} />
+
         <Route path="/user" element={<MemberLayout />}>
           <Route path="appointment-histories" element={<AppointmentHistory />} />
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
@@ -52,11 +55,7 @@ const CustomRoute = () => {
       </Route>
 
 
-      {/* Admin Route */}
-      {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
-      <Route path="overview" element={<BloodDonorReport />} />
-      <Route path="posts" element={<AdminPosts></AdminPosts>} />
-      {/* </Route> */}
+
 
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
@@ -64,7 +63,7 @@ const CustomRoute = () => {
         <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
         <Route path="blood-management" element={<DonationManagement />} />
-        <Route path="donation-request" element={<BloodDonationRequestPage/>}/>
+        <Route path="donation-request" element={<BloodDonationRequestPage />} />
         <Route
           path="blood-donation-schedule"
           element={<BloodDonationScheduleComponent />}
@@ -74,8 +73,12 @@ const CustomRoute = () => {
 
       {/* Admin Route */}
       <Route path="/admin/*" element={<AdminLayout />}>
-        <Route path="overview" element={<BloodDonorReport />} />
+        <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
+        {/* Admin Route */}
+        {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
+        <Route path="posts" element={<AdminPosts></AdminPosts>} />
+        {/* </Route> */}
       </Route>
       {/* Error Route */}
       <Route path="/404" element={<ErrorPage />}></Route>
