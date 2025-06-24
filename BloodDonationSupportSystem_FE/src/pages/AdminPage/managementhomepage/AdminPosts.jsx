@@ -4,7 +4,6 @@ import {
   Typography,
   Divider,
   Button,
-  CardContent,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -28,8 +27,8 @@ export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [openForm, setOpenForm] = useState(false);
-
   const { user } = useAuth();
+
 
 
   const loadArticles = async () => {
@@ -40,6 +39,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     loadArticles();
+    loadUser();
   }, []);
 
   const handleOpenForm = (article = null) => {
@@ -63,10 +63,10 @@ export default function ArticlePage() {
   };
 
 
+
   const handleSubmit = async (data, image, fileName) => {
     data.imageUrl = image;
     data.fileName = fileName;
-
     console.log(data);
     const cleanData = {
       title: data.title,
@@ -87,6 +87,11 @@ export default function ArticlePage() {
         const res =await createArticleV2(cleanData);
          console.log(res);
       }
+
+      const res = await createArticle(formData);
+
+
+      console.log("Res:", res);
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();
@@ -118,9 +123,7 @@ export default function ArticlePage() {
           <ArticleForm
             onSubmit={handleSubmit}
             initialValues={
-
               selectedArticle 
-
             }
           ></ArticleForm>
         </DialogContent>
