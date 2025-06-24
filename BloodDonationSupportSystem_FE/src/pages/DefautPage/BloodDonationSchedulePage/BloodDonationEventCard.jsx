@@ -1,9 +1,11 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { People } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function BloodeDonationEventCard ({item}) {
+   const navigate = useNavigate();
     function onBook () {
-        alert('Đã đặt lịch!')
+        navigate("/user/blood-donation-register", {state : {item}});
     }
     
       return (
@@ -51,7 +53,7 @@ export default function BloodeDonationEventCard ({item}) {
           {item.numberRegister}/{item.capacity} <Typography variant="body2" component="span">Người</Typography>
         </Typography>
 
-        <Button variant="contained" onClick={onBook}>
+        <Button variant="contained" onClick={() => onBook()}>
           Đặt lịch
         </Button>
       </Stack>

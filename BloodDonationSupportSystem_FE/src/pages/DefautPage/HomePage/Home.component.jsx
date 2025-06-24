@@ -5,7 +5,9 @@ import Blog from "./HomePageDetails/Blog";
 import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
-import BloodCompatibility from "../../../components/BloodCompatibility";
+
+import BloodTypeSearch from "../../../components/BloodTypeSearch";
+
 
 export default function Home() {
   return (
@@ -24,10 +26,13 @@ export default function Home() {
       </Container>
       <Box sx={{ padding: 2, display: "flex", justifyContent: "center" }}>
         <BloodDonationRegister />
+
       </Box>
-      <Box>
-        <BloodCompatibility />
-      </Box>
+        <Box>
+          <BloodTypeSearch/>
+        </Box>
+
+
       <Box sx={{ marginTop: 5 }}>
         <Box
           sx={{
@@ -51,13 +56,16 @@ export default function Home() {
             </Container>
           </Typography>
         </Box>
-        
+
         <Blog></Blog>
 
-          <Box>
+        <div className="relative min-h-screen w-full bg-blue-400/40">
+          <div className="absolute inset-0 backdrop-blur-sm z-0" />
+          <div className="relative z-10 flex items-center justify-center min-h-screen w-full px-4">
             <DonationTips></DonationTips>
-          </Box>
-        
+          </div>
+        </div>
+
       </Box>
     </>
   );

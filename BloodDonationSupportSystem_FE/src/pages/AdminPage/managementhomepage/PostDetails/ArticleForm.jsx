@@ -34,55 +34,66 @@ export default function ArticleForm({
   const statusOptions = ["CHỜ DUYỆT", "ĐÃ DUYỆT", "BỊ TỪ CHỐI"];
 
   const [selectedType, setSelectedType] = useState(
-    initialValues.articleType || ""
+
+    initialValues.articleType
   );
 
   const [selectedStatus, setSelectedStatus] = useState(
-    initialValues.status || ""
+    initialValues.status
+
   );
 
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const [imagePreview, setImagePreview] = useState(
-    initialValues.imageUrl || null
-  );
+  const [imagePreview, setImagePreview] = useState( initialValues );
 
-  const handleFormSubmit = (article) => {
-    if (!user) {
-      console.log("user chưa load");
-      return;
+    // Convert File → base64
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  // Khi chọn ảnh
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+
+      const base64 = await toBase64(file);       // Chuyển ảnh sang base64
+      setImagePreview(base64);                   // Dùng để hiển thị + gửi đi
     }
-    console.log(article);
-    const data = {
-      ...article,
-      articleType: selectedType,
-      status: selectedStatus,
-      createdByAdminId: user.userId,
-    };
-    console.log("Final submit data:", {
-    ...data,
-    selectedImage: selectedImage?.name || null,
-  });
+  };
+  const onSubmitForm = (data) => {
+    console.log(imagePreview);
+      onSubmit(data, imagePreview, selectedImage.name);
 
-    onSubmit(data, selectedImage);
   };
 
-  useEffect(() => {
-    reset(initialValues);
-    setSelectedType(initialValues.articleType || "");
-    setSelectedStatus(initialValues.status || "");
-    setImagePreview(initialValues?.imageUrl || null);
-  }, [initialValues, reset]);
+  // useEffect(() => {
+  //   reset(initialValues);
+  //   setSelectedType(initialValues.articleType || "");
+  //   setSelectedStatus(initialValues.status || "");
+  //   setImagePreview(initialValues?.imageUrl || null);
+  // }, [initialValues, reset]);
+
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit(handleFormSubmit)}
+      onSubmit={handleSubmit(onSubmitForm)}
+      noValidate
+
       sx={{ mt: 2 }}
     >
       <TextField
         fullWidth
         label="Tiêu đề"
+
+        defaultValue={title}
+
         {...register("title", { required: "Tiêu đề không được để trống" })}
         error={!!errors.title}
         helperText={errors.title?.message}
@@ -154,13 +165,8 @@ export default function ArticleForm({
             type="file"
             accept="image/*"
             hidden
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setSelectedImage(file);
-              if (file) {
-                setImagePreview(URL.createObjectURL(file));
-              }
-            }}
+            onChange={
+            handleFileChange}
           />
         </Button>
 
@@ -204,6 +210,11 @@ export default function ArticleForm({
       <Button sx={{ marginTop: "20px" }} type="submit" variant="contained">
         {initialValues?.id ? "Cập nhật" : "Thêm bài viết"}
       </Button>
+
+
+
+
+
     </Box>
   );
 }

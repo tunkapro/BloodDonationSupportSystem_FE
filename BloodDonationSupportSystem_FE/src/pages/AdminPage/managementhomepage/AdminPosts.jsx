@@ -14,6 +14,10 @@ import ArticleList from "./PostDetails/ArticleList";
 import {
   getAllArticles,
   createArticle,
+
+  createArticleV2,
+
+
   updateArticle,
   deleteArticle,
 } from "../../../api/articleService";
@@ -23,13 +27,14 @@ export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [openForm, setOpenForm] = useState(false);
-  const { user, loadUser } = useAuth();
+  const { user } = useAuth();
 
 
 
   const loadArticles = async () => {
     const res = await getAllArticles();
-    setArticles(res.data);
+    console.log(res.data);
+    setArticles(res.data.data);
   };
 
   useEffect(() => {
@@ -52,24 +57,35 @@ export default function ArticlePage() {
     setOpenForm(true);
   };
 
-  const handleDelete = async (id) => {
-    await deleteArticle(id);
+  const handleDelete = async (article) => {
+    await deleteArticle(article.id);
     loadArticles();
   };
 
-  const handleSubmit = async (data, image) => {
-    console.log("user object:", user);
-  console.log("user.userId:", user?.userId);
+
+
+  const handleSubmit = async (data, image, fileName) => {
+    data.imageUrl = image;
+    data.fileName = fileName;
+    console.log(data);
+    const cleanData = {
+      title: data.title,
+      content: data.content,
+      status: data.status,
+      imageUrl : image,
+      fileName : fileName,
+      articleType: data.articleType,
+      createdByAdminId: user.id,
+    };
+    console.log(cleanData);
+
     try {
-      const formData = new FormData();
-      formData.append(
-        "data",
-        new Blob([JSON.stringify(data)], {
-          type: "application/json",
-        })
-      );
-      if (image) {
-        formData.append("image", image);
+      if (selectedArticle.id) {
+        const res = await updateArticle(selectedArticle.id, cleanData);
+        console.log(res);
+      } else {
+        const res =await createArticleV2(cleanData);
+         console.log(res);
       }
 
       const res = await createArticle(formData);
@@ -101,19 +117,13 @@ export default function ArticlePage() {
       ></ArticleList>
       <Dialog open={openForm} onClose={handleCloseForm}>
         <DialogTitle>
-          {selectedArticle ? "Cập nhật bài viết" : "Thêm bài viết"}
+          {selectedArticle ?  "Thêm bài viết" : "Cập nhật bài viết" }
         </DialogTitle>
         <DialogContent>
           <ArticleForm
             onSubmit={handleSubmit}
             initialValues={
-              selectedArticle || {
-                title: "",
-                content: "",
-                articleType: "",
-                status: "",
-              
-              }
+              selectedArticle 
             }
           ></ArticleForm>
         </DialogContent>

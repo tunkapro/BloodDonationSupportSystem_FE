@@ -1,4 +1,3 @@
-// ProfileEdit.jsx
 import React, { useState } from 'react';
 import {
   Box,
@@ -21,7 +20,7 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
 
   return (
     <Paper sx={{ width: '100%', height: 'auto', m: 'auto', p: 5 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2, fontSize: '2rem', pb: 2 }}>
         <strong>Chỉnh sửa thông tin tài khoản</strong>
       </Box>
       <Stack spacing={2}>
@@ -71,9 +70,50 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
           value={formData.bloodType || ''}
           slotProps={{ input: { readOnly: true } }}
         />
-        <Box display="flex" justifyContent="flex-end" gap={2}>
-          <Button variant="outlined" onClick={onCancel}>Cancel</Button>
-          <Button variant="contained" onClick={() => onSave(formData)}>Save</Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
+          {/* <Button
+            variant="outlined"
+            onClick={onCancel}
+            sx={{ borderRadius: '5px', px: '40px' }}
+          >
+            Hủy
+          </Button> */}
+          <Button
+            variant="contained"
+            size="large"
+            onClick={onCancel}
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              textTransform: 'none',
+              fontSize: '1rem',
+              backgroundColor: 'white',
+              color: 'black',
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#f0f0f0',
+              },
+            }}
+          >
+            Hủy
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => onSave(formData)}
+            sx={{
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 600,
+              boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)'
+            }}
+          >
+            Lưu
+          </Button>
         </Box>
       </Stack>
     </Paper>
@@ -81,3 +121,4 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
 };
 
 export default ProfileEdit;
+
