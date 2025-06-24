@@ -36,7 +36,7 @@ const StaffSidebar = () => {
         },
         {
           label: "Quản lí hiến máu",
-          path: "/staff/blood-management",
+          path: "/staff/health-check",
           icon: <ChecklistIcon />,
         },
         {
