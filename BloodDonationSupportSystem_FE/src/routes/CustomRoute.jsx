@@ -22,7 +22,7 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
-import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage"
+import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 import DonationRegistration from "../pages/MemberPage/DonationRegistration/DonationRegistration";

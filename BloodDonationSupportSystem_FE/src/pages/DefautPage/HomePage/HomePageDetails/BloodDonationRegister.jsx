@@ -65,6 +65,7 @@ export default function BloodDonationModal() {
     const data = {
       startDate: startDate.format("YYYY-MM-DD"),
       endDate: endDate.format("YYYY-MM-DD"),
+      status: "CHƯA HIẾN",
       donorId: user.id,
     };
     try {
@@ -77,6 +78,14 @@ export default function BloodDonationModal() {
           severity: "success",
         });
       } else {
+        console.log(res.message);
+        if (res.message === "You have donated within the last 90 days. Please wait a little longer !!!") {
+          setError("Bạn đã hiến máu trong vòng 90 ngày gần nhất. Vui lòng chờ để sức khỏe bình phục!");
+          return;
+        } else if (res.message === "You already have a pending registration!") {
+          setError("Bạn đã đăng kí. Đơn bạn đang được chờ!!!");
+          return;
+        }
         setError(res.message || "Đăng ký thất bại. Vui lòng thử lại.");
       }
     } catch (err) {
@@ -138,7 +147,7 @@ export default function BloodDonationModal() {
           />
 
           {error && (
-            <Typography color="error" mt={1} display="flex" justifyContent="center">
+            <Typography color="error" mt={1} display="flex" justifyContent="center" textAlign="center">
               {error}
             </Typography>
           )}
