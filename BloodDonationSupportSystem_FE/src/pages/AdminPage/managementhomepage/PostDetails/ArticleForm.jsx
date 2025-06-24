@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../../context/authContext";
+
 
 export default function ArticleForm({
   onSubmit,
@@ -22,6 +24,10 @@ export default function ArticleForm({
     reset,
     setValue,
   } = useForm();
+
+  const { user } = useAuth();
+
+
 
   const articleTypes = ["TIN TỨC", "HỎI ĐÁP", "LỜI KHUYÊN", "BLOG"];
 
@@ -41,11 +47,23 @@ export default function ArticleForm({
     initialValues.imageUrl || null
   );
 
-  const handleFormSubmit = (data) => {
-    console.log(data);
-    data.articleType = selectedType;
-    data.status = selectedStatus;
-    console.log(data);
+  const handleFormSubmit = (article) => {
+    if (!user) {
+      console.log("user chưa load");
+      return;
+    }
+    console.log(article);
+    const data = {
+      ...article,
+      articleType: selectedType,
+      status: selectedStatus,
+      createdByAdminId: user.userId,
+    };
+    console.log("Final submit data:", {
+    ...data,
+    selectedImage: selectedImage?.name || null,
+  });
+
     onSubmit(data, selectedImage);
   };
 
@@ -80,7 +98,8 @@ export default function ArticleForm({
         helperText={errors.content?.message}
         margin="normal"
       />
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
         margin="normal"
         fullWidth
         required
@@ -93,7 +112,7 @@ export default function ArticleForm({
           label="Thể loại"
           onChange={(e) => {
             setSelectedType(e.target.value);
-            setValue("articleType", e.target.value); // Cập nhật react-hook-form
+            setValue("articleType", e.target.value);
           }}
         >
           {articleTypes.map((type) => (
@@ -104,7 +123,13 @@ export default function ArticleForm({
         </Select>
       </FormControl>
 
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }} margin="normal" fullWidth required error={!!errors.status}>
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+        margin="normal"
+        fullWidth
+        required
+        error={!!errors.status}
+      >
         <InputLabel id="select-label-status">Trạng thái</InputLabel>
         <Select
           labelId="select-label-status"
@@ -176,7 +201,7 @@ export default function ArticleForm({
         )}
       </Box>
 
-      <Button sx={{marginTop: "20px"}} type="submit" variant="contained">
+      <Button sx={{ marginTop: "20px" }} type="submit" variant="contained">
         {initialValues?.id ? "Cập nhật" : "Thêm bài viết"}
       </Button>
     </Box>

@@ -39,6 +39,7 @@ import UserManagement from "../pages/AdminPage/UserManagement/UserManagementPage
 
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
+import DonationRegistration from "../pages/MemberPage/DonationRegistration/DonationRegistration";
 
 
 
@@ -59,6 +60,7 @@ const CustomRoute = () => {
         <Route path="profile" element={<ProfilePage />} />
         
         <Route path="/user" element={<MemberLayout />}>
+          
           <Route path="appointment-histories" element={<AppointmentHistory />} />
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
           <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
@@ -66,6 +68,7 @@ const CustomRoute = () => {
         </Route>
       </Route>
 
+      <Route path="registerDonationForm" element={<DonationRegistration/>}/>
 
       {/* Admin Route */}
       {/* <Route path="/admin/*" element={<AdminLayout/>}> */}

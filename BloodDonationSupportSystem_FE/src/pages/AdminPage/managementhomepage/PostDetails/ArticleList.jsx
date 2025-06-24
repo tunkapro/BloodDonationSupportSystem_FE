@@ -9,7 +9,6 @@ import {
   Paper,
   IconButton,
   Avatar,
-  Chip,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 

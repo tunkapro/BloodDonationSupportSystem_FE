@@ -4,7 +4,6 @@ import {
   Typography,
   Divider,
   Button,
-  CardContent,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -24,7 +23,10 @@ export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [openForm, setOpenForm] = useState(false);
-  // const [user, loadUser] = useAuth();
+  const { user, loadUser } = useAuth();
+
+
+
   const loadArticles = async () => {
     const res = await getAllArticles();
     setArticles(res.data);
@@ -32,6 +34,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     loadArticles();
+    loadUser();
   }, []);
 
   const handleOpenForm = (article = null) => {
@@ -54,23 +57,25 @@ export default function ArticlePage() {
     loadArticles();
   };
 
-  const handleSubmit = async (data, image,) => {
-    console.log(data);
-    const cleanData = {
-      title: data.title,
-      content: data.content,
-      articleType: data.articleType,
-      status: data.status,
-      // createdByAdminId: 
-    };
+  const handleSubmit = async (data, image) => {
+    console.log("user object:", user);
+  console.log("user.userId:", user?.userId);
     try {
-      if (selectedArticle.id) {
-        const res = await updateArticle(selectedArticle.id, cleanData, image);
-        console.log(res);
-      } else {
-        const res =await createArticle(cleanData, image);
-         console.log(res);
+      const formData = new FormData();
+      formData.append(
+        "data",
+        new Blob([JSON.stringify(data)], {
+          type: "application/json",
+        })
+      );
+      if (image) {
+        formData.append("image", image);
       }
+
+      const res = await createArticle(formData);
+
+
+      console.log("Res:", res);
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();
@@ -107,6 +112,7 @@ export default function ArticlePage() {
                 content: "",
                 articleType: "",
                 status: "",
+              
               }
             }
           ></ArticleForm>
