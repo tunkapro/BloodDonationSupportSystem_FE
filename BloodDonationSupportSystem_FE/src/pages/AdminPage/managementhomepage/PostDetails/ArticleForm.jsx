@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 export default function ArticleForm({
   onSubmit,
-  initialValues = { title: "", content: "", articleType: "", status: "" },
+  initialValues,
 }) {
   const {
     register,
@@ -23,25 +23,24 @@ export default function ArticleForm({
     setValue,
   } = useForm();
 
+
+
   const articleTypes = ["TIN TỨC", "HỎI ĐÁP", "LỜI KHUYÊN", "BLOG"];
 
   const statusOptions = ["CHỜ DUYỆT", "ĐÃ DUYỆT", "BỊ TỪ CHỐI"];
 
-  const [selectedType, setSelectedType] = useState(
+  const [selectedType, setSelectedType] = useState(initialValues ? initialValues.articleType : null);
 
-    initialValues.articleType
-  );
+  const [selectedStatus, setSelectedStatus] = useState(initialValues ? initialValues.status : null);
 
-  const [selectedStatus, setSelectedStatus] = useState(
-    initialValues.status
+  const [selectedImage, setSelectedImage] = useState( initialValues  ? "http://localhost:8090/" + initialValues.imageUrl : null);
 
-  );
+  console.log(initialValues)
 
-  const [selectedImage, setSelectedImage] = useState(null);
 
-  const [imagePreview, setImagePreview] = useState( initialValues );
+  const [fileName, setFileName] = useState("");
 
-    // Convert File → base64
+  // Convert File → base64
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -54,40 +53,30 @@ export default function ArticleForm({
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log(file)
+      setFileName(file.name)
       setSelectedImage(file);
-
       const base64 = await toBase64(file);       // Chuyển ảnh sang base64
-      setImagePreview(base64);                   // Dùng để hiển thị + gửi đi
+      setSelectedImage(base64);                   // Dùng để hiển thị + gửi đi
     }
   };
   const onSubmitForm = (data) => {
-    console.log(imagePreview);
-      onSubmit(data, imagePreview, selectedImage.name);
+    console.log(selectedImage);
+    onSubmit(data, selectedImage, fileName);
 
   };
-
-  // useEffect(() => {
-  //   reset(initialValues);
-  //   setSelectedType(initialValues.articleType || "");
-  //   setSelectedStatus(initialValues.status || "");
-  //   setImagePreview(initialValues?.imageUrl || null);
-  // }, [initialValues, reset]);
-
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmitForm)}
       noValidate
-
       sx={{ mt: 2 }}
     >
       <TextField
         fullWidth
         label="Tiêu đề"
-
-        defaultValue={title}
-
+        defaultValue={initialValues ? initialValues.title : ""}
         {...register("title", { required: "Tiêu đề không được để trống" })}
         error={!!errors.title}
         helperText={errors.title?.message}
@@ -96,6 +85,7 @@ export default function ArticleForm({
       <TextField
         fullWidth
         label="Nội dung"
+        defaultValue={initialValues ? initialValues.content : ""}
         multiline
         rows={4}
         {...register("content", { required: "Nội dung không được để trống" })}
@@ -113,6 +103,7 @@ export default function ArticleForm({
         <Select
           labelId="select-label-article-types"
           value={selectedType}
+          defaultValue={setValue("articleType", selectedType)}
           label="Thể loại"
           onChange={(e) => {
             setSelectedType(e.target.value);
@@ -132,6 +123,7 @@ export default function ArticleForm({
         <Select
           labelId="select-label-status"
           value={selectedStatus}
+          defaultValue={setValue("status", selectedStatus)}
           label="Thể loại"
           onChange={(e) => {
             setSelectedStatus(e.target.value);
@@ -153,18 +145,18 @@ export default function ArticleForm({
             accept="image/*"
             hidden
             onChange={
-            handleFileChange}
+              handleFileChange}
           />
         </Button>
 
-        {imagePreview && (
+        {selectedImage && (
           <Box sx={{ mt: 2, textAlign: "center" }}>
             <Typography variant="subtitle2" gutterBottom>
               Ảnh xem trước:
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <img
-                src={imagePreview}
+                src={selectedImage}
                 alt="preview"
                 style={{
                   width: "100%",
