@@ -429,7 +429,7 @@
       "address": "123 Nguyễn Huệ, Tp. Hồ Chí Minh",
       "bloodType": "A+",
       "statusDonation": "Khẩn Cấp"
-    }
+    }],
   "donation_registration":[
     {
      "id":"1",
@@ -470,6 +470,5 @@
       "donor_id":"4",
       "staff_id":"",
       "blood_donation_schedule_id":""
-     }
-  ]
-}
+     }]
+  }

@@ -3,6 +3,7 @@ import axios from '../../../config/axios';
 import ProfileView from './ProfileView';
 import ProfileEdit from './ProfileEdit';
 import { Typography, Snackbar, Alert, CircularProgress, Box, Container } from '@mui/material';
+import { Toolbar } from '@mui/material';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -12,7 +13,6 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt_token');
     axios.get('/member/profile')
       .then((res) => setUser(res.data.data))
       .catch(() => setError('Không thể tải hồ sơ người dùng.'))
@@ -55,8 +55,9 @@ const ProfilePage = () => {
     <>
       <div className="relative min-h-screen w-full bg-blue-400/40">
         <div className="absolute inset-0 backdrop-blur-sm z-0" />
-        <div className="relative z-10 flex items-center justify-center min-h-screen w-full px-4">
+        <div className="relative z-10 flex justify-center min-h-screen w-full px-4 pt-[64px]">
           <Container maxWidth="md">
+            <Toolbar />
               <Box sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: 2, boxShadow: 8 }}>
                 {editing ? (
                   <ProfileEdit user={user} onSave={handleSave} onCancel={() => setEditing(false)} />

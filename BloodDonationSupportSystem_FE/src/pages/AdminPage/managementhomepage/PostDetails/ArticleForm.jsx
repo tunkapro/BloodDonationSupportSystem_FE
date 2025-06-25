@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../../context/authContext";
+
 
 export default function ArticleForm({
   onSubmit,
@@ -93,7 +95,8 @@ export default function ArticleForm({
         helperText={errors.content?.message}
         margin="normal"
       />
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
         margin="normal"
         fullWidth
         required
@@ -107,7 +110,7 @@ export default function ArticleForm({
           label="Thể loại"
           onChange={(e) => {
             setSelectedType(e.target.value);
-            setValue("articleType", e.target.value); // Cập nhật react-hook-form
+            setValue("articleType", e.target.value);
           }}
         >
           {articleTypes.map((type) => (
@@ -118,7 +121,13 @@ export default function ArticleForm({
         </Select>
       </FormControl>
 
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }} margin="normal" fullWidth required error={!!errors.status}>
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+        margin="normal"
+        fullWidth
+        required
+        error={!!errors.status}
+      >
         <InputLabel id="select-label-status">Trạng thái</InputLabel>
         <Select
           labelId="select-label-status"

@@ -31,8 +31,8 @@ export default function ArticlePage() {
       createdByAdminId: ""}
     );
   const [openForm, setOpenForm] = useState(false);
-
   const { user } = useAuth();
+
 
 
   const loadArticles = async () => {
@@ -43,6 +43,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     loadArticles();
+    loadUser();
   }, []);
 
   const handleOpenForm = () => {
@@ -63,6 +64,7 @@ export default function ArticlePage() {
     await deleteArticle(article.id);
     loadArticles();
   };
+
 
 
   const handleSubmit = async (data, imageData, fileName) => {
@@ -89,6 +91,11 @@ export default function ArticlePage() {
         const res =await createArticle(cleanData);
          console.log(res);
       }
+
+      const res = await createArticle(formData);
+
+
+      console.log("Res:", res);
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();
