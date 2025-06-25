@@ -1,7 +1,7 @@
 import { Button, Box, List, ListItem, Paper, Stack, Typography, Dialog, DialogContent, DialogActions, DialogTitle,FormControl,InputLabel,Select,MenuItem } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import BloodDonationSurveyForm from "../../MemberPage/BloodDonationRegisterPage/BloodDonationSurveyForm";
+
 
 
 export default function BloodDonationRequestPage() {
@@ -94,7 +94,7 @@ export default function BloodDonationRequestPage() {
                 <DialogTitle>Thông tin chi tiết</DialogTitle>
                 <DialogContent>
                     {item && (
-                        <BloodDonationSurveyForm />
+                       <Box></Box>
                     )}
                 </DialogContent>
                 <DialogActions>
