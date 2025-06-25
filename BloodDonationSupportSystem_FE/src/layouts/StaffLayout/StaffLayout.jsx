@@ -5,7 +5,7 @@ import RequireAuth from "../../components/RequireAuth";
 
 const StaffLayout = () => {
   return (
-    <RequireAuth role={"ROLE_STAFF"}>
+    // <RequireAuth role={"ROLE_STAFF"}>
 
       <Box sx={{ display: "flex", height: "100vh",overflow:"hidden" }}>
 
@@ -34,7 +34,7 @@ const StaffLayout = () => {
 
       </Box>
 
-     </RequireAuth>
+    //  {/* </RequireAuth> */}
 
   );
 };

@@ -20,7 +20,7 @@ import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSche
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
-import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
+
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
@@ -53,7 +53,7 @@ const CustomRoute = () => {
 
            <Route path="appointment-histories" element={<AppointmentHistory />} />
            <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-           <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
+           <Route path="blood-donation-register" element={<DonationRegistration/>} />
            <Route path="profile" element={<ProfilePage />} />
            <Route path="donation-histories" element={<BloodDonateHistory />} />
 
