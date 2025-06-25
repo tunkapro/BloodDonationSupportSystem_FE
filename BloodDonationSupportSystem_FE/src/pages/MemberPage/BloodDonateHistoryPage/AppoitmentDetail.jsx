@@ -3,18 +3,26 @@ import {
   Box,
   Typography,
   Button,
-  Grid,
-  Paper,
+  Card,
+  CardContent,
   Chip,
   CircularProgress,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Alert,
+  Divider,
+  Stack,
+  Container,
 } from "@mui/material";
+import {
+  Schedule,
+  LocationOn,
+  Bloodtype,
+  CalendarToday,
+  ArrowBack,
+} from "@mui/icons-material";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { Toolbar } from "@mui/material";
 import axios from "../../../config/axios";
 
 export default function AppointmentDetail() {
@@ -28,17 +36,11 @@ export default function AppointmentDetail() {
   const [cancelDialog, setCancelDialog] = useState(false);
   const [canceling, setCanceling] = useState(false);
 
-  console.log("Appointment Detail ID:", id);
-  console.log("Appointment from state:", appointmentFromState);
-
-
   useEffect(() => {
     if (!appointmentFromState) {
       const fetchAppointment = async () => {
         try {
           const res = await axios.get(`/member/donation-info/${id}`);
-
-          console.log("response: ", res.data);
           if (res.data?.data) {
             setAppointment(res.data.data);
           } else {
@@ -70,148 +72,287 @@ export default function AppointmentDetail() {
     }
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'CHƯA HIẾN':
+        return 'warning';
+      case 'ĐÃ HIẾN':
+        return 'success';
+      case 'HỦY':
+        return 'error';
+      default:
+        return 'default';
+    }
+  };
+
+  const getDisplayValue = (value, isVolumeML = false) => {
+    if (isVolumeML) {
+      return value ? `${value} ml` : "0 ml";
+    }
+    return value || "Chưa cập nhật";
+  };
+
+  const getTimeDisplay = (startTime, endTime) => {
+    if (!startTime && !endTime) {
+      return "Chưa cập nhật";
+    }
+    if (!startTime) {
+      return `Chưa cập nhật - ${endTime}`;
+    }
+    if (!endTime) {
+      return `${startTime} - Chưa cập nhật`;
+    }
+    return `${startTime} - ${endTime}`;
+  };
+
+  const getDateDisplay = (donationDate) => {
+    if (!donationDate) {
+      return "Chưa cập nhật";
+    }
+    try {
+      return new Date(donationDate).toLocaleDateString("vi-VN", {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (error) {
+      return "Chưa cập nhật";
+    }
+  };
+
+  const getDonationType = (emergencyId) => {
+    return emergencyId ? "Hiến máu khẩn cấp" : "Hiến máu thông thường";
+  };
+
   const canCancel = appointment?.status === "CHƯA HIẾN";
 
   if (loading) {
     return (
-      <Box p={4} textAlign="center">
-        <CircularProgress />
-      </Box>
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <CircularProgress size={48} />
+        </Box>
+      </Container>
     );
   }
 
   if (!appointment) {
     return (
-      <Box p={4} textAlign="center">
-        <Typography color="error" variant="h6">
-          Không tìm thấy lịch sử đặt hẹn!
-        </Typography>
-        <Button variant="outlined" sx={{ mt: 2 }} onClick={() => navigate(-1)}>
-          Quay về
-        </Button>
-      </Box>
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Card sx={{ textAlign: "center", py: 6 }}>
+          <CardContent>
+            <Typography variant="h6" color="error" gutterBottom>
+              Không tìm thấy thông tin đặt hẹn
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Vui lòng kiểm tra lại hoặc liên hệ hỗ trợ
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<ArrowBack />}
+              onClick={() => navigate(-1)}
+            >
+              Quay lại
+            </Button>
+          </CardContent>
+        </Card>
+      </Container>
     );
   }
 
   return (
-    <Box sx={{ bgcolor: "#f6faff", minHeight: "100vh", py: 5 }}>
-      <Toolbar />
-      <Box sx={{ maxWidth: 950, mx: "auto" }}>
-        <Typography variant="h6" fontWeight={600} color="primary" mb={1}>
-          Lịch sử đặt hẹn
-        </Typography>
-
-        <Box display="flex" alignItems="center" mb={3}>
-          <Typography mr={1} fontSize={15}>
-            Trạng thái:
+    <Box sx={{ bgcolor: "#f8fafc", minHeight: "100vh", py: 4 }}>
+      <Container maxWidth="md">
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h5" fontWeight={600} color="primary" gutterBottom>
+            Chi tiết lịch hẹn hiến máu
           </Typography>
-          <Chip
-            label={appointment.status}
-            color="warning"
-            size="small"
-            sx={{ fontWeight: 500, fontSize: 13 }}
-          />
+
+          <Box display="flex" alignItems="center" gap={2}>
+            <Typography variant="body2" color="text.secondary">
+              Trạng thái:
+            </Typography>
+            <Chip
+              label={getDisplayValue(appointment.status)}
+              color={getStatusColor(appointment.status)}
+              size="medium"
+              sx={{ fontWeight: 600 }}
+            />
+          </Box>
         </Box>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={0} sx={{ p: 3, bgcolor: "#fff" }}>
-              <Typography fontWeight={600} mb={2} fontSize={16}>
-                Thông tin hiến máu
-              </Typography>
+        <Card elevation={0} sx={{ borderRadius: 3, overflow: "hidden" }}>
+          <CardContent sx={{ p: 4 }}>
+            <Typography variant="h6" fontWeight={600} sx={{ mb: 3, color: "primary.main" }}>
+              Thông tin chi tiết
+            </Typography>
 
-              <Box display="flex" justifyContent="space-between" mb={1}>
-                <Typography color="text.secondary" fontSize={15}>
-                  Thời gian:
-                </Typography>
-                <Typography fontWeight={500} fontSize={15}>
-                  Từ {appointment.startTime} đến {appointment.endTime}
-                </Typography>
+            <Stack spacing={3}>
+              <Box display="flex" alignItems="center">
+                <Schedule sx={{ color: "primary.main", mr: 2 }} />
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Thời gian hiến máu
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    fontWeight={500}
+                    sx={{
+                      color: (!appointment.startTime && !appointment.endTime) ? "text.secondary" : "text.primary",
+                      fontStyle: (!appointment.startTime && !appointment.endTime) ? "italic" : "normal"
+                    }}
+                  >
+                    {getTimeDisplay(appointment.startTime, appointment.endTime)}
+                  </Typography>
+                </Box>
               </Box>
 
-              <Box display="flex" justifyContent="space-between" mb={1}>
-                <Typography color="text.secondary" fontSize={15}>
-                  Cơ sở tiếp nhận máu:
-                </Typography>
-                <Typography fontWeight={500} fontSize={15}>
-                  {appointment.addressHospital}
-                </Typography>
+              <Divider />
+
+              <Box display="flex" alignItems="center">
+                <LocationOn sx={{ color: "error.main", mr: 2 }} />
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Cơ sở tiếp nhận máu
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    fontWeight={500}
+                    sx={{
+                      color: !appointment.addressHospital ? "text.secondary" : "text.primary",
+                      fontStyle: !appointment.addressHospital ? "italic" : "normal"
+                    }}
+                  >
+                    {getDisplayValue(appointment.addressHospital)}
+                  </Typography>
+                </Box>
               </Box>
 
-              <Box display="flex" justifyContent="space-between" mb={1}>
-                <Typography color="text.secondary" fontSize={15}>
-                  Lượng máu đã hiến:
-                </Typography>
-                <Typography fontWeight={500} fontSize={15}>
-                  {appointment.volumeMl} ml
-                </Typography>
+              <Divider />
+
+              <Box display="flex" alignItems="center">
+                <Bloodtype sx={{ color: "error.main", mr: 2 }} />
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Lượng máu hiến
+                  </Typography>
+                  <Typography variant="body1" fontWeight={500}>
+                    {getDisplayValue(appointment.volumeMl, true)}
+                  </Typography>
+                </Box>
               </Box>
 
-              <Box display="flex" justifyContent="space-between">
-                <Typography color="text.secondary" fontSize={15}>
-                  Ngày hiến máu:
-                </Typography>
-                <Typography fontWeight={500} fontSize={15}>
-                  {new Date(appointment.donationDate).toLocaleDateString("vi-VN")}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
+              <Divider />
 
-        <Box mt={4} display="flex" justifyContent="center" gap={2}>
+              <Box display="flex" alignItems="center">
+                <Bloodtype sx={{ color: "primary.main", mr: 2 }} />
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Loại hiến máu
+                  </Typography>
+                  <Typography variant="body1" fontWeight={500}>
+                    {getDonationType(appointment.emergencyBloodRequestId)}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Divider/>
+
+              <Box display="flex" alignItems="center">
+                <CalendarToday sx={{ color: "info.main", mr: 2 }} />
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    Ngày hiến máu
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    fontWeight={500}
+                    sx={{
+                      color: !appointment.donationDate ? "text.secondary" : "text.primary",
+                      fontStyle: !appointment.donationDate ? "italic" : "normal"
+                    }}
+                  >
+                    {getDateDisplay(appointment.donationDate)}
+                  </Typography>
+                </Box>
+              </Box>
+            </Stack>
+          </CardContent>
+        </Card>
+
+        <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 2 }}>
           <Button
             variant="outlined"
-            color="primary"
+            size="large"
+            startIcon={<ArrowBack />}
             onClick={() => navigate(-1)}
             sx={{
-              minWidth: 120,
-              fontSize: 15,
-              borderColor: "#1976d2",
-              color: "#1976d2",
-              bgcolor: "#fff",
-              "&:hover": {
-                bgcolor: "#e3ecfa",
-              },
+              minWidth: 140,
+              borderRadius: 2,
             }}
           >
-            Quay về
+            Quay lại
           </Button>
 
           {canCancel && (
             <Button
-              variant="outlined"
+              variant="contained"
               color="error"
+              size="large"
               onClick={() => setCancelDialog(true)}
-              sx={{ minWidth: 120 }}
+              sx={{
+                minWidth: 140,
+                borderRadius: 2,
+              }}
             >
               Hủy đơn
             </Button>
           )}
         </Box>
-      </Box>
+      </Container>
 
-      <Dialog open={cancelDialog} onClose={() => setCancelDialog(false)}>
-        <DialogTitle>Xác nhận hủy đơn</DialogTitle>
-        <DialogContent>
-          <Typography>
+      <Dialog
+        open={cancelDialog}
+        onClose={() => setCancelDialog(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: { borderRadius: 3 }
+        }}
+      >
+        <DialogTitle sx={{ pb: 1 }}>
+          <Typography variant="h6" fontWeight={600} component="span">
+            Xác nhận hủy đơn
+          </Typography>
+        </DialogTitle>
+
+        <DialogContent sx={{ pb: 2 }}>
+          <Typography variant="body1" color="text.secondary">
             Bạn có chắc chắn muốn hủy đơn hiến máu này không?
+            Hành động này không thể hoàn tác.
           </Typography>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setCancelDialog(false)}>
-            Không
+
+        <DialogActions sx={{ px: 3, pb: 3 }}>
+          <Button
+            onClick={() => setCancelDialog(false)}
+            variant="outlined"
+            sx={{ minWidth: 100 }}
+          >
+            Hủy bỏ
           </Button>
-          <Button 
-            onClick={handleCancel} 
+          <Button
+            onClick={handleCancel}
+            variant="contained"
             color="error"
             disabled={canceling}
+            sx={{ minWidth: 100 }}
           >
-            {canceling ? <CircularProgress size={20} /> : 'Có'}
+            {canceling ? <CircularProgress size={20} color="inherit" /> : 'Xác nhận'}
           </Button>
         </DialogActions>
       </Dialog>
-
     </Box>
   );
 }

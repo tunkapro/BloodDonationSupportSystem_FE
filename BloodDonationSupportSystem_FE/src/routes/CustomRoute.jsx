@@ -79,15 +79,12 @@ const CustomRoute = () => {
       </Route>
 
 
-      {/* Admin Route */}
       <Route path="/admin/*" element={<AdminLayout />}>
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
-        {/* Admin Route */}
-        {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
-        {/* </Route> */}
       </Route>
+      
       {/* Error Route */}
       <Route path="/404" element={<ErrorPage />}></Route>
     </Routes>

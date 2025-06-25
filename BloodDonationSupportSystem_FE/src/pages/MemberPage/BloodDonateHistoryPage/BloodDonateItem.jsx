@@ -86,7 +86,7 @@ export default function BloodDonateItem({ donation }) {
                     px: 3
                 }}
                 onClick={() =>
-                    navigate(`/appointment-histories/${donation.donationRegistrationId}`, {
+                    navigate(`/user/appointment-histories/${donation.donationRegistrationId}`, {
                         state: { appointment: donation },
                     })
                 }
