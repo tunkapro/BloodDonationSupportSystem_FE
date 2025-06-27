@@ -23,6 +23,7 @@ import axios from "axios";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [loginGoogleError, setLoginGoogleError] = useState("");
   const { loadUser } = useAuth();
   const navigate = useNavigate();
   const {
@@ -198,16 +199,16 @@ export default function LoginPage() {
               onSuccess={handleGoogleSuccess}
               onError={(error) => {
                 console.error("Google login error:", error);
-                setLoginError("Đăng nhập Google thất bại");
+                setLoginGoogleError("Đăng nhập Google thất bại");
               }}
               useOneTap
               flow="implicit"
             />
           </Box>
 
-          {loginError && (
+          {loginGoogleError && (
             <Typography color="error" align="center" sx={{ mt: 2 }}>
-              {loginError}
+              {loginGoogleError}
             </Typography>
           )}
           <Grid container justifyContent="center" sx={{ mt: 3 }}>

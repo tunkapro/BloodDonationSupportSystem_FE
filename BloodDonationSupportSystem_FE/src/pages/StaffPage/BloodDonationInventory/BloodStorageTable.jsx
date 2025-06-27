@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../config/axios";
+
 import Box from "@mui/material/Box";
 import {
   DataGrid,
@@ -36,10 +37,9 @@ export default function BloodDonationGrid() {
   // 1. API lấy danh sách hiến máu CHƯA KIỂM TRA
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/donation_process", {
-        params: { is_passed: "CHƯA KIỂM TRA" },
-      });
-      return res.data;
+   
+      const res = await axios.get("/staff/get-completed-donation-process-list/blood-checking");
+      return res.data.data;
     } catch (err) {
       console.error("Lỗi khi tải dữ liệu hiến máu:", err.message);
       return [];
@@ -49,7 +49,7 @@ export default function BloodDonationGrid() {
   // 2. Load dữ liệu vào bảng
   const loadAndSetData = async () => {
     const data = await fetchData();
-    setRows(data.map((row) => ({ ...row, id: row.id })));
+    setRows(data.map((row) => ({ ...row, processId: row.processId })));
   };
 
   useEffect(() => {
@@ -58,29 +58,33 @@ export default function BloodDonationGrid() {
 
   // 3. các api Xử lý cập nhật
   const processRowUpdate = async (newRow) => {
-    const { id, ...data } = newRow;
+    const { processId,donationRegisId,bloodTest, status, bloodTypeId, volumeMl } = newRow;
+    const validBloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-    if (newRow.is_passed === "ĐÃ ĐẠT" && !newRow.blood_type_id) {
+    console.log("6 cột data mới kéo về dể update là "+processId+donationRegisId+bloodTest+status+bloodTypeId+volumeMl);
+    if (bloodTest === "ĐÃ ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
       throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra!");
+    }
+    if (bloodTest === "KHÔNG ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
+      throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra dù không đạt!");
     }
 
     try {
-      await axios.put(`http://localhost:3001/donation_process/${id}`, data);
+      const data = {
+        bloodTest,
+        bloodTypeId
+      };
+      console.log("data gửi về be"+data.bloodTest+data.bloodTypeId);
+      await axios.put(`/staff/update-process-is-passed/${processId}`, data);
 
-      // Nếu ĐÃ ĐẠT và có nhóm máu => cộng máu vào kho
-      if (newRow.is_passed === "ĐÃ ĐẠT" && newRow.blood_type_id) {
+     
+      if (newRow.bloodTest === "ĐÃ ĐẠT" && newRow.bloodTypeId) {
         const bloodType = newRow.blood_type_id;
         const volumeToAdd = parseInt(newRow.volume, 10);
 
-        const res = await axios.get(
-          `http://localhost:3001/blood_inventory/${bloodType}`
-        );
-        const currentVolume = parseInt(res.data?.volume_ml || "0", 10);
-        const newVolume = currentVolume + volumeToAdd;
-
-        await axios.put(`http://localhost:3001/blood_inventory/${bloodType}`, {
-          volume_ml: newVolume,
-        });
+        const dataInventory = { donationRegisId,volumeMl: volumeMl};
+        console.log("giữ liệu truyển vào  donationid"+dataInventory.donationRegisId +"so luong moi"+dataInventory.volumeMl);
+        await axios.put(`/staff/update-blood-volume/{bloodTypeId}/${bloodType}`,dataInventory);
 
         alert("Đã thêm vào kho máu!");
       } else if (newRow.is_passed === "KHÔNG ĐẠT") {
@@ -126,37 +130,33 @@ export default function BloodDonationGrid() {
 
   const columns = [
     {
-      field: "id",
+      field: "processId",
       headerName: "Mã hồ sơ xử lí",
       width: 200,
       filterable: false,
     },
     {
-      field: "registration_id",
+      field: "donationRegisId",
       headerName: "Mã đăng kí hiến máu",
       width: 200,
       filterable: false,
       renderCell: (params) => <span>{params.value || "-"}</span>,
     },
     {
-      field: "created_at",
-      headerName: "Ngày tạo",
-      width: 150,
-      renderCell: (params) => {
-        const getDate = params.value;
-        const date = new Date(getDate);
-        return date.toLocaleDateString("vi-VN");
-      },
-      filterable: false,
-    },
-    {
-      field: "volume",
+      field: "volumeMl",
       headerName: "Dung tích (ml)",
       width: 150,
       filterable: false,
     },
+    ,
     {
-      field: "is_passed",
+      field: "status",
+      headerName: "Trạng thái hiến",
+      width: 150,
+      filterable: false,
+    },
+    {
+      field: "bloodTest",
       headerName: "Kiểm tra",
       width: 150,
       editable: true,
@@ -188,42 +188,48 @@ export default function BloodDonationGrid() {
     },
 
     {
-      field: "blood_type_id",
+      field: "bloodTypeId",
       headerName: "Nhóm máu",
       width: 150,
       editable: true,
-      filterable: false,
-      type: "singleSelect",
-      valueOptions: ["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
-        (type) => ({ value: type, label: type || "-" })
-      ),
+      filterable: false,      
+      valueFormatter: (params) => {
+        return params ?? "-";
+      },
+    
       renderEditCell: (params) => {
         const { id, field, value, api } = params;
-
+    
         const handleChange = (event) => {
-          api.setEditCellValue({ id, field, value: event.target.value });
+          const selectedValue = event.target.value;
+          api.setEditCellValue({
+            id,
+            field,
+            value: selectedValue === "null" ? null : selectedValue,
+          });
         };
-
+    
         return (
           <Select
             key={id}
-            value={value || ""}
+            value={value ?? "null"}
             onChange={handleChange}
             fullWidth
             size="small"
             sx={{ height: 50 }}
           >
-            {["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
-              (type) => (
-                <MenuItem key={type} value={type}>
-                  {type || "-"}
-                </MenuItem>
-              )
-            )}
+            <MenuItem value="null">-</MenuItem>
+            {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
           </Select>
         );
       },
-    },
+    }
+    
+    ,
     {
       field: "actions",
       type: "actions",
@@ -265,7 +271,7 @@ export default function BloodDonationGrid() {
           <Button
             color="inherit"
             onClick={() =>
-              navigate("/staff/storage/blood-bag-list", {
+              navigate("/staff/storage/blood-donation-list", {
                 state: { shouldReload: true },
               })
             }
@@ -279,6 +285,7 @@ export default function BloodDonationGrid() {
         <DataGrid
           rows={rows}
           columns={columns}
+          getRowId={(row) => row.processId} 
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
@@ -286,9 +293,10 @@ export default function BloodDonationGrid() {
           onProcessRowUpdateError={(err) => alert(err.message)}
           localeText={vietnameseText}
           disableColumnSelector
-          initialState={{
-            pagination: { paginationModel: { page: 0, pageSize: 10 } },
-          }}
+          pagination
+              initialState={{
+                pagination: { paginationModel: { page: 0, pageSize: 9 } },
+              }}
         />
       </Box>
     </Box>
