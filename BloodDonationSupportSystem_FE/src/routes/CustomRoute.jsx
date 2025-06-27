@@ -14,7 +14,6 @@ import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import DonationManagement from "../pages/StaffPage/DonationManagement";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
@@ -29,6 +28,8 @@ import DonationRegistration from "../pages/MemberPage/DonationRegistration/Donat
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
 import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
+
 
 
 
@@ -70,7 +71,7 @@ const CustomRoute = () => {
         <Route path="overview" element={<Overview />} />
         <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
-        <Route path="blood-management" element={<DonationManagement />} />
+        <Route path="blood-management" element={<DonorHealthCheckPage />} />
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
         <Route
           path="blood-donation-schedule"
@@ -79,15 +80,12 @@ const CustomRoute = () => {
       </Route>
 
 
-      {/* Admin Route */}
       <Route path="/admin/*" element={<AdminLayout />}>
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
-        {/* Admin Route */}
-        {/* <Route path="/admin/*" element={<AdminLayout/>}> */}
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
-        {/* </Route> */}
       </Route>
+      
       {/* Error Route */}
       <Route path="/404" element={<ErrorPage />}></Route>
     </Routes>
