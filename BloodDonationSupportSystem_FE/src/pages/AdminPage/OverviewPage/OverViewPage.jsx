@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Paper, Typography, Box, Tooltip, useTheme, Divider } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
-import axios from 'axios';
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -51,37 +50,26 @@ const OverViewPage = () => {
   const theme = useTheme();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/users')
-      .then(res => setUserCount(res.data.length))
-      .catch(() => setUserCount(0));
-    axios.get('http://localhost:3001/bloodRequestList')
-      .then(res => setDonationRegisterCount(res.data.length))
-      .catch(() => setDonationRegisterCount(0));
-    axios.get('http://localhost:3001/donation_process')
-      .then(res => {
-        const data = res.data;
-        let success = 0, cancel = 0;
-        const chartMap = {};
-        data.forEach(item => {
-          if (item.is_passed === 'ĐÃ ĐẠT') success++;
-          if (item.is_passed === 'KHÔNG ĐẠT') cancel++;
-          if (item.created_at) {
-            const date = new Date(item.created_at);
-            const label = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}`;
-            chartMap[label] = (chartMap[label] || 0) + 1;
-          }
-        });
-        setDonationSuccessCount(success);
-        setDonationCancelCount(cancel);
-        const labels = Object.keys(chartMap).sort();
-        const dataArr = labels.map(label => chartMap[label]);
-        setChartData({ labels, data: dataArr });
-      })
-      .catch(() => {
-        setDonationSuccessCount(0);
-        setDonationCancelCount(0);
-        setChartData({ labels: [], data: [] });
-      });
+    // Fake data
+    setUserCount(1250);
+    setDonationRegisterCount(890);
+    setDonationSuccessCount(756);
+    setDonationCancelCount(134);
+
+    // Fake chart data for the last 12 months
+    const currentDate = new Date();
+    const labels = [];
+    const data = [];
+    
+    for (let i = 11; i >= 0; i--) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+      const label = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+      labels.push(label);
+      // Generate random data between 50-120 for each month
+      data.push(Math.floor(Math.random() * 71) + 50);
+    }
+    
+    setChartData({ labels, data });
   }, []);
 
   const values = {
