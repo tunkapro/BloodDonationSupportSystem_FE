@@ -20,24 +20,38 @@ const ProfilePage = () => {
   }, []);
 
   const handleSave = (updatedData) => {
-  const { phoneNumber, bloodType, ...editableData } = updatedData;
-  const selectedDate = new Date(editableData.dayOfBirth);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+    const { fullName, dayOfBirth, address } = updatedData;
+    if (
+      !fullName || fullName.trim() === '' ||
+      !address || address.trim() === '' ||
+      !dayOfBirth || dayOfBirth.trim() === ''
+    ) {
+      setError('Họ tên, ngày sinh và địa chỉ không được để trống.');
+      return;
+    }
 
-  if (selectedDate > today) {
-    setError('Ngày sinh không được lớn hơn ngày hiện tại.');
-    return;
-  }
+    const selectedDate = new Date(dayOfBirth);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  axios.put('/member/profile', editableData)
-    .then((res) => {
-      setUser(res.data.data);
-      setEditing(false);
-      setSuccess('Cập nhật hồ sơ thành công.');
-    })
-    .catch(() => setError('Cập nhật hồ sơ thất bại.'));
-};
+    if (isNaN(selectedDate.getTime())) {
+      setError('Ngày sinh không hợp lệ.');
+      return;
+    }
+
+    if (selectedDate > today) {
+      setError('Ngày sinh không được lớn hơn ngày hiện tại.');
+      return;
+    }
+    const { phoneNumber, bloodType, ...editableData } = updatedData;
+    axios.put('/member/profile', editableData)
+      .then((res) => {
+        setUser(res.data.data);
+        setEditing(false);
+        setSuccess('Cập nhật hồ sơ thành công.');
+      })
+      .catch(() => setError('Cập nhật hồ sơ thất bại.'));
+  };
 
   if (loading) {
     return (
@@ -58,13 +72,13 @@ const ProfilePage = () => {
         <div className="relative z-10 flex justify-center min-h-screen w-full px-4 pt-[64px]">
           <Container maxWidth="md">
             <Toolbar />
-              <Box sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: 2, boxShadow: 8 }}>
-                {editing ? (
-                  <ProfileEdit user={user} onSave={handleSave} onCancel={() => setEditing(false)} />
-                ) : (
-                  <ProfileView user={user} onEdit={() => setEditing(true)} />
-                )}
-              </Box>
+            <Box sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: 2, boxShadow: 8 }}>
+              {editing ? (
+                <ProfileEdit user={user} onSave={handleSave} onCancel={() => setEditing(false)} />
+              ) : (
+                <ProfileView user={user} onEdit={() => setEditing(true)} />
+              )}
+            </Box>
             <Snackbar
               open={!!error}
               autoHideDuration={4000}

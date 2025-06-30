@@ -22,6 +22,7 @@ import { useAuth } from "../context/authContext";
 
 function AppBarHeader() {
   const { user, loadUser } = useAuth();
+
   //'Home', 'News', 'q-a', 'Contact'
   const pages = [
     {
@@ -75,7 +76,7 @@ function AppBarHeader() {
 
   //  handle UI
   const location = useLocation();
-  const allItems = [...pages, ...(true ? manage : [])];
+  const allItems = [...pages, ...(user ? manage : [])];
   const selectedItemCurrent = allItems.find((item) => location.pathname.startsWith(item.path))?.title ?? 'Trang Chủ';
   const [selectedItem, setSelectedItem] = useState(selectedItemCurrent);
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -188,7 +189,7 @@ function AppBarHeader() {
                 <Typography variant="h6" sx={{ textTransform: "none" }}>{title}</Typography>
               </Button>
             ))}
-            {true && manage.map(({ title, path }) => (
+            {user && manage.map(({ title, path }) => (
               <Button
                 key={title}
                 selected={selectedItem}
