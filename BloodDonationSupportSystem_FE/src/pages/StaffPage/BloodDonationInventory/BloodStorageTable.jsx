@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import axios from "../../../config/axios";
+import { bloodCheckProcessListApi,updateProcessIsPassedApi,updateBloodVolumeApi } from "../../../api/staffService";
 
 import Box from "@mui/material/Box";
 import {
@@ -38,7 +38,7 @@ export default function BloodDonationGrid() {
   const fetchData = async () => {
     try {
    
-      const res = await axios.get("/staff/get-completed-donation-process-list/blood-checking");
+      const res = await bloodCheckProcessListApi();
       return res.data.data;
     } catch (err) {
       console.error("Lỗi khi tải dữ liệu hiến máu:", err.message);
@@ -61,7 +61,7 @@ export default function BloodDonationGrid() {
     const { processId,donationRegisId,bloodTest, status, bloodTypeId, volumeMl } = newRow;
     const validBloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-    console.log("6 cột data mới kéo về dể update là "+processId+donationRegisId+bloodTest+status+bloodTypeId+volumeMl);
+   
     if (bloodTest === "ĐÃ ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
       throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra!");
     }
@@ -74,20 +74,17 @@ export default function BloodDonationGrid() {
         bloodTest,
         bloodTypeId
       };
-      console.log("data gửi về be"+data.bloodTest+data.bloodTypeId);
-      await axios.put(`/staff/update-process-is-passed/${processId}`, data);
-
+  
+      await updateProcessIsPassedApi(processId,data);
+      
      
       if (newRow.bloodTest === "ĐÃ ĐẠT" && newRow.bloodTypeId) {
-        const bloodType = newRow.blood_type_id;
-        const volumeToAdd = parseInt(newRow.volume, 10);
-
-        const dataInventory = { donationRegisId,volumeMl: volumeMl};
-        console.log("giữ liệu truyển vào  donationid"+dataInventory.donationRegisId +"so luong moi"+dataInventory.volumeMl);
-        await axios.put(`/staff/update-blood-volume/{bloodTypeId}/${bloodType}`,dataInventory);
-
+    
+        const dataInventory = { donationRegisId,processId,volumeMl};
+      
+        await updateBloodVolumeApi(bloodTypeId,dataInventory);
         alert("Đã thêm vào kho máu!");
-      } else if (newRow.is_passed === "KHÔNG ĐẠT") {
+      } else if (newRow.bloodTest === "KHÔNG ĐẠT") {
         alert("Cập nhật trạng thái thành công");
       }
       await loadAndSetData();
