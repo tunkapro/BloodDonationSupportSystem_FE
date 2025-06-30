@@ -17,6 +17,7 @@ import { registerAccount } from "../../../api/authService";
 import { stringifyLocalDate } from "../../../utils/dayFormat";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { Toolbar } from "@mui/material";
 
 
 const RegisterPage = () => {
@@ -54,6 +55,7 @@ const RegisterPage = () => {
 
   return (
     <Box sx={{ padding : '50px' }}>
+    <Toolbar />
       <Container maxWidth="sm">
       <Box
         sx={{ mt: 8, p: 4, boxShadow: 3, borderRadius: 2, bgcolor: "white" }}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from '../../../config/axios';
 import BloodDonateList from './BloodDonateList';
 
-const STATUS_LABELS = ['Đã hiến', 'Chưa hiến', 'Hủy'];
+const STATUS_LABELS = ['ĐÃ HIẾN', 'HỦY'];
 
 export default function BloodDonateTabs() {
   const [history, setHistory] = useState([]);
@@ -13,14 +13,17 @@ export default function BloodDonateTabs() {
 
     useEffect(() => {
       axios
-        .get('http://localhost:3001/BloodDonateHistory')
-        .then((res) => setHistory(res.data))
+        .get('/member/donation-info')
+        .then((res) => {
+          setHistory(res.data.data)
+          console.log(res.data.data);
+        })
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
     }, []);
 
   const getListByStatus = (status) =>
-    history.filter(item => item.processStatus === status);
+    history.filter(item => item.status === status);
 
   if (loading) return <Typography>Loading...</Typography>;
 

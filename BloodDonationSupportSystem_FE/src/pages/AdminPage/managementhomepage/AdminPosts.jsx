@@ -4,7 +4,6 @@ import {
   Typography,
   Divider,
   Button,
-  CardContent,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -22,21 +21,33 @@ import { useAuth } from "../../../context/authContext";
 
 export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [selectedArticle, setSelectedArticle] = useState(
+    { id: "",
+      title: "",
+      content: "",
+      status: "",
+      imageUrl : "",
+      articleType: "",
+      createdByAdminId: ""}
+    );
   const [openForm, setOpenForm] = useState(false);
-  // const [user, loadUser] = useAuth();
+  const { user } = useAuth();
+
+
+
   const loadArticles = async () => {
     const res = await getAllArticles();
-    setArticles(res.data);
+    console.log(res.data);
+    setArticles(res.data.data);
   };
 
   useEffect(() => {
     loadArticles();
+    loadUser();
   }, []);
 
-  const handleOpenForm = (article = null) => {
+  const handleOpenForm = () => {
     setOpenForm(true);
-    setSelectedArticle(article);
   };
 
   const handleCloseForm = () => {
@@ -49,28 +60,42 @@ export default function ArticlePage() {
     setOpenForm(true);
   };
 
-  const handleDelete = async (id) => {
-    await deleteArticle(id);
+  const handleDelete = async (article) => {
+    await deleteArticle(article.id);
     loadArticles();
   };
 
-  const handleSubmit = async (data, image,) => {
-    console.log(data);
+
+
+  const handleSubmit = async (data, imageData, fileName) => {
+    console.log(imageData)
+    data.imageData = imageData;
+    data.fileName = fileName;
+
     const cleanData = {
       title: data.title,
       content: data.content,
-      articleType: data.articleType,
       status: data.status,
-      // createdByAdminId: 
+      imageData: selectedArticle && imageData.includes(selectedArticle.imageUrl) ? selectedArticle.imageUrl : imageData,
+      fileName : fileName,
+      articleType: data.articleType,
+      createdByAdminId: user.id,
     };
+    console.log(cleanData);
+
     try {
-      if (selectedArticle.id) {
-        const res = await updateArticle(selectedArticle.id, cleanData, image);
+      if (selectedArticle) {
+        const res = await updateArticle(selectedArticle.id, cleanData);
         console.log(res);
       } else {
-        const res =await createArticle(cleanData, image);
+        const res =await createArticle(cleanData);
          console.log(res);
       }
+
+      const res = await createArticle(formData);
+
+
+      console.log("Res:", res);
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();
@@ -96,19 +121,12 @@ export default function ArticlePage() {
       ></ArticleList>
       <Dialog open={openForm} onClose={handleCloseForm}>
         <DialogTitle>
-          {selectedArticle ? "Cập nhật bài viết" : "Thêm bài viết"}
+          {selectedArticle  ?  "Cập nhật bài viết" : "Thêm bài viết" }
         </DialogTitle>
         <DialogContent>
           <ArticleForm
             onSubmit={handleSubmit}
-            initialValues={
-              selectedArticle || {
-                title: "",
-                content: "",
-                articleType: "",
-                status: "",
-              }
-            }
+            initialValues={selectedArticle }
           ></ArticleForm>
         </DialogContent>
         <DialogActions>

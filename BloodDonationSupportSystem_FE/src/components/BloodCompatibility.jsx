@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 
 const BloodCompatibility = () => {
   return (
-    <Box sx={{ py: 4 }}>
+    <Box >
       <BloodTypeSearch />
     </Box>
   );

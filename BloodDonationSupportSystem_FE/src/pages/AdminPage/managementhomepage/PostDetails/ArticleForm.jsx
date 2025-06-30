@@ -10,10 +10,12 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../../context/authContext";
+
 
 export default function ArticleForm({
   onSubmit,
-  initialValues = { title: "", content: "", articleType: "", status: "" },
+  initialValues,
 }) {
   const {
     register,
@@ -23,48 +25,60 @@ export default function ArticleForm({
     setValue,
   } = useForm();
 
+
+
   const articleTypes = ["TIN TỨC", "HỎI ĐÁP", "LỜI KHUYÊN", "BLOG"];
 
   const statusOptions = ["CHỜ DUYỆT", "ĐÃ DUYỆT", "BỊ TỪ CHỐI"];
 
-  const [selectedType, setSelectedType] = useState(
-    initialValues.articleType || ""
-  );
+  const [selectedType, setSelectedType] = useState(initialValues ? initialValues.articleType : null);
 
-  const [selectedStatus, setSelectedStatus] = useState(
-    initialValues.status || ""
-  );
+  const [selectedStatus, setSelectedStatus] = useState(initialValues ? initialValues.status : null);
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState( initialValues  ? "http://localhost:8090/" + initialValues.imageUrl : null);
 
-  const [imagePreview, setImagePreview] = useState(
-    initialValues.imageUrl || null
-  );
+  console.log(initialValues)
 
-  const handleFormSubmit = (data) => {
-    console.log(data);
-    data.articleType = selectedType;
-    data.status = selectedStatus;
-    console.log(data);
-    onSubmit(data, selectedImage);
+
+  const [fileName, setFileName] = useState("");
+
+  // Convert File → base64
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  // Khi chọn ảnh
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log(file)
+      setFileName(file.name)
+      setSelectedImage(file);
+      const base64 = await toBase64(file);       // Chuyển ảnh sang base64
+      setSelectedImage(base64);                   // Dùng để hiển thị + gửi đi
+    }
   };
+  const onSubmitForm = (data) => {
+    console.log(selectedImage);
+    onSubmit(data, selectedImage, fileName);
 
-  useEffect(() => {
-    reset(initialValues);
-    setSelectedType(initialValues.articleType || "");
-    setSelectedStatus(initialValues.status || "");
-    setImagePreview(initialValues?.imageUrl || null);
-  }, [initialValues, reset]);
+  };
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit(handleFormSubmit)}
+      onSubmit={handleSubmit(onSubmitForm)}
+      noValidate
       sx={{ mt: 2 }}
     >
       <TextField
         fullWidth
         label="Tiêu đề"
+        defaultValue={initialValues ? initialValues.title : ""}
         {...register("title", { required: "Tiêu đề không được để trống" })}
         error={!!errors.title}
         helperText={errors.title?.message}
@@ -73,6 +87,7 @@ export default function ArticleForm({
       <TextField
         fullWidth
         label="Nội dung"
+        defaultValue={initialValues ? initialValues.content : ""}
         multiline
         rows={4}
         {...register("content", { required: "Nội dung không được để trống" })}
@@ -80,7 +95,8 @@ export default function ArticleForm({
         helperText={errors.content?.message}
         margin="normal"
       />
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
         margin="normal"
         fullWidth
         required
@@ -90,10 +106,11 @@ export default function ArticleForm({
         <Select
           labelId="select-label-article-types"
           value={selectedType}
+          defaultValue={setValue("articleType", selectedType)}
           label="Thể loại"
           onChange={(e) => {
             setSelectedType(e.target.value);
-            setValue("articleType", e.target.value); // Cập nhật react-hook-form
+            setValue("articleType", e.target.value);
           }}
         >
           {articleTypes.map((type) => (
@@ -104,11 +121,18 @@ export default function ArticleForm({
         </Select>
       </FormControl>
 
-      <FormControl sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }} margin="normal" fullWidth required error={!!errors.status}>
+      <FormControl
+        sx={{ minWidth: 400, maxWidth: 1000, width: "100%", mt: 2 }}
+        margin="normal"
+        fullWidth
+        required
+        error={!!errors.status}
+      >
         <InputLabel id="select-label-status">Trạng thái</InputLabel>
         <Select
           labelId="select-label-status"
           value={selectedStatus}
+          defaultValue={setValue("status", selectedStatus)}
           label="Thể loại"
           onChange={(e) => {
             setSelectedStatus(e.target.value);
@@ -129,24 +153,19 @@ export default function ArticleForm({
             type="file"
             accept="image/*"
             hidden
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setSelectedImage(file);
-              if (file) {
-                setImagePreview(URL.createObjectURL(file));
-              }
-            }}
+            onChange={
+              handleFileChange}
           />
         </Button>
 
-        {imagePreview && (
+        {selectedImage && (
           <Box sx={{ mt: 2, textAlign: "center" }}>
             <Typography variant="subtitle2" gutterBottom>
               Ảnh xem trước:
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <img
-                src={imagePreview}
+                src={selectedImage}
                 alt="preview"
                 style={{
                   width: "100%",
@@ -176,9 +195,14 @@ export default function ArticleForm({
         )}
       </Box>
 
-      <Button sx={{marginTop: "20px"}} type="submit" variant="contained">
+      <Button sx={{ marginTop: "20px" }} type="submit" variant="contained">
         {initialValues?.id ? "Cập nhật" : "Thêm bài viết"}
       </Button>
+
+
+
+
+
     </Box>
   );
 }

@@ -44,7 +44,7 @@ function AppBarHeader() {
   // Register User
   const manage = [
     { title: "Đơn Đăng Ký", path: "/user/blood-donation-register" },
-    { title: "Lịch Sử Hiến Máu", path: "/user/appointment-histories" }
+    { title: "Lịch Hẹn Đã Đặt", path: "/user/appointment-histories" }
   ]
   //'Profile', 'Account', 'Logout'
   const settings = [
@@ -75,7 +75,7 @@ function AppBarHeader() {
 
   //  handle UI
   const location = useLocation();
-  const allItems = [...pages, ...(user ? manage : [])];
+  const allItems = [...pages, ...(true ? manage : [])];
   const selectedItemCurrent = allItems.find((item) => location.pathname.startsWith(item.path))?.title ?? 'Trang Chủ';
   const [selectedItem, setSelectedItem] = useState(selectedItemCurrent);
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -95,6 +95,12 @@ function AppBarHeader() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const getInitials = (fullName) => {
+    if (!fullName) return "?";
+    const words = fullName.split(" ");
+    return words.length >= 2 ? words[0][0] + words[words.length - 1][0] : fullName[0];
   };
 
   return (
@@ -168,10 +174,10 @@ function AppBarHeader() {
                 sx={{
                   my: 2, mx: 1, display: 'block', textAlign: 'center',
                   color: selectedItem === title ? 'black' : 'black',
-                  borderBottom : '5px solid',
-                  borderColor : selectedItem === title ? 'red' : 'transparent',
+                  borderBottom: '5px solid',
+                  borderColor: selectedItem === title ? 'red' : 'transparent',
                   '&:hover': {
-                    bgcolor:  '#f5f5f5'
+                    bgcolor: '#f5f5f5'
                   }
 
                 }}
@@ -182,7 +188,7 @@ function AppBarHeader() {
                 <Typography variant="h6" sx={{ textTransform: "none" }}>{title}</Typography>
               </Button>
             ))}
-            {user && manage.map(({ title, path }) => (
+            {true && manage.map(({ title, path }) => (
               <Button
                 key={title}
                 selected={selectedItem}
@@ -190,10 +196,10 @@ function AppBarHeader() {
                 sx={{
                   my: 2, mx: 1, display: 'block', textAlign: 'center',
                   color: selectedItem === title ? 'black' : 'black',
-                  borderBottom : '5px solid',
-                  borderColor : selectedItem === title ? 'red' : 'transparent',
+                  borderBottom: '5px solid',
+                  borderColor: selectedItem === title ? 'red' : 'transparent',
                   '&:hover': {
-                    bgcolor:  '#f5f5f5'
+                    bgcolor: '#f5f5f5'
                   }
 
                 }}
@@ -211,8 +217,12 @@ function AppBarHeader() {
             {/* display avatar */}
             <Tooltip title="Open settings">
 
-              <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{ marginRight: '10px' }} />
+              <Button onClick={handleOpenUserMenu} sx={{ p: 0, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Avatar
+                  sx={{ bgcolor: "primary.main", width: 50, height: 50, fontSize: "1rem", fontWeight: "bold" }}
+                >
+                  {getInitials(user.fullName)}
+                </Avatar>
                 <Typography color='black'>{user.fullName}</Typography>
               </Button>
             </Tooltip>
@@ -255,7 +265,7 @@ function AppBarHeader() {
               color="error"
               variant="contained"
               onClick={handleClickSignin}
-              
+
             >
               <Typography variant="h6" sx={{ color: "error", textTransform: "none" }}>Đăng nhập</Typography>
             </Button>

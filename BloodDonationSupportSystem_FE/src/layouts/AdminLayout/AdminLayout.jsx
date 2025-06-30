@@ -10,7 +10,7 @@ export default function AdminLayout() {
       <Box sx={{ display: "flex", minHeight: "100vh" }}>
         <Box
           sx={{
-            flex: 1,
+            flex: 2,
             bgcolor: "background.paper",
             borderRight: "1px solid #ddd",
             height: "100",
@@ -21,7 +21,7 @@ export default function AdminLayout() {
 
         <Box
           sx={{
-            flex: 9,
+            flex: 8,
             overflowX: "hidden",
             bgcolor: "background.default",
           }}

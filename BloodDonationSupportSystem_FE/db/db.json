@@ -343,7 +343,7 @@
       "id": "A+"
     },
     {
-      "volume_ml": 5700,
+      "volume_ml": 6050,
       "id": "A-"
     },
     {
@@ -474,5 +474,7 @@
       "donor_id":"4",
       "staff_id":"",
       "blood_donation_schedule_id":""
-    }]
+
+     }]
   }
+

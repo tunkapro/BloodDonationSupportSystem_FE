@@ -9,29 +9,13 @@ import {
   Paper,
   IconButton,
   Avatar,
-  Chip,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
-export default function ArticleList({ onEdit, onDelete }) {
-  const articles = [
-    {
-      id: "1",
-      title: "Bài viết đầu tiên",
-      content: "Nội dung tóm tắt của bài viết đầu tiên.",
-      status: "CHỜ DUYỆT",
-      imageUrl: "",
-      articleType: "TIN TỨC",
-    },
-    {
-      id: "2",
-      title: "Lịch hiến máu tháng 7",
-      content: "Thông tin các đợt hiến máu trong tháng 7.",
-      status: "ĐÃ DUYỆT",
-      imageUrl: "https://via.placeholder.com/100",
-      articleType: "TIN TỨC",
-    },
-  ];
+
+export default function ArticleList({articles,  onEdit, onDelete }) {
+
+
 
   if (!articles || articles.length === 0) {
     return (
@@ -64,7 +48,9 @@ export default function ArticleList({ onEdit, onDelete }) {
           {articles.map((article) => (
             <TableRow key={article.id}>
               <TableCell align="center">
-                <Avatar variant="rounded" src={article.imageUrl} alt={article.title} />
+
+                <Avatar variant="rounded" src={"http://localhost:8090/" + article.imageUrl} alt={article.title} />
+
               </TableCell>
               <TableCell align="center">{article.title}</TableCell>
               <TableCell align="center">{article.articleType}</TableCell>
@@ -81,7 +67,9 @@ export default function ArticleList({ onEdit, onDelete }) {
                 <IconButton color="primary" onClick={() => onEdit(article)}>
                   <Edit />
                 </IconButton>
-                <IconButton color="error" onClick={() => onDelete(article.id)}>
+
+                <IconButton color="error" onClick={() => onDelete(article)}>
+
                   <Delete />
                 </IconButton>
               </TableCell>
