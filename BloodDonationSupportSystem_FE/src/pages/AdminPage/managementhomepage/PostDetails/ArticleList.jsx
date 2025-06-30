@@ -13,26 +13,9 @@ import {
 import { Edit, Delete } from "@mui/icons-material";
 
 
-export default function ArticleList({  onEdit, onDelete }) {
+export default function ArticleList({articles,  onEdit, onDelete }) {
 
-  const articles = [
-    {
-      id: "1",
-      title: "Bài viết đầu tiên",
-      content: "Nội dung tóm tắt của bài viết đầu tiên.",
-      status: "CHỜ DUYỆT",
-      imageUrl: "",
-      articleType: "TIN TỨC",
-    },
-    {
-      id: "2",
-      title: "Lịch hiến máu tháng 7",
-      content: "Thông tin các đợt hiến máu trong tháng 7.",
-      status: "ĐÃ DUYỆT",
-      imageUrl: "https://via.placeholder.com/100",
-      articleType: "TIN TỨC",
-    },
-  ];
+
 
   if (!articles || articles.length === 0) {
     return (

@@ -14,13 +14,12 @@ import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import DonationManagement from "../pages/StaffPage/DonationManagement";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
 import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
-import BloodDonationRegisterContainer from "../pages/MemberPage/BloodDonationRegisterPage/BloodDonationRegisterContainer";
+
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
@@ -29,6 +28,8 @@ import DonationRegistration from "../pages/MemberPage/DonationRegistration/Donat
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
 import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
+
 
 
 
@@ -53,7 +54,7 @@ const CustomRoute = () => {
 
            <Route path="appointment-histories" element={<AppointmentHistory />} />
            <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-           <Route path="blood-donation-register" element={<BloodDonationRegisterContainer />} />
+           <Route path="blood-donation-register" element={<DonationRegistration/>} />
            <Route path="profile" element={<ProfilePage />} />
            <Route path="donation-histories" element={<BloodDonateHistory />} />
 
@@ -70,7 +71,7 @@ const CustomRoute = () => {
         <Route path="overview" element={<Overview />} />
         <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
-        <Route path="blood-management" element={<DonationManagement />} />
+        <Route path="blood-management" element={<DonorHealthCheckPage />} />
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
         <Route
           path="blood-donation-schedule"
