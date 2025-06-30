@@ -67,17 +67,10 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
           fullWidth
           label="Nhóm máu"
           name="bloodType"
-          value={formData.bloodType || ''}
+          value={formData.bloodType || 'Chưa cập nhật'}
           slotProps={{ input: { readOnly: true } }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-          {/* <Button
-            variant="outlined"
-            onClick={onCancel}
-            sx={{ borderRadius: '5px', px: '40px' }}
-          >
-            Hủy
-          </Button> */}
           <Button
             variant="contained"
             size="large"

@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../../config/axios';
 import ProfileView from './ProfileView';
 import ProfileEdit from './ProfileEdit';
-import { Typography, Snackbar, Alert, CircularProgress, Box, Container } from '@mui/material';
-import { Toolbar } from '@mui/material';
+import { 
+  Typography, 
+  Snackbar, 
+  Alert, 
+  CircularProgress, 
+  Box, 
+  Container,
+  Toolbar
+} from '@mui/material';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -13,7 +20,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/member/profile')
+    axios.get('/profile')
       .then((res) => setUser(res.data.data))
       .catch(() => setError('Không thể tải hồ sơ người dùng.'))
       .finally(() => setLoading(false));
@@ -43,8 +50,9 @@ const ProfilePage = () => {
       setError('Ngày sinh không được lớn hơn ngày hiện tại.');
       return;
     }
+    
     const { phoneNumber, bloodType, ...editableData } = updatedData;
-    axios.put('/member/profile', editableData)
+    axios.put('/profile', editableData)
       .then((res) => {
         setUser(res.data.data);
         setEditing(false);
@@ -55,52 +63,81 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <Box mt={5} display="flex" justifyContent="center">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#f5f5f5',
+        }}
+      >
         <CircularProgress />
       </Box>
     );
   }
 
   if (!user) {
-    return <Typography align="center" mt={5}>Loading user profile...</Typography>;
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#f5f5f5',
+        }}
+      >
+        <Typography>Loading user profile...</Typography>
+      </Box>
+    );
   }
 
   return (
     <>
-      <div className="relative min-h-screen w-full bg-blue-400/40">
-        <div className="absolute inset-0 backdrop-blur-sm z-0" />
-        <div className="relative z-10 flex justify-center min-h-screen w-full px-4 pt-[64px]">
-          <Container maxWidth="md">
-            <Toolbar />
-            <Box sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: 2, boxShadow: 8 }}>
-              {editing ? (
-                <ProfileEdit user={user} onSave={handleSave} onCancel={() => setEditing(false)} />
-              ) : (
-                <ProfileView user={user} onEdit={() => setEditing(true)} />
-              )}
-            </Box>
-            <Snackbar
-              open={!!error}
-              autoHideDuration={4000}
-              onClose={() => setError(null)}
-            >
-              <Alert severity="error" onClose={() => setError(null)}>
-                {error}
-              </Alert>
-            </Snackbar>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          backgroundColor: '#f5f5f5',
+        }}
+      >
+        <Toolbar />
+        
+        <Container maxWidth="md">
+          {editing ? (
+            <ProfileEdit
+              user={user}
+              onSave={handleSave}
+              onCancel={() => setEditing(false)}
+            />
+          ) : (
+            <ProfileView
+              user={user}
+              onEdit={() => setEditing(true)}
+            />
+          )}
+        </Container>
 
-            <Snackbar
-              open={!!success}
-              autoHideDuration={4000}
-              onClose={() => setSuccess(null)}
-            >
-              <Alert severity="success" onClose={() => setSuccess(null)}>
-                {success}
-              </Alert>
-            </Snackbar>
-          </Container>
-        </div>
-      </div>
+        <Snackbar
+          open={!!error}
+          autoHideDuration={6000}
+          onClose={() => setError(null)}
+        >
+          <Alert onClose={() => setError(null)} severity="error">
+            {error}
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={!!success}
+          autoHideDuration={6000}
+          onClose={() => setSuccess(null)}
+        >
+          <Alert onClose={() => setSuccess(null)} severity="success">
+            {success}
+          </Alert>
+        </Snackbar>
+      </Box>
     </>
   );
 };
