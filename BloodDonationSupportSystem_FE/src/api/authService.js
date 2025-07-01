@@ -24,7 +24,7 @@ export const logout = () => {
 
 export const loginGooleApi = async (credentialResponse) => {
   return await axios.post(
-    "http://localhost:8090/api/auth/google/callback",
+    "/auth/google/callback",
     { credential: credentialResponse.credential }
   );
 };
