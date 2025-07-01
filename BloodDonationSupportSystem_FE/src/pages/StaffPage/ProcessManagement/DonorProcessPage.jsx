@@ -16,17 +16,17 @@ export default function DonorProcessPage() {
       donorFullName: 'Nguyễn Văn A',
       registrationDate: '2025-06-20T00:00:00.000Z',
       donationEmergencyId: 'emergency-1',
-      registrationStatus: 'ĐÃ DUYỆT',
+      registrationStatus: 'CHỜ ĐỢI',
       processStatus: 'ĐANG XỬ LÍ',
       bloodType: 'A+',
-      volumeMl: 450,
+      volumeMl: null,
     },
     {
       donationRegistrationId: '2',
       donorFullName: 'Trần Thị B',
       registrationDate: '2025-06-18T00:00:00.000Z',
       donationEmergencyId: null,
-      registrationStatus: 'CHỜ DUYỆT',
+      registrationStatus: 'CHỜ ĐỢI',
       processStatus: 'CHỜ ĐỢI',
       bloodType: 'O-',
       volumeMl: null,
@@ -36,7 +36,7 @@ export default function DonorProcessPage() {
       donorFullName: 'Lê Văn C',
       registrationDate: '2025-06-15T00:00:00.000Z',
       donationEmergencyId: null,
-      registrationStatus: 'ĐÃ DUYỆT',
+      registrationStatus: 'CHỜ ĐỢI',
       processStatus: 'ĐÃ HIẾN',
       bloodType: 'B+',
       volumeMl: 350,
@@ -46,7 +46,7 @@ export default function DonorProcessPage() {
       donorFullName: 'Phạm Thị D',
       registrationDate: '2025-06-19T00:00:00.000Z',
       donationEmergencyId: 'emergency-2',
-      registrationStatus: 'ĐÃ DUYỆT',
+      registrationStatus: 'CHỜ ĐỢI',
       processStatus: 'CHỜ ĐỢI',
       bloodType: 'AB+',
       volumeMl: null,
@@ -109,10 +109,6 @@ export default function DonorProcessPage() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-
-      <Box>
-        <Navigation />
-      </Box>
 
       {/* ✅ Thanh tìm kiếm + lọc */}
       <Box mb={3} mt={3}>

@@ -12,7 +12,7 @@ import { Search } from 'lucide-react';
 export default function FilterBarProcess({
   searchTerm,
   setSearchTerm,
-  dateFilter, 
+  dateFilter,
   setDateFilter,
   processStatusFilter,
   setProcessStatusFilter,
@@ -43,7 +43,7 @@ export default function FilterBarProcess({
             />
           </Grid>
 
-          <Grid item xs={12} md={2} sx={{ width: 200 }}>
+          <Grid item xs={12} md={2} sx={{ width: 180 }}>
             <TextField
               type="date"
               fullWidth
@@ -56,8 +56,8 @@ export default function FilterBarProcess({
             />
           </Grid>
 
-           {/* 🚨 Mức độ */}
-          <Grid item xs={12} md={2} sx={{ width: 150 }}>
+          {/* 🚨 Mức độ */}
+          <Grid item xs={12} md={2} sx={{ width: 180 }}>
             <TextField
               select
               fullWidth
@@ -66,8 +66,10 @@ export default function FilterBarProcess({
               onChange={(e) => setPriorityFilter(e.target.value)}
             >
               <MenuItem value="all">Tất cả</MenuItem>
-              <MenuItem value="THÔNG THƯỜNG">Thông thường</MenuItem>
+              <MenuItem value="CỰC KỲ KHẨN CẤP">Cực kỳ khẩn cấp</MenuItem>
+              <MenuItem value="RẤT KHẨN CẤP">Rất khẩn cấp</MenuItem>
               <MenuItem value="KHẨN CẤP">Khẩn cấp</MenuItem>
+              <MenuItem value="BÌNH THƯỜNG">Bình thường</MenuItem>
             </TextField>
           </Grid>
 
@@ -83,26 +85,6 @@ export default function FilterBarProcess({
               <MenuItem value="all">Tất cả</MenuItem>
               <MenuItem value="CHỜ ĐỢI">Chờ đợi</MenuItem>
               <MenuItem value="ĐANG XỬ LÍ">Đang xử lí</MenuItem>
-            </TextField>
-          </Grid>         
-
-          <Grid item xs={12} md={2} sx={{ width: 100 }}>
-            <TextField
-              select
-              fullWidth
-              label="Nhóm máu"
-              value={bloodTypeFilter}
-              onChange={(e) => setBloodTypeFilter(e.target.value)}
-            >
-              <MenuItem value="all">Tất cả</MenuItem>
-              <MenuItem value="A-">A-</MenuItem>
-              <MenuItem value="A+">A+</MenuItem>
-              <MenuItem value="B-">B-</MenuItem>
-              <MenuItem value="B+">B+</MenuItem>
-              <MenuItem value="O-">O-</MenuItem>
-              <MenuItem value="O+">O+</MenuItem>
-              <MenuItem value="AB-">AB-</MenuItem>
-              <MenuItem value="AB+">AB+</MenuItem>
             </TextField>
           </Grid>
 

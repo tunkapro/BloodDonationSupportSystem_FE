@@ -39,7 +39,7 @@ export default function FilterBarHealthCheck({
             />
           </Grid>
          
-          <Grid item xs={12} md={2} sx={{ width: 315 }}>
+          <Grid item xs={12} md={2} sx={{ width: 260 }}>
             <TextField
               type="date"
               fullWidth
@@ -53,7 +53,7 @@ export default function FilterBarHealthCheck({
           </Grid>
 
           {/* 🚨 Mức độ */}
-          <Grid item xs={12} md={2} sx={{ width: 315 }}>
+          <Grid item xs={12} md={2} sx={{ width: 260 }}>
             <TextField
               select
               fullWidth
@@ -62,8 +62,11 @@ export default function FilterBarHealthCheck({
               onChange={(e) => setPriorityFilter(e.target.value)}
             >
               <MenuItem value="all">Tất cả</MenuItem>
-              <MenuItem value="THÔNG THƯỜNG">Thông thường</MenuItem>
+              <MenuItem value="CỰC KỲ KHẨN CẤP">Cực kỳ khẩn cấp</MenuItem>
+              <MenuItem value="RẤT KHẨN CẤP">Rất khẩn cấp</MenuItem>
               <MenuItem value="KHẨN CẤP">Khẩn cấp</MenuItem>
+              <MenuItem value="BÌNH THƯỜNG">Bình thường</MenuItem>
+                                               
             </TextField>
           </Grid>
         </Grid>

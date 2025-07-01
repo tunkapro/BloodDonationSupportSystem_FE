@@ -19,10 +19,6 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
 
   const handleConfirmSave = () => {
     if (donor.healthCheckStatus !== "CHỜ ĐỢI") {
-      if (!donor.bloodType || donor.bloodType === '—') {
-        alert('Vui lòng chọn nhóm máu.');
-        return;
-      }
 
       if (!donor.height || Number(donor.height) <= 0) {
         alert('Vui lòng nhập chiều cao hợp lệ.');
@@ -97,21 +93,17 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
 
           <Grid item xs={12} sm={6} mt={2} width={415}>
             <Typography fontWeight="bold" fontSize={14} gutterBottom>
-              Nhóm máu
+              Ghi chú
             </Typography>
             <TextField
-              select
-              value={donor.bloodType}
-              fullWidth
-              required
-              onChange={(e) => onDonorChange({ ...donor, bloodType: e.target.value })}
+              multiline
+              value={donor.note}
+              label={<em>Ghi chú thêm của nhân viên y tế</em>}
+              fullWidth      
+              onChange={(e) => onDonorChange({ ...donor, note: e.target.value })}
               disabled={isDisabledByHealthCheck}
             >
-              {['—', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
+
             </TextField>
           </Grid>
 
