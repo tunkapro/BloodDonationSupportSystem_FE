@@ -73,6 +73,7 @@ const CustomRoute = () => {
         <Route path="find-by-distance" element={<FindDistancePage />} />
         <Route path="blood-management" element={<DonorHealthCheckPage />} />
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
+        <Route path="profile" element={<ProfilePage />} />
         <Route
           path="blood-donation-schedule"
           element={<BloodDonationScheduleComponent />}
@@ -84,6 +85,7 @@ const CustomRoute = () => {
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
       
       {/* Error Route */}
