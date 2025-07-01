@@ -386,7 +386,8 @@
       "volume": "450",
       "is_passed": "ĐÃ ĐẠT",
       "blood_type_id": "A+",
-      "id": "rd2"
+      "id": "rd2",
+      "type_donation":"BÌNH THƯỜNG"
     },
     {
       "registration_id": "3",
@@ -394,7 +395,8 @@
       "volume": "450",
       "is_passed": "CHƯA KIỂM TRA",
       "blood_type_id": "A+",
-      "id": "rd3"
+      "id": "rd3",
+      "type_donation":"BÌNH THƯỜNG"
     },
     {
       "registration_id": "4",
@@ -402,7 +404,8 @@
       "volume": "450",
       "is_passed": "CHƯA KIỂM TRA",
       "blood_type_id": "A+",
-      "id": "rd4"
+      "id": "rd4",
+      "type_donation":"BÌNH THƯỜNG"
     },
     {
       "registration_id": "5",
@@ -410,7 +413,8 @@
       "volume": "450",
       "is_passed": "ĐÃ ĐẠT",
       "blood_type_id": "A+",
-      "id": "rd5"
+      "id": "rd5",
+      "type_donation":"BÌNH THƯỜNG"
     }
   ],
   "bloodRequestList": [
@@ -470,5 +474,7 @@
       "donor_id":"4",
       "staff_id":"",
       "blood_donation_schedule_id":""
+
      }]
   }
+
