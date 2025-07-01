@@ -22,4 +22,9 @@ export const logout = () => {
   localStorage.removeItem("token");
 };
 
-
+export const loginGooleApi = async (credentialResponse) => {
+  return await axios.post(
+    "http://localhost:8090/api/auth/google/callback",
+    { credential: credentialResponse.credential }
+  );
+};

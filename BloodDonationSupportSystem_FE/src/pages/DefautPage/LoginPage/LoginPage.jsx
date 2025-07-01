@@ -19,7 +19,7 @@ import { login } from "../../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/authContext";
 
-import axios from "axios";
+import { loginGooleApi } from "../../../api/authService";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -56,22 +56,10 @@ export default function LoginPage() {
   };
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8090/api/auth/google/callback",
-        { credential: credentialResponse.credential },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': "application/json",
-          },
-        }
-      );
-      console.log("Debug này xem Backend response:", response.data);
+      const response = await loginGooleApi(credentialResponse);    
       if (response.data.data) {
-        const token = response.data.data;
-        console.log("JWT Token received:", token);
-        localStorage.setItem("token", response.data.data);
-
+        const token = response.data.data;    
+        localStorage.setItem("token", token);
         await loadUser();
         navigate("/");
       }
