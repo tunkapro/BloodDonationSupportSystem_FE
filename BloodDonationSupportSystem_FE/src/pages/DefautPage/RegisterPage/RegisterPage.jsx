@@ -54,7 +54,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <Box sx={{ padding : '50px' }}>
+    <Box sx={{ padding : '50px'}}>
     <Toolbar />
       <Container maxWidth="sm">
       <Box

@@ -1,19 +1,18 @@
 import { Outlet } from 'react-router-dom'
 import Footer from '../../components/Footer';
 import AppBarHeader from '../AppBarHeader';
-import { useEffect } from 'react';
-import { useAuth } from '../../context/authContext';
+import RequireAuth from "../../components/RequireAuth";
 
 
 export default function DefaultLayout() {
-    
 
 
-    
+
+
 
     return (
         <>
-            <AppBarHeader/>
+            <AppBarHeader />
             <Outlet />
             <Footer></Footer>
         </>

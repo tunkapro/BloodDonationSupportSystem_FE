@@ -24,7 +24,7 @@ const ProfileView = ({ user, onEdit }) => {
   return (
     <Paper sx={{ width: '100%', height: 'auto', m: 'auto', padding: 5 }}>
       <Stack spacing={2}>
-        
+
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2, fontSize: '2rem' }}>
           <strong>Thông tin tài khoản</strong>
         </Box>
@@ -50,7 +50,9 @@ const ProfileView = ({ user, onEdit }) => {
             new Date(user.dayOfBirth).toLocaleDateString('vi-VN')
           }
         </Typography>
-        <Typography><strong>Nhóm máu:</strong> {user.bloodType}</Typography>
+        <Typography>
+          <strong>Nhóm máu:</strong> {user.bloodType ? user.bloodType : "Chưa cập nhật"}
+        </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
           <Button
             variant="contained"
@@ -75,13 +77,6 @@ const ProfileView = ({ user, onEdit }) => {
         <Chip
           label="Tài khoản đã xác thực"
           color="success"
-          variant="outlined"
-          sx={{ borderRadius: 3 }}
-        />
-        <Chip
-          label={`Thành viên từ ${user.createdAt ? user.createdAt.substring(0, 4) : 'Chưa rõ'
-            }`}
-          color="primary"
           variant="outlined"
           sx={{ borderRadius: 3 }}
         />

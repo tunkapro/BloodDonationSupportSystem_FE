@@ -39,7 +39,6 @@ export default function AppointmentHistory() {
     axios
       .get('/member/donation-info')
       .then((res) => {
-        console.log(res.data.data)
         setAppointment(res.data.data)
       })
       .catch((err) => {

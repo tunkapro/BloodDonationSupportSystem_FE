@@ -15,8 +15,7 @@ export default function BloodDonateTabs() {
       axios
         .get('/member/donation-info')
         .then((res) => {
-          setHistory(res.data.data)
-          console.log(res.data.data);
+          setHistory(res.data.data);
         })
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));
