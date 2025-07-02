@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Box, Typography } from '@mui/material';
-import { Navigation } from '../ProcessManagement/Navigation';
 import FilterBarHealthCheck from '../ProcessManagement/FilterBarHealthCheck';
 import DonorTableHealthCheck from '../ProcessManagement/DonorTableHealthCheck';
 import UpdateHealthCheck from '../ProcessManagement/UpdateHealthCheck';
@@ -13,53 +12,10 @@ import { getHealthChecksApi } from '../../../api/healthcheckService';
 
 export default function DonorHealthCheckPage() {
 
-  // const mockDonors = [
-  //   {
-  //     donationRegistrationId: "1",
-  //     donorFullName: "Nguyễn Văn A",
-  //     registrationDate: "2025-06-20T08:00:00Z",
-  //     donationEmergencyId: "E001",
-  //     registrationStatus: "CHƯA HIẾN",
-  //     healthCheckStatus: "CHỜ ĐỢI",
-  //     height: 170,
-  //     weight: 60,
-  //     bloodType: "O+",
-  //     staffFullName: "Bác sĩ Trần Văn B",
-  //     addressHospital: "Bệnh viện Chợ Rẫy",
-  //   },
-  //   {
-  //     donationRegistrationId: "2",
-  //     donorFullName: "Trần Thị B",
-  //     registrationDate: "2025-06-18T14:00:00Z",
-  //     donationEmergencyId: null,
-  //     registrationStatus: "CHƯA HIẾN",
-  //     healthCheckStatus: "ĐÃ ĐẠT",
-  //     height: 160,
-  //     weight: 52,
-  //     bloodType: "A-",
-  //     staffFullName: "Điều dưỡng Lê Thị C",
-  //     addressHospital: "Bệnh viện 115",
-  //   },
-  //   {
-  //     donationRegistrationId: "3",
-  //     donorFullName: "Lê Văn C",
-  //     registrationDate: "2025-06-18T10:30:00Z",
-  //     donationEmergencyId: "E002",
-  //     registrationStatus: "CHƯA HIẾN",
-  //     healthCheckStatus: "CHƯA ĐẠT",
-  //     height: 175,
-  //     weight: 68,
-  //     bloodType: "B+",
-  //     staffFullName: null,
-  //     addressHospital: null,
-  //   },
-  // ]
-
   const [donors, setDonors] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchHealthChecks = async () => {
+  const fetchHealthChecks = async () => {
       try {
         const response = await getHealthChecksApi();
 
@@ -88,6 +44,7 @@ export default function DonorHealthCheckPage() {
       }
     };
 
+  useEffect(() => {
     fetchHealthChecks();
   }, []);
 
@@ -97,6 +54,7 @@ export default function DonorHealthCheckPage() {
   const [dateFilter, setDateFilter] = useState('');
   const [cancelDonorOpen, setCancelDonorOpen] = useState(false);
   const [selectedCancelDonor, setSelectedCancelDonor] = useState(null);
+
 
 
   // ✅ Lọc dữ liệu theo search và filter
@@ -148,7 +106,7 @@ export default function DonorHealthCheckPage() {
         isOpen={!!selectedDonor}
         onClose={() => setSelectedDonor(null)}
         donor={selectedDonor}
-        onSave={handleSaveDonor}
+        onSave={fetchHealthChecks}
         onDonorChange={(updated) => setSelectedDonor(updated)}
       />
 
@@ -156,7 +114,7 @@ export default function DonorHealthCheckPage() {
         open={cancelDonorOpen}
         onClose={() => setCancelDonorOpen(false)}
         donor={selectedCancelDonor}
-        onSave={handleSaveDonor}
+        onReload={fetchHealthChecks}
       />
     </Container>
   );

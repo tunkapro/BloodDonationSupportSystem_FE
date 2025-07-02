@@ -45,7 +45,7 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                 <TableCell>Mức độ</TableCell>
                 <TableCell>Trạng thái đơn ĐK</TableCell>
                 <TableCell>Trạng thái tiến trình</TableCell>
-                <TableCell>Lượng máu</TableCell>
+                <TableCell>Ghi chú sức khỏe</TableCell>
                 <TableCell>Cập nhật</TableCell>
                 <TableCell>Hủy đơn</TableCell>
               </TableRow>
