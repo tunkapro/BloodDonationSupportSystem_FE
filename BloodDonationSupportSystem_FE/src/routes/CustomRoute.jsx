@@ -32,6 +32,7 @@ import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/Blood
 import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
 import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
+import { EmergencyRegistrationForm } from "../pages/StaffPage/EmergencyDonation/EmergencyRegistrationForm";
 
 
 
@@ -79,6 +80,7 @@ const CustomRoute = () => {
           <Route path="" element={<DonorHealthCheckPage />} />
           <Route path="process" element={<DonorProcessPage />} />
         </Route>
+        <Route path="emergency" element={<EmergencyRegistrationForm />} />
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route
