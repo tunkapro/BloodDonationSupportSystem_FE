@@ -80,6 +80,7 @@ const CustomRoute = () => {
           <Route path="process" element={<DonorProcessPage />} />
         </Route>
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
+        <Route path="profile" element={<ProfilePage />} />
         <Route
           path="blood-donation-schedule"
           element={<BloodDonationScheduleComponent />}
@@ -91,6 +92,7 @@ const CustomRoute = () => {
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
       
       {/* Error Route */}
