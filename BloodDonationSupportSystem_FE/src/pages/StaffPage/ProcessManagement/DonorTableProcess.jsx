@@ -23,7 +23,6 @@ const getProcessColor = (status) => {
       return 'warning';
     case 'ĐANG XỬ LÍ':
       return 'info';
-      return 'success';
     default:
       return 'default';
   }
@@ -46,8 +45,7 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                 <TableCell>Mức độ</TableCell>
                 <TableCell>Trạng thái đơn ĐK</TableCell>
                 <TableCell>Trạng thái tiến trình</TableCell>
-                <TableCell>Nhóm máu</TableCell>
-                <TableCell>Lượng máu</TableCell>
+                <TableCell>Ghi chú sức khỏe</TableCell>
                 <TableCell>Cập nhật</TableCell>
                 <TableCell>Hủy đơn</TableCell>
               </TableRow>
@@ -88,8 +86,6 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                       size="small"
                     />
                   </TableCell>
-
-                  <TableCell>{donor.bloodType || '—'}</TableCell>
 
                   <TableCell>{donor.volumeMl || '—'}</TableCell>
 
