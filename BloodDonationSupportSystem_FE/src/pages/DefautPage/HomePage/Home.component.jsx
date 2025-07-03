@@ -5,6 +5,7 @@ import Blog from "./HomePageDetails/Blog";
 import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
+import QuestionAndAnswer from "../Q&APage/Q&APage";
 
 import BloodTypeSearch from "../../../components/BloodTypeSearch";
 
@@ -57,14 +58,16 @@ export default function Home() {
           </Typography>
         </Box>
 
-        <Blog></Blog>
+        {/* <Blog></Blog> */}
+        <QuestionAndAnswer/>
 
-        <div className="relative min-h-screen w-full bg-blue-400/40">
-          <div className="absolute inset-0 backdrop-blur-sm z-0" />
-          <div className="relative z-10 flex items-center justify-center min-h-screen w-full px-4">
-            <DonationTips></DonationTips>
-          </div>
-        </div>
+        <Box
+          sx={{
+            background: '#87ceeb',
+          }}
+        >
+          <DonationTips/>
+        </Box>
 
       </Box>
     </>
