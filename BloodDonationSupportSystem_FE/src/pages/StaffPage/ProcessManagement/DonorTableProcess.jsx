@@ -21,9 +21,8 @@ const getProcessColor = (status) => {
   switch (status) {
     case 'CHỜ ĐỢI':
       return 'warning';
-    case 'ĐANG XỬ LÍ':
+    case 'ĐANG XỬ LÝ':
       return 'info';
-      return 'success';
     default:
       return 'default';
   }
@@ -46,8 +45,7 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                 <TableCell>Mức độ</TableCell>
                 <TableCell>Trạng thái đơn ĐK</TableCell>
                 <TableCell>Trạng thái tiến trình</TableCell>
-                <TableCell>Nhóm máu</TableCell>
-                <TableCell>Lượng máu</TableCell>
+                <TableCell>Ghi chú sức khỏe</TableCell>
                 <TableCell>Cập nhật</TableCell>
                 <TableCell>Hủy đơn</TableCell>
               </TableRow>
@@ -64,8 +62,13 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
 
                   <TableCell>
                     <Chip
-                      label={donor.donationEmergencyId ? 'KHẨN CẤP' : 'THÔNG THƯỜNG'}
-                      color={donor.donationEmergencyId ? 'error' : 'default'}
+                      label={donor.levelOfUrgency || "BÌNH THƯỜNG"}
+                      color={
+                        donor.levelOfUrgency === "CỰC KỲ KHẨN CẤP" ? "error"
+                          : donor.levelOfUrgency === "RẤT KHẨN CẤP" ? "warning"
+                            : donor.levelOfUrgency === "KHẨN CẤP" ? "secondary"
+                              : "default"
+                      }
                       variant="outlined"
                       size="small"
                     />
@@ -89,9 +92,7 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                     />
                   </TableCell>
 
-                  <TableCell>{donor.bloodType || '—'}</TableCell>
-
-                  <TableCell>{donor.volumeMl || '—'}</TableCell>
+                  <TableCell>{donor.note}</TableCell>
 
                   <TableCell>
                     <Tooltip title="Cập nhật">

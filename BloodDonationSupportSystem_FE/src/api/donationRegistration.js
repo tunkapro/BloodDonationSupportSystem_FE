@@ -8,3 +8,9 @@ export const registerDonation = async (data) => {
   
   return await apiResponse(() => axios.post(`${API_URL}/registration`, data));
 };
+
+export const cancelDonationRegistration = (donationRegistrationId) =>
+  axios.put('/staff/cancel-registration', {
+    donationRegistrationId,
+    status: 'HỦY',
+  });

@@ -1,76 +1,50 @@
 
 import React, { useEffect, useState } from 'react';
 import { Container, Box, Typography } from '@mui/material';
-import { Navigation } from '../ProcessManagement/Navigation';
 import DonorTableProcess from '../ProcessManagement/DonorTableProcess';
 import UpdateProcess from '../ProcessManagement/UpdateProcess';
 import FilterBarProcess from '../ProcessManagement/FilterBarProcess';
 import CancelDonor from '../ProcessManagement/CancelDonor';
+import { getDonationProcessApi } from '../../../api/donationProcess';
 
 
 export default function DonorProcessPage() {
 
-  const mockDonors = [
-    {
-      donationRegistrationId: '1',
-      donorFullName: 'Nguyễn Văn A',
-      registrationDate: '2025-06-20T00:00:00.000Z',
-      donationEmergencyId: 'emergency-1',
-      registrationStatus: 'ĐÃ DUYỆT',
-      processStatus: 'ĐANG XỬ LÍ',
-      bloodType: 'A+',
-      volumeMl: 450,
-    },
-    {
-      donationRegistrationId: '2',
-      donorFullName: 'Trần Thị B',
-      registrationDate: '2025-06-18T00:00:00.000Z',
-      donationEmergencyId: null,
-      registrationStatus: 'CHỜ DUYỆT',
-      processStatus: 'CHỜ ĐỢI',
-      bloodType: 'O-',
-      volumeMl: null,
-    },
-    {
-      donationRegistrationId: '3',
-      donorFullName: 'Lê Văn C',
-      registrationDate: '2025-06-15T00:00:00.000Z',
-      donationEmergencyId: null,
-      registrationStatus: 'ĐÃ DUYỆT',
-      processStatus: 'ĐÃ HIẾN',
-      bloodType: 'B+',
-      volumeMl: 350,
-    },
-    {
-      donationRegistrationId: '4',
-      donorFullName: 'Phạm Thị D',
-      registrationDate: '2025-06-19T00:00:00.000Z',
-      donationEmergencyId: 'emergency-2',
-      registrationStatus: 'ĐÃ DUYỆT',
-      processStatus: 'CHỜ ĐỢI',
-      bloodType: 'AB+',
-      volumeMl: null,
-    },
-    {
-      donationRegistrationId: '5',
-      donorFullName: 'Hoàng Minh E',
-      registrationDate: '2025-06-21T00:00:00.000Z',
-      donationEmergencyId: null,
-      registrationStatus: 'HUỶ',
-      processStatus: 'CHỜ ĐỢI',
-      bloodType: null,
-      volumeMl: null,
-    },
-  ];
+  const [donors, setDonors] = useState([]);
+  const [error, setError] = useState(null);
 
+  const fetchDonationProcess = async () => {
+    try {
+      const response = await getDonationProcessApi();
 
-  const [donors, setDonors] = useState(mockDonors);
+      const urgencyPriority = {
+        "CỰC KỲ KHẨN CẤP": 1,
+        "RẤT KHẨN CẤP": 2,
+        "KHẨN CẤP": 3,
+        "THÔNG THƯỜNG": 4,
+      };
 
-  //   useEffect(() => {
-  //     getAllDonors()
-  //       .then(data => setDonors(data))
-  //       .catch(err => console.error('Lỗi load danh sách:', err));
-  //   }, []);
+      const sortedDonors = response.data.data
+        .map((item) => ({
+          ...item,
+          levelOfUrgency: item.levelOfUrgency || "BÌNH THƯỜNG",
+        }))
+        .sort((a, b) => {
+          const priorityA = urgencyPriority[a.levelOfUrgency] || 4;
+          const priorityB = urgencyPriority[b.levelOfUrgency] || 4;
+          return priorityA - priorityB;
+        });
+
+      setDonors(sortedDonors);
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Không thể tải danh sách quản lí tiến trình.");
+    }
+  };
+
+  useEffect(() => {
+    fetchDonationProcess();
+  }, []);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [processStatusFilter, setProcessStatusFilter] = useState('all');
@@ -86,15 +60,16 @@ export default function DonorProcessPage() {
     const matchesSearch = donor.donorFullName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesProcessStatus = processStatusFilter === 'all' || donor.processStatus === processStatusFilter;
     const matchesDate = !dateFilter || donor.registrationDate.startsWith(dateFilter);
-    const matchesBloodType = bloodTypeFilter === 'all' || donor.bloodType === bloodTypeFilter;
+    const urgency = donor.levelOfUrgency || "BÌNH THƯỜNG"; // Gán mặc định nếu null
+
     const matchesPriority =
-      priorityFilter === 'all' ||
-      (priorityFilter === 'KHẨN CẤP' && donor.donationEmergencyId) ||
-      (priorityFilter === 'THÔNG THƯỜNG' && !donor.donationEmergencyId);
-    return matchesSearch && matchesProcessStatus && matchesBloodType && matchesDate && matchesPriority;
+      priorityFilter === "all" ||
+      (priorityFilter === "BÌNH THƯỜNG" && urgency === "BÌNH THƯỜNG") ||
+      urgency === priorityFilter;
+    return matchesSearch && matchesProcessStatus && matchesDate && matchesPriority;
   });
 
-   const handleCancelDonorClick = (donor) => {
+  const handleCancelDonorClick = (donor) => {
     setSelectedCancelDonor(donor);
     setCancelDonorOpen(true);
   };
@@ -109,10 +84,6 @@ export default function DonorProcessPage() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-
-      <Box>
-        <Navigation />
-      </Box>
 
       {/* ✅ Thanh tìm kiếm + lọc */}
       <Box mb={3} mt={3}>
@@ -131,14 +102,14 @@ export default function DonorProcessPage() {
       </Box>
 
       {/* ✅ Bảng danh sách */}
-      <DonorTableProcess donors={filteredDonors} onEditDonor={setSelectedDonor} onCancelDonor={handleCancelDonorClick}/>
+      <DonorTableProcess donors={filteredDonors} onEditDonor={setSelectedDonor} onCancelDonor={handleCancelDonorClick} />
 
       {/* ✅ Dialog cập nhật */}
       <UpdateProcess
         isOpen={!!selectedDonor}
         onClose={() => setSelectedDonor(null)}
         donor={selectedDonor}
-        onSave={handleSaveDonor}
+        onSave={fetchDonationProcess}
         onDonorChange={(updated) => setSelectedDonor(updated)}
       />
 
@@ -146,7 +117,7 @@ export default function DonorProcessPage() {
         open={cancelDonorOpen}
         onClose={() => setCancelDonorOpen(false)}
         donor={selectedCancelDonor}
-        onSave={handleSaveDonor}
+        onReload={fetchDonationProcess}
       />
     </Container>
   );

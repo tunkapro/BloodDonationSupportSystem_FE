@@ -1,18 +1,22 @@
-    import { Button, Card, CardContent, Stack, Typography, Box } from "@mui/material"
+    import { Button, Card,Container, CardContent, Stack, Typography, Box } from "@mui/material"
     import { Heart, ClipboardCheck } from "lucide-react"
+    import { Outlet, useLocation, useNavigate } from "react-router-dom"
 
     export function Navigation() {
 
+    const location = useLocation()
+    const navigate = useNavigate()
+    const pathname = location.pathname
 
     const navItems = [
         {
-        path: "/health-check",
+        path: "/staff/blood-management/health-check",
         label: "Sàng lọc sức khỏe",
         icon: Heart,
         description: "Kiểm tra và đánh giá tình trạng sức khỏe người hiến máu",
         },
         {
-        path: "/process",
+        path: "/staff/blood-management/process",
         label: "Quản lý tiến trình",
         icon: ClipboardCheck,
         description: "Theo dõi và quản lý toàn bộ quy trình hiến máu",
@@ -20,18 +24,18 @@
     ]
 
     return (
-        <Box>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Card sx={{ p: 2}}>
         <CardContent >
-            <Stack spacing={2} direction="row">
+            <Stack spacing={2} direction="row" >
             {navItems.map((item) => {
                 const Icon = item.icon
-                // const isActive = pathname === item.path
+                const isActive = pathname === item.path
 
                 return (
                 <Button
                     key={item.path}
-                    // variant={isActive ? "contained" : "outlined"}
+                    variant={isActive ? "contained" : "outlined"}
                     onClick={() => navigate(item.path)}
                     startIcon={<Icon size={24} />}
                     sx={{
@@ -55,8 +59,9 @@
                 )   
             })}
             </Stack>
+            <Outlet/>
         </CardContent>
         </Card>
-        </Box>
+        </Container>
     )
     }
