@@ -61,7 +61,7 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
     }
   };
 
-  const isDisabledByHealthCheck = donor.healthCheckStatus === "CHỜ ĐỢI";
+  const isDisabledByHealthCheck = donor.healthStatus === "CHỜ ĐỢI";
 
   return (
     <>

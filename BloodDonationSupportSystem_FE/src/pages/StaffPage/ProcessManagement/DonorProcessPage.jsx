@@ -11,39 +11,40 @@ import { getDonationProcessApi } from '../../../api/donationProcess';
 export default function DonorProcessPage() {
 
   const [donors, setDonors] = useState([]);
+  const [error, setError] = useState(null);
 
-   const fetchDonationProcess= async () => {
-        try {
-          const response = await getDonationProcessApi();
-  
-          const urgencyPriority = {
-            "CỰC KỲ KHẨN CẤP": 1,
-            "RẤT KHẨN CẤP": 2,
-            "KHẨN CẤP": 3,
-            "THÔNG THƯỜNG": 4,
-          };
-  
-          const sortedDonors = response.data.data
-            .map((item) => ({
-              ...item,
-              levelOfUrgency: item.levelOfUrgency || "BÌNH THƯỜNG",
-            }))
-            .sort((a, b) => {
-              const priorityA = urgencyPriority[a.levelOfUrgency] || 4;
-              const priorityB = urgencyPriority[b.levelOfUrgency] || 4;
-              return priorityA - priorityB;
-            });
-  
-          setDonors(sortedDonors);
-        } catch (err) {
-          console.error("Error:", err);
-          setError("Không thể tải danh sách quản lí tiến trình.");
-        }
+  const fetchDonationProcess = async () => {
+    try {
+      const response = await getDonationProcessApi();
+
+      const urgencyPriority = {
+        "CỰC KỲ KHẨN CẤP": 1,
+        "RẤT KHẨN CẤP": 2,
+        "KHẨN CẤP": 3,
+        "THÔNG THƯỜNG": 4,
       };
 
+      const sortedDonors = response.data.data
+        .map((item) => ({
+          ...item,
+          levelOfUrgency: item.levelOfUrgency || "BÌNH THƯỜNG",
+        }))
+        .sort((a, b) => {
+          const priorityA = urgencyPriority[a.levelOfUrgency] || 4;
+          const priorityB = urgencyPriority[b.levelOfUrgency] || 4;
+          return priorityA - priorityB;
+        });
+
+      setDonors(sortedDonors);
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Không thể tải danh sách quản lí tiến trình.");
+    }
+  };
+
   useEffect(() => {
-     fetchDonationProcess();
-   }, []);
+    fetchDonationProcess();
+  }, []);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [processStatusFilter, setProcessStatusFilter] = useState('all');
@@ -65,10 +66,10 @@ export default function DonorProcessPage() {
       priorityFilter === "all" ||
       (priorityFilter === "BÌNH THƯỜNG" && urgency === "BÌNH THƯỜNG") ||
       urgency === priorityFilter;
-    return matchesSearch && matchesProcessStatus  && matchesDate && matchesPriority;
+    return matchesSearch && matchesProcessStatus && matchesDate && matchesPriority;
   });
 
-   const handleCancelDonorClick = (donor) => {
+  const handleCancelDonorClick = (donor) => {
     setSelectedCancelDonor(donor);
     setCancelDonorOpen(true);
   };
@@ -101,7 +102,7 @@ export default function DonorProcessPage() {
       </Box>
 
       {/* ✅ Bảng danh sách */}
-      <DonorTableProcess donors={filteredDonors} onEditDonor={setSelectedDonor} onCancelDonor={handleCancelDonorClick}/>
+      <DonorTableProcess donors={filteredDonors} onEditDonor={setSelectedDonor} onCancelDonor={handleCancelDonorClick} />
 
       {/* ✅ Dialog cập nhật */}
       <UpdateProcess
