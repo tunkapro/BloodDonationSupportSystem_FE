@@ -26,7 +26,7 @@ export default function DonorHealthCheckPage() {
           "THÔNG THƯỜNG": 4,
         };
 
-        const sortedDonors = response.data
+        const sortedDonors = response.data.data
           .map((item) => ({
             ...item,
             levelOfUrgency: item.levelOfUrgency || "BÌNH THƯỜNG",

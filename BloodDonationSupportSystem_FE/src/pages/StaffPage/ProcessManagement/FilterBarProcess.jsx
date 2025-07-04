@@ -84,7 +84,7 @@ export default function FilterBarProcess({
             >
               <MenuItem value="all">Tất cả</MenuItem>
               <MenuItem value="CHỜ ĐỢI">Chờ đợi</MenuItem>
-              <MenuItem value="ĐANG XỬ LÍ">Đang xử lí</MenuItem>
+              <MenuItem value="ĐANG XỬ LÝ">Đang xử lý</MenuItem>
             </TextField>
           </Grid>
 

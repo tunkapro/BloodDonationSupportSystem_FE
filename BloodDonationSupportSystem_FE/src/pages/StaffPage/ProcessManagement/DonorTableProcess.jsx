@@ -21,7 +21,7 @@ const getProcessColor = (status) => {
   switch (status) {
     case 'CHỜ ĐỢI':
       return 'warning';
-    case 'ĐANG XỬ LÍ':
+    case 'ĐANG XỬ LÝ':
       return 'info';
     default:
       return 'default';
@@ -62,8 +62,13 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
 
                   <TableCell>
                     <Chip
-                      label={donor.donationEmergencyId ? 'KHẨN CẤP' : 'THÔNG THƯỜNG'}
-                      color={donor.donationEmergencyId ? 'error' : 'default'}
+                      label={donor.levelOfUrgency || "BÌNH THƯỜNG"}
+                      color={
+                        donor.levelOfUrgency === "CỰC KỲ KHẨN CẤP" ? "error"
+                          : donor.levelOfUrgency === "RẤT KHẨN CẤP" ? "warning"
+                            : donor.levelOfUrgency === "KHẨN CẤP" ? "secondary"
+                              : "default"
+                      }
                       variant="outlined"
                       size="small"
                     />
@@ -87,7 +92,7 @@ export default function DonorTableProcess({ donors, onEditDonor, onCancelDonor }
                     />
                   </TableCell>
 
-                  <TableCell>{donor.volumeMl || '—'}</TableCell>
+                  <TableCell>{donor.note}</TableCell>
 
                   <TableCell>
                     <Tooltip title="Cập nhật">
