@@ -27,31 +27,8 @@ const ProfilePage = () => {
   }, []);
 
   const handleSave = (updatedData) => {
-    const { fullName, dayOfBirth, address } = updatedData;
-    if (
-      !fullName || fullName.trim() === '' ||
-      !address || address.trim() === '' ||
-      !dayOfBirth || dayOfBirth.trim() === ''
-    ) {
-      setError('Họ tên, ngày sinh và địa chỉ không được để trống.');
-      return;
-    }
-
-    const selectedDate = new Date(dayOfBirth);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (isNaN(selectedDate.getTime())) {
-      setError('Ngày sinh không hợp lệ.');
-      return;
-    }
-
-    if (selectedDate > today) {
-      setError('Ngày sinh không được lớn hơn ngày hiện tại.');
-      return;
-    }
-    
     const { phoneNumber, bloodType, ...editableData } = updatedData;
+    
     axios.put('/profile', editableData)
       .then((res) => {
         setUser(res.data.data);
