@@ -1,8 +1,10 @@
     import { Button, Card, CardContent, Stack, Typography, Box } from "@mui/material"
     import { Heart, ClipboardCheck } from "lucide-react"
+    import { Navigate, useNavigate } from "react-router-dom"
 
     export function Navigation() {
 
+        const navigate = useNavigate();
 
     const navItems = [
         {
