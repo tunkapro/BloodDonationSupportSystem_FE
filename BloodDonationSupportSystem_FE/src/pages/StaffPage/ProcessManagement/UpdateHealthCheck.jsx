@@ -46,7 +46,7 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
         height: Number(donor.height),
         weight: Number(donor.weight),
         note: donor.note,
-        registrationId: donor.donationRegistrationId,
+        donationRegistrationId: donor.donationRegistrationId,
       };
 
       await updateHealthCheckApi(payload);
