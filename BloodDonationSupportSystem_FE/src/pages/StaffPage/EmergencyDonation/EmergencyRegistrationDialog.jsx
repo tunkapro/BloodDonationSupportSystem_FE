@@ -31,7 +31,9 @@ const urgencyLevels = [
   { value: "CỰC KÌ KHẨN CẤP", label: "Cực kì khẩn cấp" },
 ];
 
+
 export function EmergencyRegistrationDialog({ open, onClose, onSubmit }) {
+  const { user } = useAuth();
   const [form, setForm] = useState({
     patient_name: "",
     patient_relatives: "",
@@ -42,9 +44,10 @@ export function EmergencyRegistrationDialog({ open, onClose, onSubmit }) {
     level_of_urgency: "",
     note: "",
     confirmChecked: false,
+    registeredByStaff:user.id,
   });
 
-  const { user } = useAuth();
+  
   const [staffName, setStaffName] = useState("");
 
   const [snackbar, setSnackbar] = useState({
@@ -111,7 +114,7 @@ export function EmergencyRegistrationDialog({ open, onClose, onSubmit }) {
       return false;
     }
 
-    const phoneRegex = /^[0-9]{10,11}$/;
+    const phoneRegex = /^[0-9]{10}$/;
     if (!phoneRegex.test(phonenumber)) {
       showSnackbar("Số điện thoại phải gồm 10-11 chữ số.", "error");
       return false;
@@ -134,7 +137,10 @@ export function EmergencyRegistrationDialog({ open, onClose, onSubmit }) {
       volumeMl: Number(form.volume_ml),
       levelOfUrgency: form.level_of_urgency,
       note: form.note,
+      registeredByStaff:user.id,
     };
+
+    console.log(payload);
 
     try {
       await createEmergencyRequest(payload);
