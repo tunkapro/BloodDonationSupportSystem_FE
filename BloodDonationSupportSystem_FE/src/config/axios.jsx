@@ -1,7 +1,7 @@
 // services/axios.js
 import axios from "axios";
 
-const baseUrl = "http://localhost:8090/api"
+const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 const config = {
   baseURL: baseUrl
