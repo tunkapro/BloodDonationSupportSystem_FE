@@ -5,7 +5,6 @@ export const login = async (data) => {
   console.log(data);
   const res = await axios.post("/auth/login", data);
   localStorage.setItem("token", res.data.data.token);
-  console.log("token"+res.data.data.token)
   return res.data;
 };
 
