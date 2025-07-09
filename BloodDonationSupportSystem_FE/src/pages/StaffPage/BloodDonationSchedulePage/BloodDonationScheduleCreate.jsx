@@ -16,6 +16,24 @@ import {
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import viLocale from 'date-fns/locale/vi'; // Tiếng Việt
 import axios from 'axios';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 const BloodDonationScheduleCreate = () => {
@@ -108,7 +126,7 @@ const BloodDonationScheduleCreate = () => {
                                 rules={{ required: 'Giờ bắt đầu là bắt buộc' }}
                                 render={({ field }) => (
                                     <TimeField
-                                        label="Giờ kết thúc"
+                                        label="Giờ bắt đầu"
                                         value={field.value}
                                         onChange={field.onChange}
                                         format="HH:mm"
