@@ -14,7 +14,6 @@ import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import DonationManagement from "../pages/StaffPage/DonationManagement";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
@@ -22,6 +21,7 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
+
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
@@ -29,6 +29,10 @@ import DonationRegistration from "../pages/MemberPage/DonationRegistration/Donat
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
 import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
+import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
+import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
+import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
+
 
 
 
@@ -48,7 +52,9 @@ const CustomRoute = () => {
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="/user" element={<MemberLayout />}>       
+        <Route path="/user/*" element={<MemberLayout />}>
+
+
            <Route path="appointment-histories" element={<AppointmentHistory />} />
            <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
            <Route path="blood-donation-register" element={<DonationRegistration/>} />
@@ -68,8 +74,13 @@ const CustomRoute = () => {
         <Route path="overview" element={<Overview />} />
         <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
-        <Route path="blood-management" element={<DonationManagement />} />
+        <Route path="blood-management/*" element={<Navigation />} >
+          <Route path="health-check" element={<DonorHealthCheckPage />} />
+          <Route path="" element={<DonorHealthCheckPage />} />
+          <Route path="process" element={<DonorProcessPage />} />
+        </Route>
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
+        <Route path="profile" element={<ProfilePage />} />
         <Route
           path="blood-donation-schedule"
           element={<BloodDonationScheduleComponent />}
@@ -81,6 +92,7 @@ const CustomRoute = () => {
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
       
       {/* Error Route */}

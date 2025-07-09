@@ -39,7 +39,6 @@ export default function AppointmentHistory() {
     axios
       .get('/member/donation-info')
       .then((res) => {
-        console.log(res.data.data)
         setAppointment(res.data.data)
       })
       .catch((err) => {
@@ -224,8 +223,8 @@ export default function AppointmentHistory() {
   return (
     <Box
       sx={{
-        bgcolor: alpha(theme.palette.primary.main, 0.02),
         minHeight: '100vh',
+        backgroundColor: '#f5f5f5',
         py: 4
       }}
     >

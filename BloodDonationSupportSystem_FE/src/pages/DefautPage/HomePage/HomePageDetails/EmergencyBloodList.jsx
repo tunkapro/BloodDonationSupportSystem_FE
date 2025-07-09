@@ -13,8 +13,11 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import axios from "axios";
 import customAxios from "../../../../config/axios";
+import { getEmergencyCases, respondEmergencyRequest } from "../../../../api/emergencyBloodRequest";
+
+
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 const ITEMS_PER_PAGE = 5;
 
@@ -30,15 +33,13 @@ export default function EmergencyRequestList() {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8090/api/emergencies-notification/emergency-cases")
+    getEmergencyCases()
       .then((res) => {
-        console.log(res.data.data);
         setRequests(res.data.data);
         setLoading(false);
       });
 
-    const socket = new SockJS("http://localhost:8090/emergencies-notification");
+    const socket = new SockJS(SOCKET_URL);
     const stomp = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
@@ -56,10 +57,7 @@ export default function EmergencyRequestList() {
 
   const respond = async (id) => {
     try {
-      console.log(id);
-      var result = await customAxios.post(
-        `member/emergency-registrations?emergencyDonationId=${id}`
-      );
+      var result = await respondEmergencyRequest(id);
       if (result) {
         setSnackbar({
           open: true,
@@ -68,7 +66,6 @@ export default function EmergencyRequestList() {
         });
       }
     } catch (err) {
-      console.log(err);
       if (err.status === 403) {
         setSnackbar({
           open: true,

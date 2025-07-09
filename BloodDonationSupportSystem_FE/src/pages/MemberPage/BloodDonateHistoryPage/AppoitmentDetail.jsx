@@ -162,7 +162,7 @@ export default function AppointmentDetail() {
   }
 
   return (
-    <Box sx={{ bgcolor: "#f8fafc", minHeight: "100vh", py: 4 }}>
+    <Box sx={{ backgroundColor: '#f5f5f5', minHeight: "100vh", py: 4 }}>
       <Container maxWidth="md">
         <Box sx={{ mb: 4 }}>
           <Typography variant="h5" fontWeight={600} color="primary" gutterBottom>

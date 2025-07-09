@@ -19,10 +19,11 @@ import { login } from "../../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/authContext";
 
-import axios from "axios";
+import { loginGooleApi } from "../../../api/authService";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [loginGoogleError, setLoginGoogleError] = useState("");
   const { loadUser } = useAuth();
   const navigate = useNavigate();
   const {
@@ -56,22 +57,10 @@ export default function LoginPage() {
   };
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8090/api/auth/google/callback",
-        { credential: credentialResponse.credential },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': "application/json",
-          },
-        }
-      );
-      console.log("Debug này xem Backend response:", response.data);
+      const response = await loginGooleApi(credentialResponse);    
       if (response.data.data) {
-        const token = response.data.data;
-        console.log("JWT Token received:", token);
-        localStorage.setItem("token", response.data.data);
-
+        const token = response.data.data;    
+        localStorage.setItem("token", token);
         await loadUser();
         navigate("/");
       }
@@ -198,16 +187,16 @@ export default function LoginPage() {
               onSuccess={handleGoogleSuccess}
               onError={(error) => {
                 console.error("Google login error:", error);
-                setLoginError("Đăng nhập Google thất bại");
+                setLoginGoogleError("Đăng nhập Google thất bại");
               }}
               useOneTap
               flow="implicit"
             />
           </Box>
 
-          {loginError && (
+          {loginGoogleError && (
             <Typography color="error" align="center" sx={{ mt: 2 }}>
-              {loginError}
+              {loginGoogleError}
             </Typography>
           )}
           <Grid container justifyContent="center" sx={{ mt: 3 }}>

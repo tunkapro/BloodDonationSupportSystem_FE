@@ -22,6 +22,7 @@ import { useAuth } from "../context/authContext";
 
 function AppBarHeader() {
   const { user, loadUser } = useAuth();
+
   //'Home', 'News', 'q-a', 'Contact'
   const pages = [
     {
@@ -244,8 +245,14 @@ function AppBarHeader() {
               onClose={handleCloseUserMenu}
             >
               {settings.map(({ title, path }) => (
-                <MenuItem key={title} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center', textTransform: "none" }} component={Link} to={path}>{title}</Typography>
+                <MenuItem
+                  key={title}
+                  component={Link}
+                  to={`${path}`}
+                  onClick={handleCloseUserMenu}
+                  sx={{ textTransform: "none" }}
+                >
+                  {title}
                 </MenuItem>
 
               ))}
