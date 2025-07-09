@@ -4,11 +4,11 @@ import BloodInformation from "./HomePageDetails/BloodInformation";
 import Blog from "./HomePageDetails/Blog";
 import Banner from "./HomePageDetails/SlideShow";
 import DonationTips from "./HomePageDetails/DonationTip";
+import EmergencyBloodList from "./HomePageDetails/EmergencyBloodList";
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
 import QuestionAndAnswer from "../Q&APage/Q&APage";
 
 import BloodTypeSearch from "../../../components/BloodTypeSearch";
-
 
 export default function Home() {
   return (
@@ -25,14 +25,15 @@ export default function Home() {
           <Banner />
         </Box>
       </Container>
-      <Box sx={{ padding: 2, display: "flex", justifyContent: "center" }}>
-        <BloodDonationRegister />
 
+      <BloodDonationRegister />
+
+      <Box sx={{ paddingX: 2, display: "flex", justifyContent: "center" }}>
+        <EmergencyBloodList></EmergencyBloodList>
       </Box>
-        <Box>
-          <BloodTypeSearch/>
-        </Box>
-
+      <Box>
+        <BloodTypeSearch />
+      </Box>
 
       <Box sx={{ marginTop: 5 }}>
         <Box
@@ -59,16 +60,15 @@ export default function Home() {
         </Box>
 
         {/* <Blog></Blog> */}
-        <QuestionAndAnswer/>
+        <QuestionAndAnswer />
 
         <Box
           sx={{
-            background: '#87ceeb',
+            background: "#87ceeb",
           }}
         >
-          <DonationTips/>
+          <DonationTips />
         </Box>
-
       </Box>
     </>
   );

@@ -37,8 +37,7 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
                 <TableCell>Trạng thái sức khỏe</TableCell>
                 <TableCell>Chiều cao</TableCell>
                 <TableCell>Cân nặng</TableCell>
-                <TableCell>Nhóm máu</TableCell>
-                <TableCell>Thao tác</TableCell>
+                <TableCell>Cập nhật</TableCell>
                 <TableCell>Hủy đơn</TableCell>
               </TableRow>
             </TableHead>
@@ -54,8 +53,13 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
 
                   <TableCell>
                     <Chip
-                      label={donor.donationEmergencyId ? 'KHẨN CẤP' : 'THÔNG THƯỜNG'}
-                      color={donor.donationEmergencyId ? 'error' : 'info'}
+                      label={donor.levelOfUrgency || "BÌNH THƯỜNG"} 
+                      color={
+                        donor.levelOfUrgency === "CỰC KỲ KHẨN CẤP" ? "error"
+                          : donor.levelOfUrgency === "RẤT KHẨN CẤP" ? "warning"
+                            : donor.levelOfUrgency === "KHẨN CẤP" ? "secondary"
+                              : "default" 
+                      }
                       variant="outlined"
                       size="small"
                     />
@@ -64,7 +68,7 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
                   <TableCell>
                     <Chip
                       label={donor.registrationStatus}
-                      color={'warning'}
+                      color={'primary'}
                       variant="outlined"
                       size="small"
                     />
@@ -72,8 +76,8 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
 
                   <TableCell>
                     <Chip
-                      label={donor.healthCheckStatus}
-                      color={'warning'}
+                      label={donor.healthStatus}
+                      color={'primary'}
                       variant="outlined"
                       size="small"
                     />
@@ -82,8 +86,6 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
                   <TableCell>{donor.height || '—'}</TableCell>
 
                   <TableCell>{donor.weight || '—'}</TableCell>
-
-                  <TableCell>{donor.bloodType || '—'}</TableCell>
 
                   <TableCell>
                     <Tooltip title="Cập nhật">

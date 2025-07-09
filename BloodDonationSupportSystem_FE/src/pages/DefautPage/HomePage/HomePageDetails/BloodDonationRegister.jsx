@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button, Typography, Modal, Snackbar, Alert } from "@mui/material";
+import { Box, Button, Typography, Modal, Snackbar, Alert,Grid, Paper } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { registerDonation } from "../../../../api/donationRegistration";
 import { useAuth } from "../../../../context/authContext";
+import GroupsIcon from '@mui/icons-material/Groups';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 dayjs.extend(customParseFormat);
 
@@ -94,10 +98,80 @@ export default function BloodDonationModal() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Button variant="contained" color="error" onClick={handleOpen}>
-        <Typography variant="h5">Đăng Ký Hiến Máu</Typography>
-      </Button>
+  
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box sx={{ background: '#FFF5F5', py: 6, px: { xs: 2, md: 8 }, display: 'flex', justifyContent: 'center' }}>
+   
+            <Box>
+              <Typography variant="overline" color="error" fontWeight="bold" sx={{ background: '#FFE5E5', px: 2, py: 0.5, borderRadius: 2 }}>
+                Cứu sống là niềm vui
+              </Typography>
+              <Typography variant="h2" fontWeight="bold" sx={{ mt: 2, mb: 1 }}>
+                Hiến Máu <span style={{ color: '#E53935' }}>Cứu Người</span>
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                Mỗi giọt máu bạn hiến tặng có thể cứu sống 3 người. Hãy cùng chúng tôi lan tỏa yêu thương và chia sẻ sự sống.
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="large"
+                  sx={{ borderRadius: 2, fontWeight: 'bold', px: 4 }}
+                  onClick={handleOpen}
+                  startIcon={<FavoriteIcon/>}
+                >
+                  Đăng Ký Hiến Máu
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="large"
+                  sx={{ borderRadius: 2, fontWeight: 'bold', px: 4 }}
+                >
+                  Tìm Hiểu Thêm
+                </Button>
+              </Box>
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={0} sx={{ background: 'transparent', textAlign: 'center', p: 1 }}>
+                    <Box sx={{ mx: 'auto', width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFE5E5', color: '#E53935', mb: 1 }}>
+                      <GroupsIcon sx={{ fontSize: 32 }} />
+                    </Box>
+                    <Typography variant="h5" fontWeight="bold">50,000+</Typography>
+                    <Typography variant="body2" color="text.secondary">Người hiến máu</Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={0} sx={{ background: 'transparent', textAlign: 'center', p: 1 }}>
+                    <Box sx={{ mx: 'auto', width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFE5E5', color: '#E53935', mb: 1 }}>
+                      <FavoriteIcon sx={{ fontSize: 32 }} />
+                    </Box>
+                    <Typography variant="h5" fontWeight="bold">120,000+</Typography>
+                    <Typography variant="body2" color="text.secondary">Đơn vị máu</Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={0} sx={{ background: 'transparent', textAlign: 'center', p: 1 }}>
+                    <Box sx={{ mx: 'auto', width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFE5E5', color: '#E53935', mb: 1 }}>
+                      <EmojiEventsIcon sx={{ fontSize: 32 }} />
+                    </Box>
+                    <Typography variant="h5" fontWeight="bold">15+</Typography>
+                    <Typography variant="body2" color="text.secondary">Năm kinh nghiệm</Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={0} sx={{ background: 'transparent', textAlign: 'center', p: 1 }}>
+                    <Box sx={{ mx: 'auto', width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFE5E5', color: '#E53935', mb: 1 }}>
+                      <LocationOnIcon sx={{ fontSize: 32 }} />
+                    </Box>
+                    <Typography variant="h5" fontWeight="bold">25+</Typography>
+                    <Typography variant="body2" color="text.secondary">Điểm hiến máu</Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </Box>
+      </Box>
 
       <Modal open={open} onClose={handleClose}>
         <Box
