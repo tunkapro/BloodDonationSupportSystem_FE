@@ -14,6 +14,8 @@ import {
   Divider,
   Stack,
   Container,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   Schedule,
@@ -35,6 +37,8 @@ export default function AppointmentDetail() {
   const [loading, setLoading] = useState(!appointmentFromState);
   const [cancelDialog, setCancelDialog] = useState(false);
   const [canceling, setCanceling] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     if (!appointmentFromState) {
@@ -63,10 +67,10 @@ export default function AppointmentDetail() {
       await axios.put(`/member/donation-info/cancel/${id}`);
       setAppointment(prev => ({ ...prev, status: 'HỦY' }));
       setCancelDialog(false);
-      alert('Đã hủy đơn hiến máu thành công!');
+      setSuccess('Đã hủy đơn hiến máu thành công!');
     } catch (error) {
       console.error("Error canceling appointment:", error);
-      alert('Có lỗi xảy ra khi hủy đơn. Vui lòng thử lại!');
+      setError('Có lỗi xảy ra khi hủy đơn. Vui lòng thử lại!');
     } finally {
       setCanceling(false);
     }
@@ -91,6 +95,10 @@ export default function AppointmentDetail() {
     }
     return value || "Chưa cập nhật";
   };
+
+  const getHospitalDisplay = (value) => {
+    return value || "Trung tâm hiến máu";
+  }
 
   const getTimeDisplay = (startTime, endTime) => {
     if (!startTime && !endTime) {
@@ -220,11 +228,11 @@ export default function AppointmentDetail() {
                     variant="body1"
                     fontWeight={500}
                     sx={{
-                      color: !appointment.addressHospital ? "text.secondary" : "text.primary",
-                      fontStyle: !appointment.addressHospital ? "italic" : "normal"
+                      color: "text.primary",
+                      fontStyle: "normal"
                     }}
                   >
-                    {getDisplayValue(appointment.addressHospital)}
+                    {getHospitalDisplay(appointment.addressHospital)}
                   </Typography>
                 </Box>
               </Box>
@@ -353,6 +361,38 @@ export default function AppointmentDetail() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setError(null)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={!!success}
+        autoHideDuration={6000}
+        onClose={() => setSuccess(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setSuccess(null)}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {success}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  TextField,
-  Button,
-  Paper,
-  Stack,
-  MenuItem,
-  Alert,
-  Typography
+  Box, TextField, Button, Paper, Stack, MenuItem, Alert
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,25 +10,30 @@ import { vi } from 'date-fns/locale';
 const genders = ['Nam', 'Nữ', 'Khác'];
 
 const ProfileEdit = ({ user, onSave, onCancel }) => {
-  const [formData, setFormData] = useState({ ...user });
+  const [formData, setFormData] = useState({
+    ...user,
+    gender: user.gender || 'Nam'
+  });
   const [errors, setErrors] = useState({});
   const [dateError, setDateError] = useState('');
+  const [tempDateValue, setTempDateValue] = useState(getValidDate(user.dayOfBirth));
+
+  function getValidDate(dateStr) {
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d;
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   const handleDateChange = (newDate) => {
-    setDateError('');
+    setTempDateValue(newDate);
 
-    if (!newDate) {
-      setDateError('Ngày sinh không được để trống');
-      setFormData(prev => ({ ...prev, dayOfBirth: '' }));
+    if (!newDate || isNaN(newDate.getTime())) {
+      setDateError('');
       return;
     }
 
@@ -70,11 +68,11 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
       return;
     }
 
-    const formattedDate = newDate.toISOString().split('T')[0];
-    setFormData(prev => ({ ...prev, dayOfBirth: formattedDate }));
+    const formatted = newDate.toISOString().split('T')[0];
+    setFormData(prev => ({ ...prev, dayOfBirth: formatted }));
   };
 
-  const validateForm = () => {
+  const validate = () => {
     const newErrors = {};
 
     if (!formData.fullName || formData.fullName.trim() === '') {
@@ -94,29 +92,14 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
   };
 
   const handleSave = () => {
-    if (validateForm()) {
-      onSave(formData);
-    }
-  };
-
-  const getDateValue = () => {
-    if (!formData.dayOfBirth) return null;
-    return new Date(formData.dayOfBirth);
+    if (validate()) onSave(formData);
   };
 
   return (
-    <Paper sx={{ width: '100%', height: 'auto', m: 'auto', p: 5 }}>
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        mb: 2,
-        fontSize: '2rem',
-        pb: 2
-      }}>
-        <strong>Chỉnh sửa thông tin tài khoản</strong>
+    <Paper sx={{ p: 5 }}>
+      <Box sx={{ textAlign: 'center', fontSize: '1.5rem', mb: 2 }}>
+        <strong>Chỉnh sửa thông tin</strong>
       </Box>
-
       <Stack spacing={2}>
         <TextField
           fullWidth
@@ -127,7 +110,6 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
           error={!!errors.fullName}
           helperText={errors.fullName}
         />
-
         <TextField
           fullWidth
           label="Số điện thoại"
@@ -135,7 +117,6 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
           value={formData.phoneNumber || ''}
           slotProps={{ input: { readOnly: true } }}
         />
-
         <TextField
           fullWidth
           label="Địa chỉ"
@@ -145,7 +126,6 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
           error={!!errors.address}
           helperText={errors.address}
         />
-
         <TextField
           select
           fullWidth
@@ -160,22 +140,19 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
           <DatePicker
             label="Ngày sinh"
-            value={getDateValue()}
+            value={tempDateValue}
             onChange={handleDateChange}
             format="dd/MM/yyyy"
-            maxDate={new Date()}
-            minDate={new Date(new Date().getFullYear() - 150, 0, 1)}
             slotProps={{
               textField: {
                 fullWidth: true,
                 error: !!dateError || !!errors.dayOfBirth,
                 helperText: dateError || errors.dayOfBirth,
-              },
-            }}
-            sx={{
-              '& .MuiInputBase-root': {
-                borderRadius: 1,
-              },
+                inputProps: {
+                  placeholder: 'Nhập hoặc chọn ngày sinh',
+                  autoComplete: 'off',
+                }
+              }
             }}
           />
         </LocalizationProvider>
