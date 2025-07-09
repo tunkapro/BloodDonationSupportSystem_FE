@@ -15,6 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { registerAccount } from "../../../api/authService";
 import { stringifyLocalDate } from "../../../utils/dayFormat";
+import vi from "date-fns/locale/vi";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Toolbar } from "@mui/material";
@@ -35,6 +36,7 @@ const RegisterPage = () => {
   const password = watch("password");
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       const info = {
         ...data,
@@ -149,18 +151,19 @@ const RegisterPage = () => {
             control={control}
             rules={{ required: "Vui lòng chọn ngày sinh" }}
             render={({ field }) => (
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
                 <DatePicker
                   label="Ngày sinh"
                   value={field.value || null}
+                  format="dd/MM/yyyy"
                   onChange={field.onChange}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       fullWidth
                       margin="normal"
-                      error={!!errors.birthday}
-                      helperText={errors.birthday?.message}
+                      error={!!errors.dateOfBirth}
+                      helperText={errors.dateOfBirth?.message}
                     />
                   )}
                 />

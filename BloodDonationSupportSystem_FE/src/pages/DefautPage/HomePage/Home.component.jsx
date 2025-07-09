@@ -7,7 +7,7 @@ import DonationTips from "./HomePageDetails/DonationTip";
 import BloodDonationRegister from "./HomePageDetails/BloodDonationRegister";
 
 import BloodTypeSearch from "../../../components/BloodTypeSearch";
-
+import EmergencyBloodList from "../../DefautPage/HomePage/HomePageDetails/EmergencyBloodList"
 
 export default function Home() {
   return (
@@ -28,6 +28,9 @@ export default function Home() {
         <BloodDonationRegister />
 
       </Box>
+      <Box sx={{ paddingX: 2, display: 'flex', justifyContent: 'center'}}>
+  <EmergencyBloodList></EmergencyBloodList>
+</Box>
         <Box>
           <BloodTypeSearch/>
         </Box>
