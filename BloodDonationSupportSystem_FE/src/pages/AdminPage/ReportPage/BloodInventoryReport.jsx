@@ -1,42 +1,55 @@
-import { useState } from 'react';
-import { Box, Paper, Typography, Button, Stack } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, Paper, Typography, Button, Stack, CircularProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-
-const BLOOD_INVENTORY_FAKE = [
-  { id: 1, bloodType: 'A+', volume: 1200 },
-  { id: 2, bloodType: 'A-', volume: 800 },
-  { id: 3, bloodType: 'B+', volume: 950 },
-  { id: 4, bloodType: 'B-', volume: 600 },
-  { id: 5, bloodType: 'AB+', volume: 400 },
-  { id: 6, bloodType: 'AB-', volume: 300 },
-  { id: 7, bloodType: 'O+', volume: 1500 },
-  { id: 8, bloodType: 'O-', volume: 700 },
-];
+import { ManagementAPI } from '../../../api/ManagementAPI';
 
 const columns = [
   { field: 'bloodType', headerName: 'Nhóm máu', width: 150 },
   { field: 'volume', headerName: 'Dung tích (ml)', width: 200 },
 ];
 
-function exportToCSV(data) {
-  const header = ['Nhóm máu', 'Dung tích (ml)'];
-  const rows = data.map(row => [row.bloodType, row.volume]);
-  let csvContent = 'data:text/csv;charset=utf-8,';
-  csvContent += header.join(',') + '\n';
-  rows.forEach(rowArr => {
-    csvContent += rowArr.join(',') + '\n';
-  });
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement('a');
-  link.setAttribute('href', encodedUri);
-  link.setAttribute('download', 'blood_inventory.csv');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
 export default function BloodInventoryReport() {
-  const [rows] = useState(BLOOD_INVENTORY_FAKE);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  const fetchBloodInventoryData = async () => {
+    setLoading(true);
+    try {
+      const response = await ManagementAPI.getBloodInventory();
+      
+      const inventoryData = response.data?.bloodInventory || [];
+      
+      const transformedData = inventoryData.map((item, index) => ({
+        id: index + 1,
+        bloodType: item.bloodType || '',
+        volume: item.volume || item.quantity || 0,
+      }));
+      
+      setRows(transformedData);
+    } catch (error) {
+      console.error('Error fetching blood inventory data:', error);
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      await ManagementAPI.exportBloodInventory();
+    } catch (error) {
+      console.error('Error exporting blood inventory:', error);
+     
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBloodInventoryData();
+  }, []);
 
   return (
     <Box sx={{ p: 2, background: '#f5f6fa', minHeight: '100vh' }}>
@@ -49,26 +62,39 @@ export default function BloodInventoryReport() {
         </Typography>
         <Paper elevation={1} sx={{ p: 2, mb: 3, background: '#f8fafc' }}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-            <Button variant="contained" color="primary" onClick={() => exportToCSV(rows)}>
-              Xuất CSV
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleExport}
+              disabled={loading || exporting}
+              startIcon={exporting ? <CircularProgress size={16} color="inherit" /> : null}
+            >
+              {exporting ? 'Đang xuất...' : 'Xuất Excel'}
             </Button>
           </Stack>
         </Paper>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          getRowId={row => row.id}
-          autoHeight
-          hideFooter
-          density="compact"
-          sx={{
-            background: 'white',
-            borderRadius: 2,
-            '& .MuiDataGrid-row:hover': {
-              backgroundColor: '#e3f2fd',
-            },
-          }}
-        />
+        
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            getRowId={row => row.id}
+          
+            hideFooter
+            density="compact"
+            sx={{
+              background: 'white',
+              borderRadius: 2,
+              '& .MuiDataGrid-row:hover': {
+                backgroundColor: '#e3f2fd',
+              },
+            }}
+          />
+        )}
       </Paper>
     </Box>
   );

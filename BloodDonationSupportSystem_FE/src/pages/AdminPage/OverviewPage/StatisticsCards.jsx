@@ -4,6 +4,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import PendingIcon from '@mui/icons-material/Pending';
+import BlockIcon from '@mui/icons-material/Block';
 
 const cardData = [
   {
@@ -12,7 +14,7 @@ const cardData = [
     tooltip: 'Tổng số tài khoản trong hệ thống',
     color: 'primary.main',
     bg: 'primary.lighter',
-    key: 'userCount',
+    key: 'numberAccount',
   },
   {
     label: 'Đăng ký hiến máu',
@@ -20,7 +22,7 @@ const cardData = [
     tooltip: 'Tổng số lượt đăng ký hiến máu',
     color: 'info.main',
     bg: 'info.lighter',
-    key: 'donationRegisterCount',
+    key: 'numberBloodDonationsRegistration',
   },
   {
     label: 'Hiến máu thành công',
@@ -28,7 +30,7 @@ const cardData = [
     tooltip: 'Số lượt hiến máu thành công',
     color: 'success.main',
     bg: 'success.lighter',
-    key: 'donationSuccessCount',
+    key: 'numberSuccessDonation',
   },
   {
     label: 'Hiến máu thất bại',
@@ -36,7 +38,23 @@ const cardData = [
     tooltip: 'Số lượt hiến máu không thành công',
     color: 'error.main',
     bg: 'error.lighter',
-    key: 'donationCancelCount',
+    key: 'numberFailureDonation',
+  },
+  {
+    label: 'Chưa hoàn thành',
+    icon: <PendingIcon fontSize="large" color="warning" />, 
+    tooltip: 'Số lượt hiến máu chưa hoàn thành',
+    color: 'warning.main',
+    bg: 'warning.lighter',
+    key: 'numberNotCompleteDonation',
+  },
+  {
+    label: 'Không được chấp nhận',
+    icon: <BlockIcon fontSize="large" color="error" />, 
+    tooltip: 'Số lượt hiến máu không được chấp nhận',
+    color: 'error.main',
+    bg: 'error.lighter',
+    key: 'numberNotAcceptedDonation',
   },
 ];
 

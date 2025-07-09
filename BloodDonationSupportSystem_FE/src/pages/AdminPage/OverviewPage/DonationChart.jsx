@@ -1,44 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Box, Divider, FormControl, InputLabel, Select, MenuItem, Stack, useTheme } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { ManagementAPI } from '../../../api/ManagementAPI';
 
 const DonationChart = () => {
   const theme = useTheme();
 
-  const [chartData, setChartData] = useState({ labels: [], data: [] });
-  const [filteredChartData, setFilteredChartData] = useState({ labels: [], data: [] });
+  const [chartData, setChartData] = useState({ labels: [], successData: [], failedData: [] });
+  const [filteredChartData, setFilteredChartData] = useState({ labels: [], successData: [], failedData: [] });
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedBloodType, setSelectedBloodType] = useState('all');
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [loading, setLoading] = useState(false);
 
   const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(y => ({ value: y, label: y }));
-  const bloodTypes = [
-    { value: 'all', label: 'Tất cả nhóm máu' },
-    { value: 'A+', label: 'A+' }, { value: 'A-', label: 'A-' }, { value: 'B+', label: 'B+' },
-    { value: 'B-', label: 'B-' }, { value: 'AB+', label: 'AB+' }, { value: 'AB-', label: 'AB-' },
-    { value: 'O+', label: 'O+' }, { value: 'O-', label: 'O-' },
-  ];
-  const statusOptions = [
-    { value: 'all', label: 'Tất cả trạng thái' },
-    { value: 'success', label: 'Thành công' },
-    { value: 'failed', label: 'Thất bại' },
-  ];
 
-  useEffect(() => {
-    const currentDate = new Date();
-    const labels = [];
-    const data = [];
-    for (let i = 11; i >= 0; i--) {
-      const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
-      const label = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-      labels.push(label);
-      data.push(Math.floor(Math.random() * 71) + 50);
+  const fetchDonationData = async (year) => {
+    setLoading(true);
+    try {
+ 
+      const response = await ManagementAPI.getDonationDataByYearForChart(year);
+      
+  
+      const labels = [];
+      const successData = [];
+      const failedData = [];
+      
+
+      for (let month = 1; month <= 12; month++) {
+        const label = `${year}-${month.toString().padStart(2, '0')}`;
+        labels.push(label);
+        
+  
+        const monthData = response.data?.monthlyData?.[month] || {};
+        successData.push(monthData.successCount || 0);
+        failedData.push(monthData.failedCount || 0);
+      }
+      
+      setChartData({ labels, successData, failedData });
+    } catch (error) {
+      console.error('Error fetching donation data:', error);
+
+      const labels = [];
+      const successData = [];
+      const failedData = [];
+      
+      for (let month = 1; month <= 12; month++) {
+        const label = `${selectedYear}-${month.toString().padStart(2, '0')}`;
+        labels.push(label);
+        successData.push(0);
+        failedData.push(0);
+      }
+      
+      setChartData({ labels, successData, failedData });
+    } finally {
+      setLoading(false);
     }
-    setChartData({ labels, data });
-  }, []);
+  };
 
   useEffect(() => {
-    let filteredData = [...chartData.data];
+    fetchDonationData(selectedYear);
+  }, [selectedYear]);
+
+  useEffect(() => {
+    let filteredSuccessData = [...chartData.successData];
+    let filteredFailedData = [...chartData.failedData];
     let filteredLabels = [...chartData.labels];
 
     if (selectedYear !== 'all') {
@@ -47,32 +71,24 @@ const DonationChart = () => {
       if (newFilteredLabels.length > 0) {
         const startIndex = filteredLabels.indexOf(newFilteredLabels[0]);
         filteredLabels = newFilteredLabels;
-        filteredData = chartData.data.slice(startIndex, startIndex + newFilteredLabels.length);
+        filteredSuccessData = chartData.successData.slice(startIndex, startIndex + newFilteredLabels.length);
+        filteredFailedData = chartData.failedData.slice(startIndex, startIndex + newFilteredLabels.length);
       } else {
         filteredLabels = [];
-        filteredData = [];
+        filteredSuccessData = [];
+        filteredFailedData = [];
       }
     }
 
-    if (selectedBloodType !== 'all' || selectedStatus !== 'all') {
-      filteredData = filteredData.map(value => {
-        let adjustedValue = value;
-        if (selectedBloodType !== 'all') {
-          adjustedValue = Math.floor(adjustedValue * 0.8);
-        }
-        if (selectedStatus !== 'all') {
-          adjustedValue = Math.floor(adjustedValue * (selectedStatus === 'success' ? 0.85 : 0.15));
-        }
-        return adjustedValue;
-      });
-    }
-    setFilteredChartData({ labels: filteredLabels, data: filteredData });
-  }, [selectedYear, selectedBloodType, selectedStatus, chartData]);
+    setFilteredChartData({ 
+      labels: filteredLabels, 
+      successData: filteredSuccessData, 
+      failedData: filteredFailedData 
+    });
+  }, [selectedYear, chartData]);
 
   const filters = [
     { id: 'year', label: 'Năm', value: selectedYear, options: years, handler: setSelectedYear },
-    { id: 'bloodType', label: 'Nhóm máu', value: selectedBloodType, options: bloodTypes, handler: setSelectedBloodType },
-    { id: 'status', label: 'Trạng thái', value: selectedStatus, options: statusOptions, handler: setSelectedStatus },
   ];
 
   return (
@@ -91,6 +107,7 @@ const DonationChart = () => {
                 value={filter.value}
                 label={filter.label}
                 onChange={(e) => filter.handler(e.target.value)}
+                disabled={loading}
               >
                 {filter.options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -104,20 +121,29 @@ const DonationChart = () => {
       </Box>
 
       <Box sx={{ width: '100%', overflowX: 'auto', display: 'flex', justifyContent: 'center' }}>
-        <LineChart
-          xAxis={[{ scaleType: 'point', data: filteredChartData.labels }]}
-          series={[{ 
-            data: filteredChartData.data, 
-            label: 'Lượt hiến máu', 
-            color: selectedStatus === 'success' 
-              ? theme.palette.success.main 
-              : selectedStatus === 'failed' 
-              ? theme.palette.error.main 
-              : theme.palette.primary.main 
-          }]}
-          width={Math.max(600, filteredChartData.labels.length * 80)}
-          height={320}
-        />
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 320 }}>
+            <Typography>Đang tải dữ liệu...</Typography>
+          </Box>
+        ) : (
+          <LineChart
+            xAxis={[{ scaleType: 'point', data: filteredChartData.labels }]}
+            series={[
+              { 
+                data: filteredChartData.successData, 
+                label: 'Hiến máu thành công', 
+                color: theme.palette.success.main 
+              },
+              { 
+                data: filteredChartData.failedData, 
+                label: 'Hiến máu thất bại', 
+                color: theme.palette.error.main 
+              }
+            ]}
+            width={Math.max(600, filteredChartData.labels.length * 80)}
+            height={320}
+          />
+        )}
       </Box>
     </Paper>
   );

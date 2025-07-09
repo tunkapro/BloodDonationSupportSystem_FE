@@ -6,22 +6,23 @@ import BloodVolumeChart from './BloodVolumeChart';
 import { ManagementAPI } from '../../../api/ManagementAPI';
 
 const OverViewPage = () => {
-  const [userCount, setUserCount] = useState(0);
-  const [donationRegisterCount, setDonationRegisterCount] = useState(0);
-  const [donationSuccessCount, setDonationSuccessCount] = useState(0);
-  const [donationCancelCount, setDonationCancelCount] = useState(0);
+  const [numberAccount, setNumberAccount] = useState(0);
+  const [numberBloodDonationsRegistration, setNumberBloodDonationsRegistration] = useState(0);
+  const [numberSuccessDonation, setNumberSuccessDonation] = useState(0);
+  const [numberFailureDonation, setNumberFailureDonation] = useState(0);
+  const [numberNotCompleteDonation, setNumberNotCompleteDonation] = useState(0);
+  const [numberNotAcceptedDonation, setNumberNotAcceptedDonation] = useState(0);
 
   // Add year and month state
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [selectedMonth, setSelectedMonth] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState(1);
 
   const theme = useTheme();
 
-  // Example: generate last 5 years for dropdown
+
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
   const months = [
-    { value: 'all', label: 'Tất cả' },
     { value: 1, label: 'Tháng 1' },
     { value: 2, label: 'Tháng 2' },
     { value: 3, label: 'Tháng 3' },
@@ -37,30 +38,37 @@ const OverViewPage = () => {
   ];
 
   useEffect(() => {
-    // Fetch data from API based on selectedYear and selectedMonth
+
     const fetchData = async () => {
       try {
-        const data = await ManagementAPI.getOverviewStatistics(selectedYear, selectedMonth);
-        setUserCount(data.userCount || 0);
-        setDonationRegisterCount(data.donationRegisterCount || 0);
-        setDonationSuccessCount(data.donationSuccessCount || 0);
-        setDonationCancelCount(data.donationCancelCount || 0);
+        const res = await ManagementAPI.getOverviewStatistics(selectedYear, selectedMonth);
+
+        setNumberAccount(res.data.numberAccount || 0);
+        setNumberBloodDonationsRegistration(res.data.numberBloodDonationsRegistration || 0);
+        setNumberSuccessDonation(res.data.numberSuccessDonation || 0);
+        setNumberFailureDonation(res.data.numberFailureDonation || 0);
+        setNumberNotCompleteDonation(res.data.numberNotCompleteDonation || 0);
+        setNumberNotAcceptedDonation(res.data.numberNotAcceptedDonation || 0);
       } catch (error) {
-        // Optionally handle error, for now just reset to 0
-        setUserCount(0);
-        setDonationRegisterCount(0);
-        setDonationSuccessCount(0);
-        setDonationCancelCount(0);
+   
+        setNumberAccount(0);
+        setNumberBloodDonationsRegistration(0);
+        setNumberSuccessDonation(0);
+        setNumberFailureDonation(0);
+        setNumberNotCompleteDonation(0);
+        setNumberNotAcceptedDonation(0);
       }
     };
     fetchData();
   }, [selectedYear, selectedMonth]);
 
   const values = {
-    userCount,
-    donationRegisterCount,
-    donationSuccessCount,
-    donationCancelCount,
+    numberAccount,
+    numberBloodDonationsRegistration,
+    numberSuccessDonation,
+    numberFailureDonation,
+    numberNotCompleteDonation,
+    numberNotAcceptedDonation,
   };
 
   return (
@@ -69,7 +77,7 @@ const OverViewPage = () => {
         Thống kê tổng quan
       </Typography>
 
-      {/* Filter controls */}
+  
       <Grid container spacing={2} justifyContent="center" sx={{ mb: 2 }}>
         <Grid item>
           <FormControl size="small">
@@ -102,7 +110,7 @@ const OverViewPage = () => {
           </FormControl>
         </Grid>
       </Grid>
-      {/* End filter controls */}
+
       <StatisticsCards values={values} />
       <DonationChart />
       <BloodVolumeChart />
