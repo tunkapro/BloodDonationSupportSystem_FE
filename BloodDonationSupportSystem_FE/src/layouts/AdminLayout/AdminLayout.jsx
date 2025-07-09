@@ -10,15 +10,12 @@ const SIDEBAR_WIDTH = 280; // px, matches AdminNavBar width
   return (
     <RequireAuth role={"ROLE_ADMIN"}>
 <>
-      {/* Fixed Header */}
-      <Box sx={{ position: 'fixed', top: 0, left: 0, width: '100vw', zIndex: 1201 }}>
-        <AdminHeader />
-      </Box>
+
       {/* Fixed Sidebar */}
       <Box
         sx={{
           position: 'fixed',
-          top: `${HEADER_HEIGHT}px`,
+          top:0,
           left: 0,
           width: `${SIDEBAR_WIDTH}px`,
           height: `calc(100vh - ${HEADER_HEIGHT}px)`,
@@ -33,8 +30,8 @@ const SIDEBAR_WIDTH = 280; // px, matches AdminNavBar width
       <Box
         sx={{
           marginLeft: `${SIDEBAR_WIDTH}px`,
-          marginTop: `${HEADER_HEIGHT}px`,
-          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+ 
+         
           overflow: 'auto',
           bgcolor: 'background.default',
         }}

@@ -22,16 +22,10 @@ import { useAuth } from "../../../context/authContext";
 export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(
-    { id: "",
-      title: "",
-      content: "",
-      status: "",
-      imageUrl : "",
-      articleType: "",
-      createdByAdminId: ""}
+   null
     );
   const [openForm, setOpenForm] = useState(false);
-  const { user } = useAuth();
+  const { user,loadUser } = useAuth();
 
 
 
@@ -92,10 +86,9 @@ export default function ArticlePage() {
          console.log(res);
       }
 
-      const res = await createArticle(formData);
 
 
-      console.log("Res:", res);
+
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();

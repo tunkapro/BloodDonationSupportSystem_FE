@@ -32,7 +32,9 @@ import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/Blood
 import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
 import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
-
+import Account from "../pages/AdminPage/Account";
+import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
+import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
 
 
 
@@ -55,16 +57,16 @@ const CustomRoute = () => {
         <Route path="/user/*" element={<MemberLayout />}>
 
 
-           <Route path="appointment-histories" element={<AppointmentHistory />} />
-           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-           <Route path="blood-donation-register" element={<DonationRegistration/>} />
-           <Route path="profile" element={<ProfilePage />} />
-           <Route path="donation-histories" element={<BloodDonateHistory />} />
+          <Route path="appointment-histories" element={<AppointmentHistory />} />
+          <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
+          <Route path="blood-donation-register" element={<DonationRegistration />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="donation-histories" element={<BloodDonateHistory />} />
 
         </Route>
       </Route>
 
-      <Route path="registerDonationForm" element={<DonationRegistration/>}/>
+      <Route path="registerDonationForm" element={<DonationRegistration />} />
 
 
 
@@ -93,8 +95,11 @@ const CustomRoute = () => {
         <Route path="user-management" element={<UserManagement />} />
         <Route path="posts" element={<AdminPosts></AdminPosts>} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="account" element={<Account />} />
+        <Route path="donation-report" element={<BloodDonationReport />} />
+        <Route path="blood-inventory-report" element={<BloodInventoryReport />} />
       </Route>
-      
+
       {/* Error Route */}
       <Route path="/404" element={<ErrorPage />}></Route>
     </Routes>
