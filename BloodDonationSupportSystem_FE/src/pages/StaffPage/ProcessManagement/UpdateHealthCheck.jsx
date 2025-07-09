@@ -20,18 +20,24 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [snackbarType, setSnackbarType] = useState('success');
 
 
   const handleConfirmSave = () => {
     if (donor.healthCheckStatus !== "CHỜ ĐỢI") {
 
       if (!donor.height || Number(donor.height) <= 0) {
-        alert('Vui lòng nhập chiều cao hợp lệ.');
+        setErrorMessage('Vui lòng nhập chiều cao hợp lệ.');
+        setSnackbarType('error');
+        setSnackbarOpen(true);
         return;
       }
 
       if (!donor.weight || Number(donor.weight) <= 0) {
-        alert('Vui lòng nhập cân nặng hợp lệ.');
+        setErrorMessage('Vui lòng nhập cân nặng hợp lệ.');
+        setSnackbarType('error');
+        setSnackbarOpen(true);
         return;
       }
     }
@@ -51,13 +57,18 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
 
       await updateHealthCheckApi(payload);
 
-      
+
       onSave?.();
+
+      setErrorMessage('');
+      setSnackbarType('success');
       setSnackbarOpen(true);
       setOpenConfirm(false);
     } catch (error) {
       console.error('Lỗi cập nhật health check:', error);
-      alert('Đã xảy ra lỗi khi lưu thay đổi.');
+      setSnackbarType('error');
+      setErrorMessage('Đã xảy ra lỗi khi lưu thay đổi.');
+      setSnackbarOpen(true);
     }
   };
 
@@ -199,17 +210,28 @@ export default function UpdateHealthCheck({ isOpen, onClose, donor, onSave, onDo
 
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={500}
+        autoHideDuration={1000}
         onClose={() => {
           setSnackbarOpen(false);
-          onClose(); // Chỉ đóng dialog sau khi Snackbar hiển thị xong
+          if (snackbarType === 'success') onClose();
+          setErrorMessage('');
         }}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
-          Cập nhật thành công!
+        <Alert
+          onClose={() => {
+            setSnackbarOpen(false);
+            setErrorMessage('');
+          }}
+          severity={snackbarType} 
+          sx={{ width: '100%' }}
+        >
+          {snackbarType === 'error'
+            ? errorMessage || 'Có lỗi xảy ra. Vui lòng kiểm tra lại.'
+            : 'Cập nhật thành công!'}
         </Alert>
       </Snackbar>
+
     </>
   );
 }
