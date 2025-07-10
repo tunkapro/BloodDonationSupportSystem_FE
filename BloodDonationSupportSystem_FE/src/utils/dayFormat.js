@@ -31,3 +31,7 @@ export function formatTimeToString(date) {
   const s = '00';
   return `${h}:${m}:${s}`;
 }
+
+export function formatTimeToStringFunc(time) {
+  return dayjs(time).format("HH:mm:ss");
+}

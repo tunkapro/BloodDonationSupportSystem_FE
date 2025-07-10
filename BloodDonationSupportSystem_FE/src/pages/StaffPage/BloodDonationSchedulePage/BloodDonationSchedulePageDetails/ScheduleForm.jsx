@@ -8,7 +8,6 @@ import {
   Alert,
 } from "@mui/material";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
-import dayjs from "dayjs";
 import { dayjsToLocalTimeObject } from "../../../../utils/dayFormat";
 
 export default function ScheduleForm({
@@ -55,17 +54,13 @@ export default function ScheduleForm({
         startTime: dayjsToLocalTimeObject(form.startTime),
         endTime: dayjsToLocalTimeObject(form.endTime),
       };
-      console.log(payload)
+      await handleCreateSchedule(payload);
 
-      const res = await handleCreateSchedule(payload);
-      console.log(res);
-      if (res.status == 200) {
-        setSnackbar({
-          open: true,
-          message: "Tạo lịch hiến máu thành công!",
-          severity: "success",
-        });
-      }
+      setSnackbar({
+        open: true,
+        message: "Tạo lịch hiến máu thành công!",
+        severity: "success",
+      });
     } catch (err) {
       setSnackbar({
         open: true,

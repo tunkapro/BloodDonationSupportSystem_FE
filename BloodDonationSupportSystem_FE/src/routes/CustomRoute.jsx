@@ -21,8 +21,7 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
-
-import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
+import UserManagement from "../pages/AdminPage/UserManagement/UserManagement";
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 import DonationRegistration from "../pages/MemberPage/DonationRegistration/DonationRegistration";
@@ -31,10 +30,11 @@ import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
 import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
 import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
+import DonationManagement from "../pages/AdminPage/DonationManagement/DonationManagementPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
+import ScheduleManagement from "../pages/AdminPage/ScheduleManagement/ScheduleManagementPage";
 
-
-
+import ProtectedRoute from "../routes/ProtectRoute";
 
 
 const CustomRoute = () => {
@@ -51,52 +51,80 @@ const CustomRoute = () => {
         <Route path="reset-password" element={<ForgotPasswordPage />} />
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="/user/*" element={<MemberLayout />}>
 
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute allowedRoles={["ROLE_MEMBER", "ROLE_ADMIN", "ROLE_STAFF"]}>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
 
-           <Route path="appointment-histories" element={<AppointmentHistory />} />
-           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-           <Route path="blood-donation-register" element={<DonationRegistration/>} />
-           <Route path="profile" element={<ProfilePage />} />
-           <Route path="donation-histories" element={<BloodDonateHistory />} />
-
+        <Route
+          path="/user/*"
+          element={
+            <ProtectedRoute allowedRoles={["ROLE_MEMBER"]}>
+              <MemberLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="appointment-histories" element={<AppointmentHistory />} />
+          <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
+          <Route path="blood-donation-register" element={<DonationRegistration />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="donation-histories" element={<BloodDonateHistory />} />
         </Route>
       </Route>
 
-      <Route path="registerDonationForm" element={<DonationRegistration/>}/>
+      <Route
+        path="registerDonationForm"
+        element={
+          <ProtectedRoute allowedRoles={["ROLE_MEMBER"]}>
+            <DonationRegistration />
+          </ProtectedRoute>
+        }
+      />
 
-
-
-
-      <Route path="/staff/*" element={<StaffLayout />}>
+      <Route
+        path="/staff/*"
+        element={
+          <ProtectedRoute allowedRoles={["ROLE_STAFF"]}>
+            <StaffLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Overview />} />
         <Route path="overview" element={<Overview />} />
         <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
-        <Route path="blood-management/*" element={<Navigation />} >
+        <Route path="blood-management/*" element={<Navigation />}>
           <Route path="health-check" element={<DonorHealthCheckPage />} />
           <Route path="" element={<DonorHealthCheckPage />} />
           <Route path="process" element={<DonorProcessPage />} />
         </Route>
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route
-          path="blood-donation-schedule"
-          element={<BloodDonationScheduleComponent />}
-        />
+        <Route path="blood-donation-schedule" element={<BloodDonationScheduleComponent />} />
       </Route>
 
-
-      <Route path="/admin/*" element={<AdminLayout />}>
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="overview" element={<OverViewPage />} />
         <Route path="user-management" element={<UserManagement />} />
-        <Route path="posts" element={<AdminPosts></AdminPosts>} />
-        <Route path="profile" element={<ProfilePage />} />
+        <Route path="posts" element={<AdminPosts />} />
+        <Route path="donation-management" element={<DonationManagement />} />
+        <Route path="donation-calendar" element={<ScheduleManagement />} />
       </Route>
-      
-      {/* Error Route */}
-      <Route path="/404" element={<ErrorPage />}></Route>
+
+        <Route path="*" element={<ErrorPage />} />
+      <Route path="/404" element={<ErrorPage />} />
     </Routes>
   );
 };

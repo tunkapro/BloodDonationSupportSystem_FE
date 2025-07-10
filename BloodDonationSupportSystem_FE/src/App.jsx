@@ -8,8 +8,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./context/authContext";
 
 function App() {
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [user, setUser] = useState(null);
 
   return (
     <GoogleOAuthProvider clientId="581056826760-guivkvbnune28fsfipvi0blao6afqv6i.apps.googleusercontent.com">

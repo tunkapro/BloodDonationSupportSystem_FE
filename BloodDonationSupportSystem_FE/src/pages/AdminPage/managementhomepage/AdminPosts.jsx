@@ -31,7 +31,7 @@ export default function ArticlePage() {
       createdByAdminId: ""}
     );
   const [openForm, setOpenForm] = useState(false);
-  const { user } = useAuth();
+  const { user, loadUser } = useAuth();
 
 
 

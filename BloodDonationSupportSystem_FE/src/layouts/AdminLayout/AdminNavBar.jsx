@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     List,
@@ -156,7 +156,7 @@ export default function Sidebar() {
                 ))}
             </Box>
 
-            {/* Footer */}
+
             <Box sx={{ 
                 borderTop: '1px solid #e2e8f0',
                 textAlign: 'center',

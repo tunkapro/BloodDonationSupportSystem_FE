@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Box,
   Button,
@@ -9,18 +9,19 @@ import {
   Typography,
   Snackbar,
   Alert,
-} from '@mui/material';
+} from "@mui/material";
 import {
   DatePicker,
   LocalizationProvider,
   TimeField,
-} from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { vi } from 'date-fns/locale';
-import { isBefore, isAfter, addDays, startOfToday } from 'date-fns';
-import { createSchedule } from '../../../../api/bloodDonationSchedule';
+} from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { vi } from "date-fns/locale";
+import { isBefore, isAfter, addDays, startOfToday } from "date-fns";
+import { createSchedule } from "../../../../api/bloodDonationSchedule";
+import dayjs from "dayjs";
 
-const BloodDonationScheduleCreate = (onClose) => {
+const BloodDonationScheduleCreate = () => {
   const {
     register,
     handleSubmit,
@@ -32,16 +33,16 @@ const BloodDonationScheduleCreate = (onClose) => {
 
   const [snackbar, setSnackbar] = useState({
     open: false,
-    message: '',
-    severity: 'success',
+    message: "",
+    severity: "success",
   });
-  
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
   const addSchedule = async (data) => {
+
     try {
       const res = await createSchedule(data);
       if (res.status === 200) {
@@ -50,8 +51,8 @@ const BloodDonationScheduleCreate = (onClose) => {
           message: "Tạo lịch thành công",
           severity: "success",
         });
-        reset(); // clear form nếu thành công
-        if (onClose) onClose(); // đóng dialog nếu có prop
+        reset();
+
       }
     } catch (err) {
       if (
@@ -66,13 +67,12 @@ const BloodDonationScheduleCreate = (onClose) => {
       } else {
         setSnackbar({
           open: true,
-          message: "Đã xảy ra lỗi khi tạo lịch",
+          message: "Đã xảy ra lỗi khi tạo lịch" + err,
           severity: "error",
         });
       }
     }
   };
-  
 
   const onSubmit = (data) => {
     const today = startOfToday();
@@ -81,43 +81,47 @@ const BloodDonationScheduleCreate = (onClose) => {
 
     // validate ngày hoạt động
     if (!date) {
-      setError('operatingDate', {
-        type: 'manual',
-        message: 'Ngày hoạt động là bắt buộc',
+      setError("operatingDate", {
+        type: "manual",
+        message: "Ngày hoạt động là bắt buộc",
       });
       return;
     }
 
     if (isBefore(date, today)) {
-      setError('operatingDate', {
-        type: 'manual',
-        message: 'Ngày hoạt động không được là ngày trong quá khứ',
+      setError("operatingDate", {
+        type: "manual",
+        message: "Ngày hoạt động không được là ngày trong quá khứ",
       });
       return;
     }
 
     if (isAfter(date, maxAllowedDate)) {
-      setError('operatingDate', {
-        type: 'manual',
-        message: 'Ngày hoạt động không được quá 90 ngày kể từ hôm nay',
+      setError("operatingDate", {
+        type: "manual",
+        message: "Ngày hoạt động không được quá 90 ngày kể từ hôm nay",
       });
       return;
     }
 
     if (data.capcity <= 0) {
-      setError('capcity', {
-        type: 'manual',
-        message: 'Số lượng phải lớn hơn 0',
+      setError("capcity", {
+        type: "manual",
+        message: "Số lượng phải lớn hơn 0",
       });
       return;
     }
+    const parseTime = (timeObj) => {
+      if (!timeObj) return null;
+      return dayjs(timeObj).format("HH:mm:ss");
+    };
 
     const formattedData = {
       addressHospital: data.address,
-      donationDate: date.toISOString().split('T')[0], // yyyy-MM-dd
-      startTime: data.startTime?.toTimeString().split(' ')[0], // HH:mm:ss
-      endTime: data.endTime?.toTimeString().split(' ')[0],
-      amountRegistration: data.capcity,
+      donationDate: date.toISOString().split("T")[0],
+      startTime: parseTime(data.startTime),
+      endTime: parseTime(data.endTime),
+      amountRegistration: parseInt(data.capcity),
     };
 
     addSchedule(formattedData);
@@ -136,7 +140,7 @@ const BloodDonationScheduleCreate = (onClose) => {
               label="Địa chỉ bệnh viện"
               fullWidth
               margin="normal"
-              {...register('address', { required: 'Địa chỉ là bắt buộc' })}
+              {...register("address", { required: "Địa chỉ là bắt buộc" })}
               error={!!errors.address}
               helperText={errors.address?.message}
             />
@@ -145,7 +149,7 @@ const BloodDonationScheduleCreate = (onClose) => {
               name="operatingDate"
               control={control}
               defaultValue={null}
-              rules={{ required: 'Ngày hoạt động là bắt buộc' }}
+              rules={{ required: "Ngày hoạt động là bắt buộc" }}
               render={({ field }) => (
                 <DatePicker
                   label="Ngày hoạt động"
@@ -155,11 +159,11 @@ const BloodDonationScheduleCreate = (onClose) => {
                     isBefore(date, startOfToday()) ||
                     isAfter(date, addDays(startOfToday(), 90))
                   }
-                  sx={{ marginTop: '10px' }}
+                  sx={{ marginTop: "10px" }}
                   slotProps={{
                     textField: {
                       fullWidth: true,
-                      margin: 'normal',
+                      margin: "normal",
                       error: !!errors.operatingDate,
                       helperText: errors.operatingDate?.message,
                     },
@@ -173,7 +177,7 @@ const BloodDonationScheduleCreate = (onClose) => {
                 name="startTime"
                 control={control}
                 defaultValue={null}
-                rules={{ required: 'Giờ bắt đầu là bắt buộc' }}
+                rules={{ required: "Giờ bắt đầu là bắt buộc" }}
                 render={({ field }) => (
                   <TimeField
                     label="Giờ bắt đầu"
@@ -190,7 +194,7 @@ const BloodDonationScheduleCreate = (onClose) => {
                 name="endTime"
                 control={control}
                 defaultValue={null}
-                rules={{ required: 'Giờ kết thúc là bắt buộc' }}
+                rules={{ required: "Giờ kết thúc là bắt buộc" }}
                 render={({ field }) => (
                   <TimeField
                     label="Giờ kết thúc"
@@ -209,11 +213,11 @@ const BloodDonationScheduleCreate = (onClose) => {
               fullWidth
               type="number"
               margin="normal"
-              {...register('capcity', {
-                required: 'Bắt buộc',
+              {...register("capcity", {
+                required: "Bắt buộc",
                 min: {
                   value: 1,
-                  message: 'Phải lớn hơn 0',
+                  message: "Phải lớn hơn 0",
                 },
               })}
               error={!!errors.capcity}
@@ -230,12 +234,12 @@ const BloodDonationScheduleCreate = (onClose) => {
           open={snackbar.open}
           autoHideDuration={3000}
           onClose={handleCloseSnackbar}
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={handleCloseSnackbar}
             severity={snackbar.severity}
-            sx={{ width: '100%' }}
+            sx={{ width: "100%" }}
           >
             {snackbar.message}
           </Alert>
