@@ -221,11 +221,11 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
             slotProps={{ input: { readOnly: true } }}
           />
 
-          {(dateError || Object.keys(errors).length > 0) && (
+          {/* {(dateError || Object.keys(errors).length > 0) && (
             <Alert severity="error" sx={{ mt: 1 }}>
               Vui lòng kiểm tra lại thông tin đã nhập
             </Alert>
-          )}
+          )} */}
 
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
             <Button
