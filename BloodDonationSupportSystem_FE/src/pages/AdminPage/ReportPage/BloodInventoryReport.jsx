@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Box, Paper, Typography, Button, Stack, CircularProgress } from '@mui/material';
+import { Box, Paper, Typography, Button, Stack, CircularProgress, Card, CardContent, Avatar } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { ManagementAPI } from '../../../api/ManagementAPI';
+import { InvertColors } from '@mui/icons-material';
 
 const columns = [
   { field: 'bloodType', headerName: 'Nhóm máu', width: 150 },
@@ -53,13 +54,39 @@ export default function BloodInventoryReport() {
 
   return (
     <Box sx={{ p: 2, background: '#f5f6fa', minHeight: '100vh' }}>
+      <Card
+        elevation={0}
+        sx={{
+          mb: 4,
+          background: theme => `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          color: 'white',
+          borderRadius: 3
+        }}
+      >
+        <CardContent sx={{ p: 4 }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar 
+              sx={{ 
+                bgcolor: 'rgba(255, 255, 255, 0.2)',
+                width: 56,
+                height: 56
+              }}
+            >
+              <InvertColors sx={{ fontSize: 32 }} />
+            </Avatar>
+            <div>
+              <Typography variant="h4" fontWeight={700} gutterBottom>
+                Báo Cáo Kho Máu
+              </Typography>
+              <Typography variant="body1" sx={{ opacity: 0.9 }}>
+                Xem tổng quan kho máu hiện tại và xuất file dữ liệu kho máu.
+              </Typography>
+            </div>
+          </Stack>
+        </CardContent>
+      </Card>
       <Paper elevation={3} sx={{ p: 4, maxWidth: 700, margin: '32px auto' }}>
-        <Typography variant="h5" textAlign={'center'} fontWeight={700} mb={1}>
-          Báo Cáo Kho Máu
-        </Typography>
-        <Typography variant="subtitle1" textAlign={'center'} color="text.secondary" mb={3}>
-          Xem tổng quan kho máu hiện tại và xuất file dữ liệu kho máu.
-        </Typography>
+    
         <Paper elevation={1} sx={{ p: 2, mb: 3, background: '#f8fafc' }}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
             <Button 

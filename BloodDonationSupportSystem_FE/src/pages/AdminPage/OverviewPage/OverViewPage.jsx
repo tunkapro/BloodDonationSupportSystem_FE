@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Box, useTheme, FormControl, InputLabel, Select, MenuItem, Grid } from '@mui/material';
+import { Typography, Box, useTheme, FormControl, InputLabel, Select, MenuItem, Grid, Card, CardContent, Stack, Avatar } from '@mui/material';
+import { BarChart } from '@mui/icons-material';
 import StatisticsCards from './StatisticsCards';
 import DonationChart from './DonationChart';
 import BloodVolumeChart from './BloodVolumeChart';
@@ -20,7 +21,6 @@ const OverViewPage = () => {
 
   const theme = useTheme();
 
-
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
   const months = [
     { value: 1, label: 'Tháng 1' },
@@ -38,11 +38,9 @@ const OverViewPage = () => {
   ];
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const res = await ManagementAPI.getOverviewStatistics(selectedYear, selectedMonth);
-
         setNumberAccount(res.data.numberAccount || 0);
         setNumberBloodDonationsRegistration(res.data.numberBloodDonationsRegistration || 0);
         setNumberSuccessDonation(res.data.numberSuccessDonation || 0);
@@ -50,7 +48,6 @@ const OverViewPage = () => {
         setNumberNotCompleteDonation(res.data.numberNotCompleteDonation || 0);
         setNumberNotAcceptedDonation(res.data.numberNotAcceptedDonation || 0);
       } catch (error) {
-   
         setNumberAccount(0);
         setNumberBloodDonationsRegistration(0);
         setNumberSuccessDonation(0);
@@ -73,11 +70,38 @@ const OverViewPage = () => {
 
   return (
     <Box sx={{ p: { xs: 1, md: 4 }, background: theme.palette.background.default, minHeight: '100vh' }}>
-      <Typography variant="h4" fontWeight={700} gutterBottom textAlign="center" color="primary.main">
-        Thống kê tổng quan
-      </Typography>
+      <Card
+        elevation={0}
+        sx={{
+          mb: 4,
+          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          color: 'white',
+          borderRadius: 3
+        }}
+      >
+        <CardContent sx={{ p: 4 }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar 
+              sx={{ 
+                bgcolor: 'rgba(255, 255, 255, 0.2)',
+                width: 56,
+                height: 56
+              }}
+            >
+              <BarChart sx={{ fontSize: 32 }} />
+            </Avatar>
+            <div>
+              <Typography variant="h4" fontWeight={700} gutterBottom>
+                Thống kê tổng quan
+              </Typography>
+              <Typography variant="body1" sx={{ opacity: 0.9 }}>
+                Xem nhanh các chỉ số và biểu đồ về hiến máu, kho máu trong hệ thống
+              </Typography>
+            </div>
+          </Stack>
+        </CardContent>
+      </Card>
 
-  
       <Grid container spacing={2} justifyContent="center" sx={{ mb: 2 }}>
         <Grid item>
           <FormControl size="small">

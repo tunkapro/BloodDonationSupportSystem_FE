@@ -8,6 +8,11 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Card,
+  CardContent,
+  Stack,
+  Avatar,
+  useTheme
 } from "@mui/material";
 import ArticleForm from "./PostDetails/ArticleForm";
 import ArticleList from "./PostDetails/ArticleList";
@@ -18,6 +23,7 @@ import {
   deleteArticle,
 } from "../../../api/articleService";
 import { useAuth } from "../../../context/authContext";
+import { Description } from "@mui/icons-material";
 
 export default function ArticlePage() {
   const [articles, setArticles] = useState([]);
@@ -26,8 +32,7 @@ export default function ArticlePage() {
     );
   const [openForm, setOpenForm] = useState(false);
   const { user,loadUser } = useAuth();
-
-
+  const theme = useTheme();
 
   const loadArticles = async () => {
     const res = await getAllArticles();
@@ -59,8 +64,6 @@ export default function ArticlePage() {
     loadArticles();
   };
 
-
-
   const handleSubmit = async (data, imageData, fileName) => {
     console.log(imageData)
     data.imageData = imageData;
@@ -86,9 +89,6 @@ export default function ArticlePage() {
          console.log(res);
       }
 
-
-
-
       setOpenForm(false);
       setSelectedArticle(null);
       loadArticles();
@@ -100,9 +100,37 @@ export default function ArticlePage() {
 
   return (
     <Container>
-      <Typography variant="h4" mt={4}>
-        Quản lý bài viết
-      </Typography>
+      <Card
+        elevation={0}
+        sx={{
+          mb: 4,
+          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          color: 'white',
+          borderRadius: 3
+        }}
+      >
+        <CardContent sx={{ p: 4 }}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar 
+              sx={{ 
+                bgcolor: 'rgba(255, 255, 255, 0.2)',
+                width: 56,
+                height: 56
+              }}
+            >
+              <Description sx={{ fontSize: 32 }} />
+            </Avatar>
+            <div>
+              <Typography variant="h4" fontWeight={700} gutterBottom>
+                Quản lý bài viết
+              </Typography>
+              <Typography variant="body1" sx={{ opacity: 0.9 }}>
+                Thêm, chỉnh sửa, và quản lý các bài viết trên hệ thống
+              </Typography>
+            </div>
+          </Stack>
+        </CardContent>
+      </Card>
       <Divider sx={{ my: 2 }} />
       <Button variant="contained" onClick={handleOpenForm}>
         Thêm bài viết

@@ -30,7 +30,7 @@ const BloodVolumeChart = () => {
       const labels = allBloodTypes;
       
       // Extract blood volume data from API response - adjust these property names based on your API
-      const bloodVolumeData = response.data?.bloodVolumeData?.[month] || {};
+      const bloodVolumeData = response.data?.bloodVolumeData || {};
       const data = allBloodTypes.map(bt => bloodVolumeData[bt] || 0);
       
       const newSeries = [{

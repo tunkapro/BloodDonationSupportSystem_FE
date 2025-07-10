@@ -17,9 +17,9 @@ const DonationChart = () => {
     setLoading(true);
     try {
  
-      const response = await ManagementAPI.getDonationDataByYearForChart(year);
+      const response = await ManagementAPI.getDonationDataByYearForChart(year, 1);
       
-  
+      console.log(response)
       const labels = [];
       const successData = [];
       const failedData = [];
