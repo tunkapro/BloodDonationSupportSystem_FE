@@ -1,146 +1,154 @@
 import { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import axios from "axios";
-import { Typography, Box, TextField, Button } from "@mui/material";
-import { Bar } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { getBloodDonationSchedules } from "../../../api/bloodDonationSchedule";
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { vi } from "date-fns/locale";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import {
+  getBloodDonationSchedules,
+  getStatByDay,
+  createSchedule,
+} from "../../../api/bloodDonationSchedule";
 
-export default function BloodDonationSchedule() {
+import StatChart from "./BloodDonationSchedulePageDetails/StatChart";
+import CapacityFilter from "./BloodDonationSchedulePageDetails/CapacityFilter";
+import SuitableDates from "./BloodDonationSchedulePageDetails/SuitableDates";
+import ScheduleForm from "./BloodDonationSchedulePageDetails/ScheduleForm";
+import ScheduleTable from "./BloodDonationSchedulePageDetails/ScheduleTable";
+import BloodDonationScheduleCreate from "./BloodDonationSchedulePageDetails/BloodDonationScheduleCreate";
+import { formatTimeToString } from "../../../utils/dayFormat";
+
+export default function BloodDonationSchedulePage() {
   const [schedule, setSchedule] = useState([]);
   const [stats, setStats] = useState([]);
   const [inputCapacity, setInputCapacity] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
-var count = 0;
-  const filteredDays = Array.isArray(stats)
-    ? stats.filter((day) => day.total >= inputCapacity)
-    : [];
+  const [form, setForm] = useState({
+    addressHospital: "",
+    startTime: null,
+    endTime: null,
+    amountRegistration: null,
+  });
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
-  const chartData = {
-    labels: Array.isArray(stats) ? stats.map((day) => day.date) : [],
-    datasets: [
-      {
-        label: "Số đơn đăng ký",
-        data: Array.isArray(stats) ? stats.map((day) => day.total) : [],
-        backgroundColor: "rgba(255,99,132,0.5)",
-      },
-    ],
+  const selectedDay = stats.find((d) => d.date === selectedDate);
+  const existingTotal = selectedDay?.total || 0;
+
+  const filteredDays =
+    inputCapacity && Number(inputCapacity) > 0
+      ? stats.filter((day) => day.total >= Number(inputCapacity))
+      : [];
+
+  const loadSchedules = async () => {
+    getBloodDonationSchedules()
+      .then((res) => {
+        const data = res.data;
+        setSchedule(Array.isArray(data) ? data : data.data || []);
+      })
+      .catch(() => setSchedule([]));
   };
 
   useEffect(() => {
-    axios
-      .get("/api/staff/registration/stat-by-day")
+    getStatByDay()
       .then((res) => {
         const data = res.data;
-        if (Array.isArray(data)) setStats(data);
-        else if (Array.isArray(data.data)) setStats(data.data);
-        else setStats([]);
+        setStats(Array.isArray(data) ? data : data.data || []);
       })
-      .catch((err) => {
-        console.error(err);
-        setStats([]);
-      });
+      .catch(() => setStats([]));
 
-    const getBloodDonationScheduleList = async () => {
-      try {
-        const res = await getBloodDonationSchedules();
-        if (Array.isArray(res.data)) {
-          setSchedule(res.data);
-        } else if (Array.isArray(res.data.data)) {
-          setSchedule(res.data.data);
-        } else {
-          setSchedule([]);
-        }
-      } catch (err) {
-        console.log(err);
-        setSchedule([]);
-      }
-    };
-    getBloodDonationScheduleList();
+    loadSchedules();
   }, []);
 
+  const handleCreateSchedule = async () => {
+    const payload = {
+      donationDate: selectedDate,
+      addressHospital: form.addressHospital,
+      startTime: formatTimeToString(form.startTime),
+      endTime: formatTimeToString(form.endTime),
+      amountRegistration: form.amountRegistration,
+    };
+    try {
+      await createSchedule(payload);
+      setForm({
+        addressHospital: "",
+        startTime: "",
+        endTime: "",
+        amountRegistration: "",
+      });
+      setSelectedDate(null);
+      loadSchedules();
+    } catch (err) {
+      alert("Tạo lỗi!" + err.message);
+    }
+  };
+
   return (
-    <Box sx={{ margin: 4 }}>
-      <Typography variant="h4" align="center" gutterBottom>
+    <Box sx={{ padding: 4 }}>
+      <Typography variant="h3" align="center" gutterBottom fontWeight="bold">
         Lịch Hiến Máu
       </Typography>
-
-      <TableContainer component={Paper} sx={{ mt: 3 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="blood schedule table">
-          <TableHead sx={{ backgroundColor: "rgb(141, 193, 209)" }}>
-            <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>STT</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Địa Chỉ</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Ngày Hoạt Động</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Thời Gian</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Số Lượng Đăng Ký</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Tối Đa</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {schedule.map((item) => (
-              <TableRow key={item.id} hover>
-                <TableCell>{count++}</TableCell>
-                <TableCell>{item.addressHospital}</TableCell>
-                <TableCell>{item.donationDate}</TableCell>
-                <TableCell>{`Từ ${item.startTime} đến ${item.endTime}`}</TableCell>
-                <TableCell>{item.registrationMatching}</TableCell>
-                <TableCell>{item.amountRegistration}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <Box mt={5}>
-        <Typography variant="h6" mb={2}>Biểu đồ thống kê số đơn đăng ký</Typography>
-        <Paper elevation={3} sx={{ padding: 2 }}>
-          <Bar data={chartData} />
-        </Paper>
-
-        <TextField
-          label="Số người hiến mong muốn"
-          type="number"
-          value={inputCapacity}
-          onChange={(e) => setInputCapacity(Number(e.target.value))}
-          sx={{ mt: 3, mb: 2 }}
-        />
-
-        <Box>
-          <Typography variant="subtitle1" fontWeight="bold">Ngày phù hợp:</Typography>
-          <Box component="ul" sx={{ paddingLeft: 3 }}>
-            {filteredDays.map((day) => (
-              <li key={day.date} style={{ marginBottom: 8 }}>
-                <Typography component="span">{day.date} - {day.total} đơn</Typography>
-                <Button
-                  onClick={() => setSelectedDate(day.date)}
-                  size="small"
-                  sx={{ ml: 2 }}
-                  variant="outlined"
-                >
-                  Chọn ngày này
-                </Button>
-              </li>
-            ))}
-          </Box>
-        </Box>
+      <Box display='flex' justifyContent='right'>
+        <Button
+        variant="contained"
+        sx={{ my: 2 }}
+        onClick={() => setOpenCreateDialog(true)}
+      >
+        + Tạo lịch hiến máu mới
+      </Button>
       </Box>
+      
+
+      <StatChart stats={stats} selectedDate={selectedDate} />
+
+      <CapacityFilter
+        inputCapacity={inputCapacity}
+        setInputCapacity={setInputCapacity}
+      />
+
+      <SuitableDates
+        filteredDays={filteredDays}
+        setSelectedDate={setSelectedDate}
+        setForm={setForm}
+      />
+
+      {selectedDate && (
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
+          <ScheduleForm
+            selectedDate={selectedDate}
+            form={form}
+            setForm={setForm}
+            inputCapacity={inputCapacity}
+            existingTotal={existingTotal}
+            handleCreateSchedule={handleCreateSchedule}
+          />
+        </LocalizationProvider>
+      )}
+
+      <ScheduleTable schedule={schedule} />
+
+      <Dialog
+        open={openCreateDialog}
+        onClose={() => setOpenCreateDialog(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Tạo Lịch Hiến Máu</DialogTitle>
+        <DialogContent>
+          <BloodDonationScheduleCreate
+            onClose={() => {
+              setOpenCreateDialog(false);
+              loadSchedules(); 
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
