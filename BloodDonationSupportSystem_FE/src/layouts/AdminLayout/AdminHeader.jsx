@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, InputBase, IconButton, Avatar, Menu, MenuItem, Fade, Paper } from '@mui/material';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Box, 
+  InputBase, 
+  IconButton, 
+  Avatar, 
+  Menu, 
+  MenuItem, 
+  Fade, 
+  Paper 
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useNavigate } from 'react-router-dom';
 
 const admin = {
   name: 'Admin User',
-  avatar: '', // You can use a URL or leave blank for initials
+  avatar: '',
 };
 
 export default function AdminHeader() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
   const handleProfileClick = (event) => {
@@ -17,6 +31,16 @@ export default function AdminHeader() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleProfile = () => {
+    handleClose();
+    navigate('/admin/profile');
+  };
+
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -71,8 +95,8 @@ export default function AdminHeader() {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             sx={{ mt: 1 }}
           >
-            <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
-            <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+            <MenuItem onClick={() => { handleClose(); handleProfile(); }}>Hồ sơ</MenuItem>
+            <MenuItem onClick={() => { handleClose(); handleLogout(); }}>Đăng xuất</MenuItem>
           </Menu>
         </Box>
       </Toolbar>

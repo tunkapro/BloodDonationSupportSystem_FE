@@ -19,7 +19,7 @@ export default function BloodDonationRegisterForm({ onSubmit, initialValues = { 
 
   const handleFormSubmit = (data) => {
     console.log("Form submitted:", data);
-    onSubmit?.(data); // gọi hàm callback nếu có
+    onSubmit?.(data); 
   };
 
   return (

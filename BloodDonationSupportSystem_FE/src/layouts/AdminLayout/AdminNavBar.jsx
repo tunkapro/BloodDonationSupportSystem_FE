@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     List,
@@ -20,7 +20,14 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PeopleIcon from '@mui/icons-material/People';
+import ArticleIcon from '@mui/icons-material/Article';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import BloodtypeIcon from '@mui/icons-material/Bloodtype';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useState } from "react";
 
 export default function Sidebar() {
     const navigate = useNavigate();
@@ -36,20 +43,23 @@ export default function Sidebar() {
         {
             title: 'Quản lý',
             items: [
-                { text: 'Người dùng', path: '/admin/user-management', icon: <AssignmentIcon /> },
-                { text: 'Bài viết', path: '/admin/posts', icon: <CalendarMonthIcon /> },
-                { text: 'Lịch hiến máu', path: '/admin/donation-calendar', icon: <CalendarMonthIcon /> },
-                { text: 'Kho máu', path: '/admin/blood-bank', icon: <CalendarMonthIcon /> },
-                { text: 'Đơn hiến máu', path: '/admin/donation-management', icon: <CalendarMonthIcon /> },
+                { text: 'Người dùng', path: '/admin/user-management', icon: <PeopleIcon /> },
+                { text: 'Bài viết', path: '/admin/posts', icon: <ArticleIcon /> },
             ],
         },
         {
-            title: 'Thống kê - Báo cáo',
+            title: 'Báo cáo',
             items: [
-                { text: 'Quản lý người dùng', path: '/admin/user-management', icon: <AssignmentIcon /> },
-                { text: 'Quản lý bài viết', path: '/admin/posts', icon: <CalendarMonthIcon /> }
+                { text: 'Đơn hiến máu', path: '/admin/donation-report', icon: <VolunteerActivismIcon /> },
+                { text: 'Kho máu', path: '/admin/blood-inventory-report', icon: <BloodtypeIcon /> }
             ],
-        }
+        },  {
+            title: 'Cài đặt',
+            items: [
+                { text: 'Tài khoản', path: '/admin/account', icon: <AccountCircleIcon /> },
+                { text: 'Đăng xuất', path: '/admin/logout', icon: <LogoutIcon /> },
+            ],
+        },
     ];
 
     // Get current selected item based on location
@@ -72,8 +82,8 @@ export default function Sidebar() {
             color: '#334155',
             display: 'flex',
             flexDirection: 'column',
-          
-            position: 'relative',
+           height: "100vh",
+            position: 'fixed',
             overflow: 'hidden',
             borderRight: '1px solid #e2e8f0'
         }}>
