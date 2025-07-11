@@ -19,21 +19,22 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState('');
+  const [snackbarType, setSnackbarType] = useState('success'); 
 
   const handleConfirmSave = () => {
     if (donor.processStatus === "ĐÃ HIẾN") {
       if (!donor.volumeMl || Number(donor.volumeMl) <= 0) {
-        alert('Vui lòng nhập lượng máu đã hiến (ml) hợp lệ.');
+        setErrorMessage('Vui lòng nhập lượng máu đã hiến (ml) hợp lệ.');
+        setSnackbarType('error');
+        setSnackbarOpen(true);
         return;
       }
     }
     setOpenConfirm(true);
   };
 
-
   const handleSave = async () => {
-
     try {
       const payload = {
         donationProcessId: donor.donationProcessId,
@@ -45,17 +46,19 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
       await updateDonationProcessApi(payload);
 
       onSave?.();
-
+      setErrorMessage('');
+      setSnackbarType('success');
       setSnackbarOpen(true);
       setOpenConfirm(false);
     } catch (error) {
-      console.error('Lỗi cập nhật health check:', error);
-      alert('Đã xảy ra lỗi khi lưu thay đổi.');
+      console.error('Lỗi cập nhật tiến trình:', error);
+      setErrorMessage('Đã xảy ra lỗi khi lưu thay đổi. Vui lòng điền đúng thông tin.');
+      setSnackbarType('error');
+      setSnackbarOpen(true);
     }
-  }
+  };
 
   const isDisabledByProcess = donor.processStatus !== "ĐÃ HIẾN";
-
 
   return (
     <>
@@ -63,7 +66,6 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
         <DialogTitle>Cập nhật thông tin hiến máu</DialogTitle>
         <DialogContent dividers>
           <Grid container spacing={2}>
-            {/* Họ tên & Ngày đăng ký */}
             <Grid item xs={12} sm={6} width={415}>
               <Typography fontWeight="bold" fontSize={14} gutterBottom>
                 Họ tên
@@ -90,7 +92,6 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
           </Grid>
 
           <Grid container spacing={2} mt={2}>
-            {/* Trạng thái tiến trình & Lượng máu */}
             <Grid item xs={12} sm={6} mt={2} width={415}>
               <Typography fontWeight="bold" fontSize={14} gutterBottom>
                 Trạng thái tiến trình
@@ -100,7 +101,6 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
                 value={donor.processStatus}
                 onChange={(e) => onDonorChange({ ...donor, processStatus: e.target.value })}
                 fullWidth
-
               >
                 <MenuItem value="ĐANG XỬ LÝ">Đang xử lý</MenuItem>
                 <MenuItem value="ĐÃ HIẾN">Đã hiến</MenuItem>
@@ -152,15 +152,25 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
 
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={500}
+        autoHideDuration={1000}
         onClose={() => {
           setSnackbarOpen(false);
-          onClose(); // Chỉ đóng dialog sau khi Snackbar hiển thị xong
+          if (snackbarType === 'success') onClose();
+          setErrorMessage('');
         }}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
-          Cập nhật thành công!
+        <Alert
+          onClose={() => {
+            setSnackbarOpen(false);
+            setErrorMessage('');
+          }}
+          severity={snackbarType}
+          sx={{ width: '100%' }}
+        >
+          {snackbarType === 'error'
+            ? errorMessage || 'Có lỗi xảy ra. Vui lòng kiểm tra lại.'
+            : 'Cập nhật thành công!'}
         </Alert>
       </Snackbar>
     </>
