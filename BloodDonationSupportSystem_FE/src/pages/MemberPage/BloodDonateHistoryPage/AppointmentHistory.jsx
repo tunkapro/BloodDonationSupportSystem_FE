@@ -228,7 +228,6 @@ export default function AppointmentHistory() {
         py: 4
       }}
     >
-      <Toolbar />
       <Container maxWidth="lg">
         <Paper
           elevation={0}
