@@ -97,7 +97,7 @@ const StaffSidebar = () => {
   return (
     <Box
       sx={{
-        width: 280,
+        width: 310,
         bgcolor: "#f8fafc",
         color: "#334155",
         display: "flex",
