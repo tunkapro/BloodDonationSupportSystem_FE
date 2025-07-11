@@ -7,6 +7,7 @@ import {
   Stack,
   MenuItem,
   Alert,
+  useTheme,
   Typography
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,25 +18,32 @@ import { vi } from 'date-fns/locale';
 const genders = ['Nam', 'Nữ', 'Khác'];
 
 const ProfileEdit = ({ user, onSave, onCancel }) => {
-  const [formData, setFormData] = useState({ ...user });
+  const theme = useTheme();
+  const [formData, setFormData] = useState({
+    ...user,
+    gender: user.gender || 'Nam'
+  });
   const [errors, setErrors] = useState({});
   const [dateError, setDateError] = useState('');
+  const [tempDateValue, setTempDateValue] = useState(getValidDate(user.dayOfBirth));
+
+  function getValidDate(dateStr) {
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d;
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   const handleDateChange = (newDate) => {
-    setDateError('');
+    setTempDateValue(newDate);
 
-    if (!newDate) {
-      setDateError('Ngày sinh không được để trống');
+    if (!newDate || isNaN(newDate.getTime())) {
       setFormData(prev => ({ ...prev, dayOfBirth: '' }));
+      setDateError('Ngày sinh không hợp lệ');
       return;
     }
 
@@ -70,11 +78,14 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
       return;
     }
 
-    const formattedDate = newDate.toISOString().split('T')[0];
-    setFormData(prev => ({ ...prev, dayOfBirth: formattedDate }));
+    setDateError('');
+    setFormData(prev => ({
+      ...prev,
+      dayOfBirth: newDate.toISOString().split('T')[0]
+    }));
   };
 
-  const validateForm = () => {
+  const validate = () => {
     const newErrors = {};
 
     if (!formData.fullName || formData.fullName.trim() === '') {
@@ -94,146 +105,169 @@ const ProfileEdit = ({ user, onSave, onCancel }) => {
   };
 
   const handleSave = () => {
-    if (validateForm()) {
-      onSave(formData);
-    }
-  };
-
-  const getDateValue = () => {
-    if (!formData.dayOfBirth) return null;
-    return new Date(formData.dayOfBirth);
+    if (validate()) onSave(formData);
   };
 
   return (
-    <Paper sx={{ width: '100%', height: 'auto', m: 'auto', p: 5 }}>
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        mb: 2,
-        fontSize: '2rem',
-        pb: 2
-      }}>
-        <strong>Chỉnh sửa thông tin tài khoản</strong>
-      </Box>
+    <Box sx={{ maxWidth: 1000, mx: 'auto', p: 3 }}>
+      <Paper
+        elevation={0}
+        sx={{
+          mb: 4,
+          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          color: 'white',
+          borderRadius: 4,
+          overflow: 'hidden',
+          position: 'relative',
 
-      <Stack spacing={2}>
-        <TextField
-          fullWidth
-          label="Họ và tên"
-          name="fullName"
-          value={formData.fullName || ''}
-          onChange={handleChange}
-          error={!!errors.fullName}
-          helperText={errors.fullName}
-        />
-
-        <TextField
-          fullWidth
-          label="Số điện thoại"
-          name="phoneNumber"
-          value={formData.phoneNumber || ''}
-          slotProps={{ input: { readOnly: true } }}
-        />
-
-        <TextField
-          fullWidth
-          label="Địa chỉ"
-          name="address"
-          value={formData.address || ''}
-          onChange={handleChange}
-          error={!!errors.address}
-          helperText={errors.address}
-        />
-
-        <TextField
-          select
-          fullWidth
-          label="Giới tính"
-          name="gender"
-          value={formData.gender || ''}
-          onChange={handleChange}
-        >
-          {genders.map((g) => <MenuItem key={g} value={g}>{g}</MenuItem>)}
-        </TextField>
-
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
-          <DatePicker
-            label="Ngày sinh"
-            value={getDateValue()}
-            onChange={handleDateChange}
-            format="dd/MM/yyyy"
-            maxDate={new Date()}
-            minDate={new Date(new Date().getFullYear() - 150, 0, 1)}
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                error: !!dateError || !!errors.dayOfBirth,
-                helperText: dateError || errors.dayOfBirth,
-              },
-            }}
+        }}
+      >
+        <Box sx={{ position: 'relative', p: 4 }}>
+          <Typography
+            variant="h4"
             sx={{
-              '& .MuiInputBase-root': {
-                borderRadius: 1,
-              },
-            }}
-          />
-        </LocalizationProvider>
-
-        <TextField
-          fullWidth
-          label="Nhóm máu"
-          name="bloodType"
-          value={formData.bloodType || 'Chưa cập nhật'}
-          slotProps={{ input: { readOnly: true } }}
-        />
-
-        {(dateError || Object.keys(errors).length > 0) && (
-          <Alert severity="error" sx={{ mt: 1 }}>
-            Vui lòng kiểm tra lại thông tin đã nhập
-          </Alert>
-        )}
-
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={onCancel}
-            sx={{
-              px: 4,
-              py: 1.5,
-              borderRadius: 3,
-              textTransform: 'none',
-              fontSize: '1rem',
-              backgroundColor: 'white',
-              color: 'black',
-              fontWeight: 600,
-              '&:hover': {
-                backgroundColor: '#f0f0f0',
-              },
+              textAlign: 'center',
+              fontWeight: 700,
+              mb: 1,
+              textShadow: '0 2px 4px rgba(0,0,0,0.1)',
             }}
           >
-            Hủy
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={handleSave}
+            Chỉnh sửa thông tin cá nhân
+          </Typography>
+          <Typography
+            variant="body1"
             sx={{
-              px: 4,
-              py: 1.5,
-              borderRadius: 3,
-              textTransform: 'none',
-              fontSize: '1rem',
-              fontWeight: 600,
-              boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)'
+              textAlign: 'center',
+              opacity: 0.9,
             }}
           >
-            Lưu
-          </Button>
+            Quản lý thông tin cá nhân của bạn
+          </Typography>
         </Box>
-      </Stack>
-    </Paper>
+      </Paper>
+      <Paper sx={{ p: 5 }}>
+        <Stack spacing={2}>
+          <TextField
+            fullWidth
+            label="Họ và tên"
+            name="fullName"
+            value={formData.fullName || ''}
+            onChange={handleChange}
+            error={!!errors.fullName}
+            helperText={errors.fullName}
+          />
+          {formData.phoneNumber ? (
+            <TextField
+              fullWidth
+              label="Số điện thoại"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              slotProps={{ input: { readOnly: true } }}
+            />
+          ) : (
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              value={formData.email || ""}
+              slotProps={{ input: { readOnly: true } }}
+            />
+          )}
+          <TextField
+            fullWidth
+            label="Địa chỉ"
+            name="address"
+            value={formData.address || ''}
+            onChange={handleChange}
+            error={!!errors.address}
+            helperText={errors.address}
+          />
+          <TextField
+            select
+            fullWidth
+            label="Giới tính"
+            name="gender"
+            value={formData.gender || ''}
+            onChange={handleChange}
+          >
+            {genders.map((g) => <MenuItem key={g} value={g}>{g}</MenuItem>)}
+          </TextField>
+
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
+            <DatePicker
+              label="Ngày sinh"
+              value={tempDateValue}
+              onChange={handleDateChange}
+              format="dd/MM/yyyy"
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  error: !!dateError || !!errors.dayOfBirth,
+                  helperText: dateError || errors.dayOfBirth,
+                  inputProps: {
+                    placeholder: 'Nhập hoặc chọn ngày sinh',
+                    autoComplete: 'off',
+                  }
+                }
+              }}
+            />
+          </LocalizationProvider>
+
+          <TextField
+            fullWidth
+            label="Nhóm máu"
+            name="bloodType"
+            value={formData.bloodType || 'Chưa cập nhật'}
+            slotProps={{ input: { readOnly: true } }}
+          />
+
+          {/* {(dateError || Object.keys(errors).length > 0) && (
+            <Alert severity="error" sx={{ mt: 1 }}>
+              Vui lòng kiểm tra lại thông tin đã nhập
+            </Alert>
+          )} */}
+
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={onCancel}
+              sx={{
+                px: 4,
+                py: 1.5,
+                borderRadius: 3,
+                textTransform: 'none',
+                fontSize: '1rem',
+                backgroundColor: 'white',
+                color: 'black',
+                fontWeight: 600,
+                '&:hover': {
+                  backgroundColor: '#f0f0f0',
+                },
+              }}
+            >
+              Hủy
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={handleSave}
+              sx={{
+                px: 4,
+                py: 1.5,
+                borderRadius: 3,
+                textTransform: 'none',
+                fontSize: '1rem',
+                fontWeight: 600,
+                boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)'
+              }}
+            >
+              Lưu
+            </Button>
+          </Box>
+        </Stack>
+      </Paper>
+    </Box>
   );
 };
 

@@ -82,8 +82,18 @@ export default function BloodDonationGrid() {
     
         const dataInventory = { donationRegisId,processId,volumeMl};
       
-        await updateBloodVolumeApi(bloodTypeId,dataInventory);
-        alert("Đã thêm vào kho máu!");
+        const responseInventory = await updateBloodVolumeApi(bloodTypeId,dataInventory);
+        if(responseInventory.data.message==="Update blood volume successfully. Emergency request volume updated and completed for emergency."){
+          alert("Máu đã cập nhật cho trường hợp khẩn cấp và hoàn thành lượng máu cần");
+        }
+        if(responseInventory.data.message==="Update blood volume successfully. Emergency request volume updated."){
+          alert("Máu đã cập nhật cho trường hợp khẩn cấp");
+        }
+        if(responseInventory.data.message==="Update blood volume successfully. User has been updated with blood type from process"
+        || responseInventory.data.message==="Update blood volume successfully. User already has a blood type set, no update needed"){
+          alert("Đã thêm vào kho máu và cập nhật máu cho hồ sơ người hiến máu!");
+        }
+        
       } else if (newRow.bloodTest === "KHÔNG ĐẠT") {
         alert("Cập nhật trạng thái thành công");
       }
