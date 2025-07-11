@@ -28,7 +28,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
 export default function Sidebar() {
     const navigate = useNavigate();
     const location = useLocation();

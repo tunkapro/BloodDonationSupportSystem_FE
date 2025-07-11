@@ -33,6 +33,7 @@ import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessP
 import DonationManagement from "../pages/AdminPage/DonationManagement/DonationManagementPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
 import ScheduleManagement from "../pages/AdminPage/ScheduleManagement/ScheduleManagementPage";
+import EmergencyDonationPage from "../pages/StaffPage/EmergencyDonation/EmergencyDonationPage";
 import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
@@ -108,6 +109,7 @@ const CustomRoute = () => {
           <Route path="process" element={<DonorProcessPage />} />
         </Route>
         <Route path="donation-request" element={<BloodDonationRequestPage />} />
+        <Route path="emergency" element={<EmergencyDonationPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="blood-donation-schedule" element={<BloodDonationScheduleComponent />} />
       </Route>
