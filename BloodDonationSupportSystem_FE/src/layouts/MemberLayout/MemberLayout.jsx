@@ -14,6 +14,7 @@ export default function MemberLayout() {
       <Toolbar />
       <Outlet />
       <Footer></Footer>
+
     </RequireAuth>
   );
 }
