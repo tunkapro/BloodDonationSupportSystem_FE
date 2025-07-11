@@ -1,5 +1,5 @@
 import React from 'react';
-import BloodStorageTable from  "./BloodStorageTable";
+import BloodStorageTable from "./BloodStorageTable"; 
 import { useNavigate } from 'react-router-dom';
 import { Box } from "@mui/material";
 function BloodStoragePage() {
