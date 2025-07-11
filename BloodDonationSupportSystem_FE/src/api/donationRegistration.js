@@ -8,7 +8,6 @@ export const registerDonation = async (data) => {
 };
 
 export const cancelDonationRegistration = (donationRegistrationId) =>
-  axios.put('/staff/cancel-registration', {
-    donationRegistrationId,
+  axios.put(`/staff/cancel-registration/${donationRegistrationId}`, {
     status: 'HỦY',
   });

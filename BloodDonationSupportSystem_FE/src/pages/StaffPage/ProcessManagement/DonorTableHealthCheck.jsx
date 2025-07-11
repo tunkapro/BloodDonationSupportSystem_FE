@@ -55,7 +55,7 @@ export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDon
                     <Chip
                       label={donor.levelOfUrgency || "BÌNH THƯỜNG"} 
                       color={
-                        donor.levelOfUrgency === "CỰC KỲ KHẨN CẤP" ? "error"
+                        donor.levelOfUrgency === "CỰC KÌ KHẨN CẤP" ? "error"
                           : donor.levelOfUrgency === "RẤT KHẨN CẤP" ? "warning"
                             : donor.levelOfUrgency === "KHẨN CẤP" ? "secondary"
                               : "default" 

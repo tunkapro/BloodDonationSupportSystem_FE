@@ -32,6 +32,7 @@ import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/Blood
 import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
 import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
+import EmergencyDonationPage from "../pages/StaffPage/EmergencyDonation/EmergencyDonationPage";
 import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";

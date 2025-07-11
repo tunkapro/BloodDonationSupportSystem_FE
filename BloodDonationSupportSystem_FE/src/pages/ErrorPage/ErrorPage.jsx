@@ -35,7 +35,11 @@ export default function ErrorPage() {
             </Box>
             <Typography variant="h2" color="error">404 Not Found</Typography>
             <Stack direction="row" justifyContent="center" sx={{ mt: 3 }}>
-                <Button variant="contained" color="primary" onClick={handleGoBack}>
+                <Button 
+                variant="contained" 
+                color="inherit" 
+                sx={{ backgroundColor: '#9e9e9e', '&:hover': { backgroundColor: '#757575' } }}
+                onClick={handleGoBack}>
                     Quay về trang chủ
                 </Button>
             </Stack>
