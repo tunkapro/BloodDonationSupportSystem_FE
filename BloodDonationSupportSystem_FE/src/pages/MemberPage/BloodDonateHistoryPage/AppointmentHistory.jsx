@@ -25,7 +25,6 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Toolbar } from "@mui/material";
 
 import axios from '../../../config/axios';
 
@@ -228,7 +227,6 @@ export default function AppointmentHistory() {
         py: 4
       }}
     >
-      <Toolbar />
       <Container maxWidth="lg">
         <Paper
           elevation={0}

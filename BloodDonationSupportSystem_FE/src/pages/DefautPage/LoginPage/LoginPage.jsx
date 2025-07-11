@@ -18,13 +18,14 @@ import { GoogleLogin } from "@react-oauth/google";
 import { login } from "../../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/authContext";
+import { getCurrentUser } from "../../../api/userService";
 
 import { loginGooleApi } from "../../../api/authService";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loginGoogleError, setLoginGoogleError] = useState("");
-  const { loadUser } = useAuth();
+  const { loadUser, user } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -45,7 +46,15 @@ export default function LoginPage() {
         await loadUser();
       }
 
-      navigate("/");
+      const userRes = await getCurrentUser();
+      const role = userRes.data.role;
+      console.log("ROLE:", role);
+
+      if (role === "ROLE_MEMBER") navigate("/");
+      else if (role === "ROLE_STAFF") navigate("/staff");
+      else if (role === "ROLE_ADMIN") navigate("/admin");
+      else navigate("/");
+
     } catch (error) {
       const message =
         error?.response?.data?.message != null
@@ -57,9 +66,9 @@ export default function LoginPage() {
   };
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const response = await loginGooleApi(credentialResponse);    
+      const response = await loginGooleApi(credentialResponse);
       if (response.data.data) {
-        const token = response.data.data;    
+        const token = response.data.data;
         localStorage.setItem("token", token);
         await loadUser();
         navigate("/");
