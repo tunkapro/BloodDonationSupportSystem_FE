@@ -49,9 +49,8 @@ function AppBarHeader() {
   ]
   //'Profile', 'Account', 'Logout'
   const settings = [
-
-    { title: "Hồ Sơ", path: "user/profile" },
-    { title: "Lịch Sử Hiến Máu", path: "user/donation-histories" },
+    { title: "Hồ Sơ", path: "/user/profile" },
+    { title: "Lịch Sử Hiến Máu", path: "/user/donation-histories" },
   ];
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.
   //  if get Token is null will dont display permission of member like avata name
