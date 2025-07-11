@@ -57,6 +57,7 @@ const DistanceSearchWithDataGrid = () => {
   };
   const handleInviteDonation = async (donorName,bloodType ,contact) => {
     try {
+    
       const res = await sendInviteApi(donorName,bloodType ,contact);
       if (res.data.data.includes("successfully")) {
         showSnackbar(`Đã gửi lời mời đến ${donorName}`, "success");
