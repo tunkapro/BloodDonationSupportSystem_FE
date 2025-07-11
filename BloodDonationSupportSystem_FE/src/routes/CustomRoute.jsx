@@ -37,6 +37,7 @@ import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
 import ProtectedRoute from "../routes/ProtectRoute";
+import CertificatePage from "../pages/MemberPage/CertificatePage/CertificatePage";
 
 
 const CustomRoute = () => {
@@ -75,6 +76,7 @@ const CustomRoute = () => {
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
           <Route path="blood-donation-register" element={<DonationRegistration />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="certificate" element={<CertificatePage/>}/>
           <Route path="donation-histories" element={<BloodDonateHistory />} />
         </Route>
       </Route>

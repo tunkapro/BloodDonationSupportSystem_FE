@@ -51,6 +51,7 @@ function AppBarHeader() {
   const settings = [
 
     { title: "Hồ Sơ", path: "user/profile" },
+    { title: "Chứng nhận", path: "user/certificate" },
     { title: "Lịch Sử Hiến Máu", path: "user/donation-histories" },
   ];
   // Get User Infor fake API. If have real API will decode TOkEN to GET Name and Role to Auth.
@@ -229,7 +230,7 @@ function AppBarHeader() {
             </Tooltip>
             {/* display settings */}
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '50px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
