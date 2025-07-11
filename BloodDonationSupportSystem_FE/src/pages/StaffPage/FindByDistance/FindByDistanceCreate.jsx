@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Snackbar, Alert } from "@mui/material";
 import {
   Box,
   Slider,
@@ -9,9 +10,9 @@ import {
   ToggleButton,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { searchDonorsApi } from "../../../api/staffService";
+import { searchDonorsApi, sendInviteApi ,sendInviteSmSApi} from "../../../api/staffService";
 import { useForm } from "react-hook-form";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 const bloodTypes = [
   { value: "A+", label: "A+" },
   { value: "A-", label: "A-" },
@@ -35,11 +36,46 @@ const vietnameseText = {
   toolbarExport: "Xuất",
 };
 
+
 const DistanceSearchWithDataGrid = () => {
   const [filters, setFilters] = useState({ distance: 10, bloodTypes: [] });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [customError, setCustomError] = useState("");
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar({ open: true, message, severity });
+  };
+  
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+  const handleInviteDonation = async (donorName,bloodType ,contact) => {
+    try {
+      const res = await sendInviteApi(donorName,bloodType ,contact);
+      if (res.data.data.includes("successfully")) {
+        showSnackbar(`Đã gửi lời mời đến ${donorName}`, "success");
+      }
+    } catch (error) {
+      showSnackbar("Có lỗi khi gửi lời mời.", "error");
+    }
+  };
+  const handleInviteDonationSms = async (bloodType, contact) => {
+    try {
+      const res = await sendInviteSmSApi(bloodType, contact);
+      if (res.data.message.includes("successfully")) {
+        showSnackbar(`Đã gửi lời mời đến ${contact}`, "success");
+      }
+    } catch (error) {
+      showSnackbar("Có lỗi khi gửi lời mời.", "error");
+    }
+  };
+
 
   const {
     handleSubmit,
@@ -57,7 +93,6 @@ const DistanceSearchWithDataGrid = () => {
     setLoading(true);
     try {
       const response = await searchDonorsApi(filters);
-      console.log("resp" + response);
 
       const dataWithIds = response.data.data.map((item, index) => ({
         id: index + 1,
@@ -67,7 +102,7 @@ const DistanceSearchWithDataGrid = () => {
 
       setResults(dataWithIds);
     } catch (error) {
-      alert("Không thể tìm kiếm. Vui lòng thử lại sau." + error);
+      showSnackbar("Không thể tìm kiếm. Vui lòng thử lại sau." + error,"error");
     } finally {
       setLoading(true);
     }
@@ -81,12 +116,12 @@ const DistanceSearchWithDataGrid = () => {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-    },  
+    },
     {
       field: "donorName",
       headerName: "Họ tên",
       flex: 1,
-      sortable:false,
+      sortable: false,
       disableColumnMenu: true,
     },
     { field: "bloodType", headerName: "Nhóm máu", flex: 1,   sortable:false,
@@ -96,13 +131,77 @@ const DistanceSearchWithDataGrid = () => {
       const getDate = params.value;
       const date = new Date(getDate);
       return date.toLocaleDateString("vi-VN");
-    }},
-    { field: "phoneNumber", headerName: "Số điện thoại", flex: 1 ,   sortable:false,
-    disableColumnMenu: true,},
+      },
+    },
+    {
+      field: "contact",
+      headerName: "Thông tin liên hệ",
+      flex: 1.25,
+      sortable: false,
+      disableColumnMenu: true,
+    },
+    {
+      field: "action",
+      headerName: "Gửi lời mời",
+      flex: 1,
+      sortable: false,
+      disableColumnMenu: true,
+      renderCell: (params) => {
+        const isEmail = params.row.contact.includes("@");
+        const contact = params.row.contact;
+        const bloodType= params.row.bloodType;
+        const donorName = params.row.donorName;
+        return (
+          <Box sx={{ width: "100%" }}>
+            {isEmail ? (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleInviteDonation(donorName,bloodType, contact);
+                }}
+                sx={{
+                  backgroundColor: "#f9a825",
+                  color: "#fff",
+                  minWidth: 100,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "#f57f17",
+                  },
+                }}
+              >
+                Gửi Email
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                size="small"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleInviteDonationSms(bloodType, contact);
+                }}
+                sx={{
+                  backgroundColor: "#2e7d32",
+                  color: "#fff",
+                  minWidth: 100,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "#1b5e20",
+                  },
+                }}
+              >
+                Gửi SMS
+              </Button>
+            )}
+          </Box>
+        );
+      },
+    },
   ];
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: "auto", background: "white" }}>
+    <Box sx={{ width:"100%", mx: "auto", background: "white" }}>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -190,7 +289,12 @@ const DistanceSearchWithDataGrid = () => {
         <Box sx={{ mt: 1 }}>
           <div style={{ height: 600, width: "100%" }}>
             <DataGrid
-            sx={{'.MuiDataGrid-columnHeader':{background:"#1976d3",color:"white"}}}
+              sx={{
+                ".MuiDataGrid-columnHeader": {
+                  background: "#1976d3",
+                  color: "white",
+                },
+              }}
               rows={results}
               columns={columns}
               localeText={vietnameseText}
@@ -199,6 +303,20 @@ const DistanceSearchWithDataGrid = () => {
                 pagination: { paginationModel: { page: 0, pageSize: 9 } },
               }}
             />
+            <Snackbar
+              open={snackbar.open}
+              autoHideDuration={3000}
+              onClose={handleCloseSnackbar}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <Alert
+                onClose={handleCloseSnackbar}
+                severity={snackbar.severity}
+                sx={{ width: "100%" }}
+              >
+                {snackbar.message}
+              </Alert>
+            </Snackbar>
           </div>
         </Box>
       )}
