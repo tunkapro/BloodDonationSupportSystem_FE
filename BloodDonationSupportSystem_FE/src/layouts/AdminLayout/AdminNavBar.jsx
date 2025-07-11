@@ -27,11 +27,20 @@ import BloodtypeIcon from '@mui/icons-material/Bloodtype';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/authContext'
 
 export default function Sidebar() {
     const navigate = useNavigate();
     const location = useLocation();
-    
+    const { loadUser } = useAuth();
+
+    const handleLogout = async () => {
+        localStorage.removeItem("token");
+        await loadUser();
+        navigate("/");
+
+    };
+
     const menuItems = [
         {
             title: null,
@@ -52,11 +61,11 @@ export default function Sidebar() {
                 { text: 'Đơn hiến máu', path: '/admin/donation-report', icon: <VolunteerActivismIcon /> },
                 { text: 'Kho máu', path: '/admin/blood-inventory-report', icon: <BloodtypeIcon /> }
             ],
-        },  {
+        }, {
             title: 'Cài đặt',
             items: [
-                { text: 'Tài khoản', path: '/admin/account', icon: <AccountCircleIcon /> },
-                { text: 'Đăng xuất', path: '/admin/logout', icon: <LogoutIcon /> },
+                { text: 'Tài khoản', path: '/admin/profile', icon: <AccountCircleIcon /> },
+                { text: 'Đăng xuất', icon: <LogoutIcon />, onClick: handleLogout },
             ],
         },
     ];
@@ -74,28 +83,28 @@ export default function Sidebar() {
     const [selectedItem, setSelectedItem] = useState(getCurrentSelectedItem());
 
     return (
-        <Box sx={{ 
-            width: 280, 
-            
-            bgcolor: '#f8fafc', 
+        <Box sx={{
+            width: 280,
+
+            bgcolor: '#f8fafc',
             color: '#334155',
             display: 'flex',
             flexDirection: 'column',
-           height: "100vh",
+            height: "100vh",
             position: 'fixed',
             overflow: 'hidden',
             borderRight: '1px solid #e2e8f0'
         }}>
-            
+
 
             {/* Navigation Menu */}
             <Box sx={{ flex: 1, overflowY: 'auto', py: 2 }}>
                 {menuItems.map((section, i) => (
                     <Box key={section.title}>
-                        <Typography sx={{ 
-                            px: 3, 
-                            py: 1.5, 
-                            fontWeight: 600, 
+                        <Typography sx={{
+                            px: 3,
+                            py: 1.5,
+                            fontWeight: 600,
                             fontSize: '0.75rem',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px',
@@ -111,7 +120,11 @@ export default function Sidebar() {
                                         selected={selectedItem === item.text}
                                         onClick={() => {
                                             setSelectedItem(item.text);
-                                            navigate(item.path);
+                                            if (item.onClick) {
+                                                item.onClick();
+                                            } else if (item.path) {
+                                                navigate(item.path);
+                                            }
                                         }}
                                         sx={{
                                             mx: 1.5,
@@ -133,15 +146,15 @@ export default function Sidebar() {
                                             transition: 'all 0.2s ease-in-out',
                                         }}
                                     >
-                                        <ListItemIcon sx={{ 
-                                            color: selectedItem === item.text ? '#667eea' : '#94a3b8', 
+                                        <ListItemIcon sx={{
+                                            color: selectedItem === item.text ? '#667eea' : '#94a3b8',
                                             minWidth: 40,
                                             transition: 'color 0.2s ease-in-out'
                                         }}>
                                             {item.icon}
                                         </ListItemIcon>
-                                        <ListItemText 
-                                            primary={item.text} 
+                                        <ListItemText
+                                            primary={item.text}
                                             sx={{
                                                 '& .MuiListItemText-primary': {
                                                     fontWeight: selectedItem === item.text ? 600 : 500,
@@ -155,10 +168,10 @@ export default function Sidebar() {
                             ))}
                         </List>
                         {i < menuItems.length - 1 && (
-                            <Divider sx={{ 
-                                borderColor: '#e2e8f0', 
-                                mx: 2, 
-                                my: 2 
+                            <Divider sx={{
+                                borderColor: '#e2e8f0',
+                                mx: 2,
+                                my: 2
                             }} />
                         )}
                     </Box>
@@ -166,7 +179,7 @@ export default function Sidebar() {
             </Box>
 
             {/* Footer */}
-            <Box sx={{ 
+            <Box sx={{
                 borderTop: '1px solid #e2e8f0',
                 textAlign: 'center',
                 bgcolor: '#f8fafc',

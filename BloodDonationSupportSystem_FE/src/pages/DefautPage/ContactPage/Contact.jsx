@@ -1,100 +1,160 @@
-import { Box, Container,AppBar, Toolbar,Button, Grid, TextField, Typography, Card} from "@mui/material";
+import { Box, Container, AppBar, Toolbar, Button, Typography, Card, useTheme } from "@mui/material";
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 export default function Contact() {
+    const theme = useTheme();
     return(
         <>
-        
-          {/* Header */}
-          <AppBar position="static" sx={{ backgroundColor: '#1E3A8A' }}>
-            <Toolbar>
-              <img src="hca-logo.png" alt="HCA Logo" style={{ height: 50 }} />
-              <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-                <Button color="inherit">TRANG CHỦ</Button>
-                <Button color="inherit">HỎI - ĐÁP</Button>
-                <Button color="inherit">TIN TỨC</Button>
-                <Button color="inherit" sx={{ fontWeight: 'bold' }}>LIÊN HỆ</Button>
-              </div>
-              <Button color="inherit" startIcon={<PersonIcon />}>Đăng nhập</Button>
-            </Toolbar>
-          </AppBar>
+        <Toolbar/>
 
-          {/* Main Content */}
-          <Container sx={{ marginTop: 4, paddingTop: 4, marginBottom: 4, padding: 4 }}>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 5 }}>
-              {/* Contact Information - Left */}
-              <Box sx={{ flex: '0 0 50%', minWidth: 0 }}>
-      <Card sx={{ backgroundColor: '#3B82F6', color: 'white', borderRadius: 5, padding: 4, minHeight: '60vh'}}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: 2, alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-          Liên hệ
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-          <EmailIcon sx={{ verticalAlign: 'middle', marginRight: 1 }} />
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Email
-          </Typography>
-        </Box>
-        <Typography variant="body1" sx={{ marginLeft: 4, marginBottom: 2 }}>
-          gmv@intelin.vn
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-          <PhoneIcon sx={{ verticalAlign: 'middle', marginRight: 1 }} />
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Hotline
-          </Typography>
-        </Box>
-        <Typography variant="body1" sx={{ marginLeft: 4 }}>
-          TT Hiền Mẫu Nhân Đạo: 028 3868 5509 / 028 3868 5507
-        </Typography>
-        <Typography variant="body1" sx={{ marginLeft: 4 }}>
-          Bệnh viện BTH: 028 39571342 / 028 39557858
-        </Typography>
-        <Typography variant="body1" sx={{ marginLeft: 4 }}>
-          TT truyền máu Chợ Rẫy: 028 39555885
-        </Typography>
-      </Card>
-    </Box>
+          <Container sx={{ marginTop: 4, marginBottom: 6 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Card sx={{ 
+                padding: 6, 
+                maxWidth: 700,
+                width: '100%',
+                borderRadius: 4,
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                color: 'white',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.15)'
+              }}>
 
-              {/* Contact Form - Right */}
-              <Box sx={{ flex: '0 0 50%', minWidth: 0 }}>
-                <Typography variant="h4" sx={{ marginBottom: 2 }}>Gửi lời nhắn cho chúng tôi</Typography>
-                <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                  Nếu bạn có bất kỳ thắc mắc nào liên quan đến các hoạt động hiện tại của trung tâm nguyệt, xin vui lòng liên hệ với chúng tôi qua địa chỉ email gmv@intelin.vn hoặc gửi thông tin cho chúng tôi theo mẫu bên dưới:
+                <Typography variant="h3" sx={{ 
+                  textAlign: 'center', 
+                  fontWeight: 'bold', 
+                  marginBottom: 4,
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                }}>
+                  Thông tin liên hệ
                 </Typography>
-                <div>
-                  <TextField
-                    fullWidth
-                    label="Họ và tên"
-                    placeholder="Vui lòng nhập họ và tên"
-                    variant="outlined"
-                    sx={{ marginBottom: 2 }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    placeholder="Vui lòng nhập email"
-                    variant="outlined"
-                    sx={{ marginBottom: 2 }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Lời nhắn"
-                    placeholder="Vui lòng nhập lời nhắn"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    sx={{ marginBottom: 2 }}
-                  />
-                  <Button
-                    variant="contained"
-                    sx={{ backgroundColor: '#BFDBFE', color: '#1E40AF', borderRadius: 2 }}
-                  >
-                    Gửi lời nhắn
-                  </Button>
-                </div>
-              </Box>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+                  <Box sx={{ 
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    borderRadius: '50%',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 3
+                  }}>
+                    <EmailIcon sx={{ fontSize: 30 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 0.5 }}>
+                      Email
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontSize: '1.1rem' }}>
+                      duclhmse182642@fpt.edu.vn
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', marginBottom: 4 }}>
+                  <Box sx={{ 
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    borderRadius: '50%',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 3
+                  }}>
+                    <PhoneIcon sx={{ fontSize: 30 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                      Hotline
+                    </Typography>
+                    <Typography variant="body1" sx={{ marginBottom: 0.5 }}>
+                      <strong>Trung tâm hiến máu:</strong> 0388459378
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', marginBottom: 4 }}>
+                  <Box sx={{ 
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    borderRadius: '50%',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 3
+                  }}>
+                    <AccessTimeIcon sx={{ fontSize: 30 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                      Giờ làm việc
+                    </Typography>
+                    <Typography variant="body1" sx={{ marginBottom: 0.5 }}>
+                      Thứ 2 - Thứ 7: 7h30 – 17h00
+                    </Typography>
+                    <Typography variant="body1" sx={{ marginBottom: 0.5 }}>
+                      Chủ nhật: Có thể hoạt động nếu có chiến dịch đặc biệt
+                    </Typography>
+                  </Box>
+                </Box>
+
+
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', marginBottom: 4 }}>
+                  <Box sx={{ 
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    borderRadius: '50%',
+                    width: 60,
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 3
+                  }}>
+                    <LocationOnIcon sx={{ fontSize: 30 }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: 1 }}>
+                      Địa chỉ
+                    </Typography>
+                    <Typography variant="body1" sx={{ marginBottom: 0.5 }}>
+                      Trung Tâm Hiến Máu
+                    </Typography>
+                    <Typography variant="body1">
+                      Thành phố Hồ Chí Minh
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ 
+                  marginTop: 4,
+                  padding: 4,
+                  backgroundColor: 'rgba(255,255,255,0.15)',
+                  borderRadius: 4,
+                  textAlign: 'center',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}>
+                  <Typography variant="body1" sx={{ 
+                    fontStyle: 'italic',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                    lineHeight: 1.6,
+                    marginBottom: 1
+                  }}>
+                    Chúng tôi luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của bạn
+                  </Typography>
+                  <Typography variant="body2" sx={{ 
+                    opacity: 0.9,
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+                  }}>
+                    Nếu bạn cần hỗ trợ vui lòng liên hệ qua hotline hoặc email
+                  </Typography>
+                </Box>
+              </Card>
             </Box>
           </Container>
         </>
