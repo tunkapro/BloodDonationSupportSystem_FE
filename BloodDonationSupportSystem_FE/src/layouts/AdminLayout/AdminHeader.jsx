@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, InputBase, IconButton, Avatar, Menu, MenuItem, Fade, Paper } from '@mui/material';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Box, 
+  InputBase, 
+  IconButton, 
+  Avatar, 
+  Menu, 
+  MenuItem, 
+  Fade, 
+  Paper 
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { useAuth } from "../../context/authContext"
 import { useNavigate } from 'react-router-dom';
+
+
  
 const admin = {
   name: 'Admin User',
@@ -12,9 +25,10 @@ const admin = {
 
 export default function AdminHeader() {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
 
-  const {loadUser} = useAuth();
+
 
   const navigate = useNavigate();
 
@@ -30,11 +44,13 @@ export default function AdminHeader() {
     navigate("/admin/profile");
   }
 
-  const handleLogout = async () => {  
-        localStorage.removeItem("token");
-    await loadUser();
+
+
+
+
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
     navigate("/");
-    setAnchorEl(null);
   };
 
   return (

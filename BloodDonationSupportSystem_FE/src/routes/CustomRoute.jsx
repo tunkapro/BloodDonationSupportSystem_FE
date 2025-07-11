@@ -33,7 +33,9 @@ import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessP
 import DonationManagement from "../pages/AdminPage/DonationManagement/DonationManagementPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
 import ScheduleManagement from "../pages/AdminPage/ScheduleManagement/ScheduleManagementPage";
-
+import Account from "../pages/AdminPage/Account";
+import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
+import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
 import ProtectedRoute from "../routes/ProtectRoute";
 
 
@@ -121,10 +123,13 @@ const CustomRoute = () => {
         <Route path="posts" element={<AdminPosts />} />
         <Route path="donation-management" element={<DonationManagement />} />
         <Route path="donation-calendar" element={<ScheduleManagement />} />
+        <Route path="account" element={<Account />} />
+        <Route path="donation-report" element={<BloodDonationReport />} />
+        <Route path="blood-inventory-report" element={<BloodInventoryReport />} />
       </Route>
 
-        <Route path="*" element={<ErrorPage />} />
-      <Route path="/404" element={<ErrorPage />} />
+      {/* Error Route */}
+      <Route path="/404" element={<ErrorPage />}></Route>
     </Routes>
   );
 };

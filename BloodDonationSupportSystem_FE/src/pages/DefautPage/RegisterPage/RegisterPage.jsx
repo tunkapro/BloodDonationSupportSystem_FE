@@ -49,7 +49,7 @@ const RegisterPage = () => {
         setOpenSnackbar(true);
         setTimeout(() => {
           navigate("/login");
-        }, 5000);
+        }, 3000);
       }
     } catch (err) {
       console.log(err);

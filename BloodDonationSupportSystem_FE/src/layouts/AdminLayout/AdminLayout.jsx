@@ -5,8 +5,8 @@ import AdminNavBar from "./AdminNavBar";
 import RequireAuth from "../../components/RequireAuth";
 import AdminHeader from "./AdminHeader";
 export default function AdminLayout() {
-  const HEADER_HEIGHT = 72; // px, matches AdminHeader minHeight
-const SIDEBAR_WIDTH = 280; // px, matches AdminNavBar width
+  const HEADER_HEIGHT = 72; 
+const SIDEBAR_WIDTH = 280; 
   return (
     <RequireAuth role={"ROLE_ADMIN"}>
 <>
@@ -18,7 +18,7 @@ const SIDEBAR_WIDTH = 280; // px, matches AdminNavBar width
       <Box
         sx={{
           position: 'fixed',
-          top: `${HEADER_HEIGHT}px`,
+          top:0,
           left: 0,
           width: `${SIDEBAR_WIDTH}px`,
           height: `calc(100vh - ${HEADER_HEIGHT}px)`,
@@ -33,8 +33,8 @@ const SIDEBAR_WIDTH = 280; // px, matches AdminNavBar width
       <Box
         sx={{
           marginLeft: `${SIDEBAR_WIDTH}px`,
-          marginTop: `${HEADER_HEIGHT}px`,
-          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+ 
+         
           overflow: 'auto',
           bgcolor: 'background.default',
         }}
