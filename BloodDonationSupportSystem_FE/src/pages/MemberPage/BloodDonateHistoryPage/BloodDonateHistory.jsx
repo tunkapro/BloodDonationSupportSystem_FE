@@ -27,7 +27,6 @@ export default function BloodDonateHistory() {
     >
       <Container maxWidth="lg">
         {/* Header */}
-        <Toolbar />
         <Paper 
           elevation={0}
           sx={{ 

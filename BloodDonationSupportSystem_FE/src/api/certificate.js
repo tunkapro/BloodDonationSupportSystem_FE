@@ -1,6 +1,10 @@
-export const downloadCertificate = async () => {
+import customAxios from "../config/axios";
+
+const URL_API = import.meta.env.VITE_API_BASE_URL;
+
+export const downloadCertificate = async (certificateId) => {
   const token = localStorage.getItem("token");
-  const res = await fetch("http://localhost:8090/api/member/download/d593c8da-2d9f-43d1-bcab-37faae835262", {
+  const res = await fetch(`${URL_API}/member/download/${certificateId}`, {
     method: "GET",
     headers: {
       "Authorization": `Bearer ${token}`
@@ -20,4 +24,11 @@ export const downloadCertificate = async () => {
   a.download = "certificate.pdf";
   a.click();
   URL.revokeObjectURL(url);
+};
+
+
+
+export const fetchCertificates = async () => {
+  const res = await customAxios.get("/member/certificates");
+  return res.data.data; 
 };

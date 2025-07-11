@@ -52,7 +52,17 @@ const RegisterPage = () => {
         }, 3000);
       }
     } catch (err) {
-      console.log(err);
+      const serverMessage = err;
+
+      if (serverMessage === "Phone number already in use") {
+        setError("phoneNumber", {
+          type: "server",
+          message: 'Số điện thoại đã tồn tại',
+        });
+      } else {
+        console.error(err);
+      }
+
     }
   };
 
