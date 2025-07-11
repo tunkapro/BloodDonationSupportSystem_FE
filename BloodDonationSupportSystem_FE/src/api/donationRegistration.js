@@ -11,3 +11,9 @@ export const cancelDonationRegistration = (donationRegistrationId) =>
   axios.put(`/staff/cancel-registration/${donationRegistrationId}`, {
     status: 'HỦY',
   });
+
+export const getRegistrationList = () => axios.get("/staff/unassigned-list");
+
+export const approveDonationRegistration = (donationRegistrationId) =>  
+  axios.put(`/staff/assign-registration/${donationRegistrationId}`);
+

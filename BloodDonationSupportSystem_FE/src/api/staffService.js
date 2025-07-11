@@ -18,3 +18,5 @@ export const updateProcessIsPassedApi=(processId,data)=> axios.put(`/staff/updat
 
 // await axios.put(`/staff/update-blood-volume/${bloodTypeId}`,dataInventory);
 export const updateBloodVolumeApi =(bloodTypeId,data)=>axios.put(`/staff/update-blood-volume/${bloodTypeId}`,data);
+
+export const getAllStaffs = () => axios.get("/staff/get-staffs");
