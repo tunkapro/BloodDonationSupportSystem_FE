@@ -14,3 +14,8 @@ export const getStatByDay = async () => await customAxios("/staff/registration/s
 
 
 export const createSchedule = async (data) => await customAxios.post("/staff/schedule", data);
+
+export const getAdminSchedules = async () => await customAxios("/admin/schedules");
+
+export const deleteSchedule = (id) => customAxios.delete(`admin/schedule/${id}`);
+export const updateSchedule = (id, data) => customAxios.put(`admin/schedule/${id}`, data);

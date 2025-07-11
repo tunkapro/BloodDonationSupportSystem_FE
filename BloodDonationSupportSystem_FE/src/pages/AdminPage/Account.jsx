@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Paper, Typography, TextField, Button, Stack } from '@mui/material';
 
 export default function Account() {
-    // Fake initial data
+
     const [phone, setPhone] = useState('0901234567');
     const [password, setPassword] = useState('');
     const [editMode, setEditMode] = useState(false);

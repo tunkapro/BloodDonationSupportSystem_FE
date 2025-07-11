@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -71,13 +71,29 @@ export default function LoginPage() {
         const token = response.data.data;
         localStorage.setItem("token", token);
         await loadUser();
-        navigate("/");
       }
     } catch (error) {
       console.error("Google login failed:", error);
       setLoginError("Đăng nhập Google thất bại");
     }
   };
+  useEffect(() => {
+    if (user?.role) {
+      switch (user.role) {
+        case "ROLE_ADMIN":
+          navigate("/admin/overview");
+          break;
+        case "ROLE_STAFF":
+          navigate("/staff/overview");
+          break;
+        case "ROLE_MEMBER":
+        default:
+          navigate("/");
+          break;
+      }
+    }
+  }, [user, navigate]);
+
   return (
     <Container
       component=""

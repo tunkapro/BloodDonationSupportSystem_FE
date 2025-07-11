@@ -21,8 +21,7 @@ import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
-
-import UserManagement from "../pages/AdminPage/UserManagement/UserManagement"
+import UserManagement from "../pages/AdminPage/UserManagement/UserManagement";
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
 import DonationRegistration from "../pages/MemberPage/DonationRegistration/DonationRegistration";
@@ -31,14 +30,15 @@ import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
 import DonorHealthCheckPage from "../pages/StaffPage/ProcessManagement/DonorHealthCheckPage";
 import DonorProcessPage from "../pages/StaffPage/ProcessManagement/DonorProcessPage";
+import DonationManagement from "../pages/AdminPage/DonationManagement/DonationManagementPage";
 import { Navigation } from "../pages/StaffPage/ProcessManagement/Navigation";
+import ScheduleManagement from "../pages/AdminPage/ScheduleManagement/ScheduleManagementPage";
 import EmergencyDonationPage from "../pages/StaffPage/EmergencyDonation/EmergencyDonationPage";
 import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
 import ProtectedRoute from "../routes/ProtectRoute";
-
-
+import CertificatePage from "../pages/MemberPage/CertificatePage/CertificatePage";
 
 
 const CustomRoute = () => {
@@ -66,6 +66,7 @@ const CustomRoute = () => {
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
           <Route path="blood-donation-register" element={<DonationRegistration />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="certificate" element={<CertificatePage/>}/>
           <Route path="donation-histories" element={<BloodDonateHistory />} />
         </Route>
       </Route>

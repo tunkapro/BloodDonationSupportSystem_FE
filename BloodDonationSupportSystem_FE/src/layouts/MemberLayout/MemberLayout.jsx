@@ -10,10 +10,11 @@ export default function MemberLayout() {
 
   return (
     <RequireAuth role={"ROLE_MEMBER"}>
-      <AppBarHeader />
+      <AppBarHeader/>
       <Toolbar />
       <Outlet />
-      <Footer/>
+      <Footer></Footer>
+
     </RequireAuth>
   );
 }

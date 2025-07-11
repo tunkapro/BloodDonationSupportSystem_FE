@@ -178,8 +178,8 @@ export default function Sidebar() {
                 ))}
             </Box>
 
-            {/* Footer */}
-            <Box sx={{
+
+            <Box sx={{ 
                 borderTop: '1px solid #e2e8f0',
                 textAlign: 'center',
                 bgcolor: '#f8fafc',
