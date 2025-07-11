@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Toolbar } from "@mui/material";
 import RequireAuth from "../../components/RequireAuth";
 import AppBarHeader from "../AppBarHeader";
+import Footer from "../../components/Footer";
 
 export default function MemberLayout() {
 
@@ -12,6 +13,7 @@ export default function MemberLayout() {
       <AppBarHeader />
       <Toolbar />
       <Outlet />
+      <Footer/>
     </RequireAuth>
   );
 }
