@@ -74,7 +74,7 @@ const CustomRoute = () => {
       <Route path="/staff/*" element={<StaffLayout />}>
         <Route index element={<Overview />} />
         <Route path="overview" element={<Overview />} />
-        <Route path="storage/blood-donation-list" element={<BloodStoragePage />} />
+        <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
         <Route path="find-by-distance" element={<FindDistancePage />} />
         <Route path="blood-management/*" element={<Navigation />} >
           <Route path="health-check" element={<DonorHealthCheckPage />} />
