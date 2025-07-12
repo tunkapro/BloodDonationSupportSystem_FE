@@ -72,8 +72,7 @@ const CustomRoute = () => {
       {/* STAFF ROLE */}
       <Route element={<ProtectedRoute allowedRoles={["ROLE_STAFF"]} />}>
         <Route path="/staff/*" element={<StaffLayout />}>
-          <Route index element={<Overview />} />
-          <Route path="overview" element={<Overview />} />
+          <Route path="" element={<RegistrationPage />}/>
           <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
           <Route path="find-by-distance" element={<FindDistancePage />} />
           <Route path="emergency" element={<EmergencyDonationPage />} />

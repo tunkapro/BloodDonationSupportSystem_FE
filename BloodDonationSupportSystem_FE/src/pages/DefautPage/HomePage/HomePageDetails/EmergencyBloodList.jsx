@@ -130,6 +130,7 @@ export default function EmergencyRequestList() {
           "Your blood type is not compatible with the emergency request"
         ) {
           errorMessage = "Nhóm máu của bạn không tương thích với yêu cầu khẩn cấp!";
+
         }
         setSnackbar({
           open: true,
