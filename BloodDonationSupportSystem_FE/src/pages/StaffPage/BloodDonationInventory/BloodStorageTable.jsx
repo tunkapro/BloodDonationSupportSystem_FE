@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { bloodCheckProcessListApi,updateProcessIsPassedApi,updateBloodVolumeApi } from "../../../api/staffService";
+import {
+  bloodCheckProcessListApi,
+  updateProcessIsPassedApi,
+  updateBloodVolumeApi,
+} from "../../../api/staffService";
 
 import Box from "@mui/material/Box";
 import {
@@ -15,12 +19,27 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { Select, MenuItem } from "@mui/material";
-
-export default function BloodDonationGrid() {
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+export default function BloodStorageTable() {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
-
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar({
+      open: true,
+      message,
+      severity,
+    });
+  };
+  const handleSnackbarClose = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
   const vietnameseText = {
     columnMenuSortAsc: "Sắp xếp tăng dần",
     columnMenuSortDesc: "Sắp xếp giảm dần",
@@ -34,10 +53,8 @@ export default function BloodDonationGrid() {
     toolbarExport: "Xuất",
   };
 
-  // 1. API lấy danh sách hiến máu CHƯA KIỂM TRA
   const fetchData = async () => {
     try {
-   
       const res = await bloodCheckProcessListApi();
       return res.data.data;
     } catch (err) {
@@ -45,8 +62,9 @@ export default function BloodDonationGrid() {
       return [];
     }
   };
-
-  // 2. Load dữ liệu vào bảng
+const handleReloadBloodBagList = async () => {
+  await loadAndSetData();
+};
   const loadAndSetData = async () => {
     const data = await fetchData();
     setRows(data.map((row) => ({ ...row, processId: row.processId })));
@@ -56,12 +74,17 @@ export default function BloodDonationGrid() {
     loadAndSetData();
   }, []);
 
-  // 3. các api Xử lý cập nhật
   const processRowUpdate = async (newRow) => {
-    const { processId,donationRegisId,bloodTest, status, bloodTypeId, volumeMl } = newRow;
+    const {
+      processId,
+      donationRegisId,
+      bloodTest,
+      status,
+      bloodTypeId,
+      volumeMl,
+    } = newRow;
     const validBloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-   
     if (bloodTest === "ĐÃ ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
       throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra!");
     }
@@ -72,31 +95,54 @@ export default function BloodDonationGrid() {
     try {
       const data = {
         bloodTest,
-        bloodTypeId
+        bloodTypeId,
       };
-  
-      await updateProcessIsPassedApi(processId,data);
-      
-     
+
+      await updateProcessIsPassedApi(processId, data);
+
       if (newRow.bloodTest === "ĐÃ ĐẠT" && newRow.bloodTypeId) {
-    
-        const dataInventory = { donationRegisId,processId,volumeMl};
-      
-        await updateBloodVolumeApi(bloodTypeId,dataInventory);
-        alert("Đã thêm vào kho máu!");
+        const dataInventory = { donationRegisId, processId, volumeMl };
+
+        const responseInventory = await updateBloodVolumeApi(
+          bloodTypeId,
+          dataInventory
+        );
+
+        if (
+          responseInventory.data.message ===
+          "Update blood volume successfully for emergency request"
+        ) {
+          showSnackbar(
+            "Máu đã kiểm tra cho trường hợp khẩn cấp " +
+              responseInventory.data.data.patientName +
+              " ,Phòng " +
+              responseInventory.data.data.locationOfPatient,
+            "success"
+          );
+        }
+        console.log("truoc dong này thi thì ko lỗi 5");
+        if (
+          responseInventory.data.message ===
+            "Update blood volume successfully. User has been updated with blood type from process" ||
+          responseInventory.data.message ===
+            "Update blood volume successfully. User already has a blood type set, no update needed"
+        ) {
+          showSnackbar(
+            "Đã thêm vào kho máu và cập nhật máu cho hồ sơ người hiến máu!",
+            "success"
+          );
+        }
       } else if (newRow.bloodTest === "KHÔNG ĐẠT") {
-        alert("Cập nhật trạng thái thành công");
+        showSnackbar("Cập nhật trạng thái thành công", "success");
       }
       await loadAndSetData();
       return { ...newRow };
     } catch (err) {
-      console.error("Lỗi cập nhật:", err);
-      alert("Lỗi khi cập nhật!");
+      showSnackbar("Lỗi cập nhật", "error");
       throw err;
     }
   };
 
-  // 5. Lưu thay đổi
   const handleSaveClick = (id) => async () => {
     setRowModesModel((prev) => ({
       ...prev,
@@ -129,13 +175,13 @@ export default function BloodDonationGrid() {
     {
       field: "processId",
       headerName: "Mã hồ sơ xử lí",
-      width: 200,
+      width: 220,
       filterable: false,
     },
     {
       field: "donationRegisId",
       headerName: "Mã đăng kí hiến máu",
-      width: 200,
+      width: 220,
       filterable: false,
       renderCell: (params) => <span>{params.value || "-"}</span>,
     },
@@ -189,14 +235,14 @@ export default function BloodDonationGrid() {
       headerName: "Nhóm máu",
       width: 150,
       editable: true,
-      filterable: false,      
+      filterable: false,
       valueFormatter: (params) => {
         return params ?? "-";
       },
-    
+
       renderEditCell: (params) => {
         const { id, field, value, api } = params;
-    
+
         const handleChange = (event) => {
           const selectedValue = event.target.value;
           api.setEditCellValue({
@@ -205,7 +251,7 @@ export default function BloodDonationGrid() {
             value: selectedValue === "null" ? null : selectedValue,
           });
         };
-    
+
         return (
           <Select
             key={id}
@@ -224,15 +270,14 @@ export default function BloodDonationGrid() {
           </Select>
         );
       },
-    }
-    
-    ,
+    },
+
     {
       field: "actions",
       type: "actions",
       headerName: "Thao tác",
       filterable: false,
-      width: 130,
+      width: 150,
       getActions: ({ id }) => {
         const isEditing = rowModesModel[id]?.mode === GridRowModes.Edit;
         return isEditing
@@ -267,11 +312,10 @@ export default function BloodDonationGrid() {
           <Box sx={{ flexGrow: 1 }} />
           <Button
             color="inherit"
-            onClick={() =>
-              navigate("/staff/storage/blood-donation-list", {
-                state: { shouldReload: true },
-              })
-            }
+            onClick={(event) => {
+              event.stopPropagation();
+              handleReloadBloodBagList();
+            }}
           >
             Danh sách kiểm tra máu
           </Button>
@@ -282,19 +326,34 @@ export default function BloodDonationGrid() {
         <DataGrid
           rows={rows}
           columns={columns}
-          getRowId={(row) => row.processId} 
+          getRowId={(row) => row.processId}
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={(err) => alert(err.message)}
+          onProcessRowUpdateError={(err) => showSnackbar(err.message, "error")}
           localeText={vietnameseText}
           disableColumnSelector
           pagination
-              initialState={{
-                pagination: { paginationModel: { page: 0, pageSize: 9 } },
-              }}
+          initialState={{
+            pagination: { paginationModel: { page: 0, pageSize: 9 } },
+          }}
         />
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={2000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <MuiAlert
+            onClose={handleSnackbarClose}
+            severity={snackbar.severity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </MuiAlert>
+        </Snackbar>
       </Box>
     </Box>
   );

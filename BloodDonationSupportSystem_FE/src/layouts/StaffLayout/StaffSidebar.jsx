@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -79,7 +79,7 @@ const StaffSidebar = () => {
           path: "/staff/profile",
           icon: <PersonIcon />,
         },
-        { text: "Đăng xuất", path: "/logout", icon: <LogoutIcon /> },
+        { text: "Đăng xuất", icon: <LogoutIcon /> },
       ],
     },
   ];
@@ -92,12 +92,12 @@ const StaffSidebar = () => {
     }
     return 'Tổng quan';
   };
-   const [selectedItem, setSelectedItem] = useState(getCurrentSelectedItem());
+  const [selectedItem, setSelectedItem] = useState(getCurrentSelectedItem());
 
   return (
-   <Box
+    <Box
       sx={{
-        width: 280,
+        width: 310,
         bgcolor: "#f8fafc",
         color: "#334155",
         display: "flex",
@@ -135,7 +135,11 @@ const StaffSidebar = () => {
                     selected={selectedItem === item.text}
                     onClick={() => {
                       setSelectedItem(item.text);
-                      navigate(item.path);
+                      if (item.text === "Đăng xuất") {
+                        handleLogout();
+                      } else {
+                        navigate(item.path);
+                      }
                     }}
                     sx={{
                       mx: 1.5,
@@ -210,7 +214,7 @@ const StaffSidebar = () => {
       </Box>
     </Box>
 
-   
+
   );
 };
 

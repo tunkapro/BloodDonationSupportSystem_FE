@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const loadUser = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -15,10 +15,11 @@ const [loading, setLoading] = useState(true);
       }
 
       const res = await getCurrentUser();
+      console.log(res)
       setUser(res.data);
     } catch (error) {
       console.error("Error load user:", error);
-      setUser(null); 
+      setUser(null);
     } finally {
       setLoading(false);
     }

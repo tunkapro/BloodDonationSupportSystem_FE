@@ -1,22 +1,56 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, InputBase, IconButton, Avatar, Menu, MenuItem, Fade, Paper } from '@mui/material';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Box, 
+  InputBase, 
+  IconButton, 
+  Avatar, 
+  Menu, 
+  MenuItem, 
+  Fade, 
+  Paper 
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useNavigate } from 'react-router-dom';
 
+
+ 
 const admin = {
   name: 'Admin User',
-  avatar: '', // You can use a URL or leave blank for initials
+  avatar: '', 
 };
 
 export default function AdminHeader() {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
+
+
+
+  const navigate = useNavigate();
 
   const handleProfileClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  }
+
+  const hanldeProfile = () => {
+    navigate("/admin/profile");
+  }
+
+
+
+
+
+  const handleLogout = async () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -51,7 +85,7 @@ export default function AdminHeader() {
           </IconButton>
         </Paper>
 
-        {/* Profile */}
+  
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Avatar sx={{ bgcolor: 'primary.main', width: 40, height: 40 }} src={admin.avatar}>
             {admin.name.split(' ').map((n) => n[0]).join('').toUpperCase()}
@@ -71,8 +105,8 @@ export default function AdminHeader() {
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             sx={{ mt: 1 }}
           >
-            <MenuItem onClick={handleClose}>Hồ sơ</MenuItem>
-            <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+            <MenuItem onClick={hanldeProfile}>Hồ sơ</MenuItem>
+            <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
           </Menu>
         </Box>
       </Toolbar>
