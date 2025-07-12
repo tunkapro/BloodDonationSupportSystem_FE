@@ -11,9 +11,6 @@ const SIDEBAR_WIDTH = 280;
     <RequireAuth role={"ROLE_ADMIN"}>
 <>
 
-      <Box sx={{ position: 'fixed', top: 0, left: 0, width: '100vw', zIndex: 1201 }}>
-        <AdminHeader />
-      </Box>
 
       <Box
         sx={{
