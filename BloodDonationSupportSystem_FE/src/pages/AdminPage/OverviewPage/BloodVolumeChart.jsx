@@ -23,7 +23,7 @@ const BloodVolumeChart = () => {
     setLoading(true);
     try {
       // Fetch data for the selected year and month
-      const response = await ManagementAPI.getOverviewStatistics(year, month);
+      const response = await ManagementAPI.getBloodDataByYearAndMonthForChart(year, month);
       
       // Process the data to create chart format
       const allBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];

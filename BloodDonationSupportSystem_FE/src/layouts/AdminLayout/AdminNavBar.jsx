@@ -56,7 +56,7 @@ export default function Sidebar() {
         },  {
             title: 'Cài đặt',
             items: [
-                { text: 'Tài khoản', path: '/admin/account', icon: <AccountCircleIcon /> },
+                
                 { text: 'Đăng xuất', path: '/admin/logout', icon: <LogoutIcon /> },
             ],
         },

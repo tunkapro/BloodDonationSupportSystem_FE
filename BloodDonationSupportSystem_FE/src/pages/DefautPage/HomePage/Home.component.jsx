@@ -32,6 +32,8 @@ export default function Home() {
   
         <BloodCompatibility/>
 
+       
+
 
       <Box sx={{ marginTop: 5 }}>
         <Box

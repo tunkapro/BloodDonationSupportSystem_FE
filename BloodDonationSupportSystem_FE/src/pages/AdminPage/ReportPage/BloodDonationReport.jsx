@@ -8,38 +8,41 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { format } from 'date-fns';
 
 const columns = [
-  { field: 'stt', headerName: 'STT', width: 70 },
-  { field: 'time', headerName: 'Thời gian', width: 150 },
-  { field: 'location', headerName: 'Địa điểm', width: 150 },
-  { field: 'registered', headerName: 'Số người đăng ký', width: 160 },
-  { field: 'success', headerName: 'Số người hiến thành công', width: 200 },
-  { field: 'failed', headerName: 'Số người hiến máu thất bại', width: 200 },
-  { field: 'totalVolume', headerName: 'Lượng máu thu được (ml)', width: 200 },
+  { field: 'stt', headerName: 'STT', width: 70, sortable: false },
+  { field: 'time', headerName: 'Thời gian', width: 150, sortable: false },
+  { field: 'location', headerName: 'Địa điểm', width: 150, sortable: false },
+  { field: 'registered', headerName: 'Số người đăng ký', width: 160, sortable: false },
+  { field: 'success', headerName: 'Số người hiến thành công', width: 200, sortable: false },
+  { field: 'failed', headerName: 'Số người hiến máu thất bại', width: 200, sortable: false },
+  { field: 'totalVolume', headerName: 'Lượng máu thu được (ml)', width: 200, sortable: false },
 ];
 
 export default function BloodDonationReport() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [fromDate, setFromDate] = useState(null);
-  const [toDate, setToDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const fetchBloodDonationReport = async () => {
-    if (!fromDate || !toDate) return;
+    if (!startDate || !endDate) return;
+ 
     setLoading(true);
     try {
-
-      const response = await ManagementAPI.getBloodDonationReport(fromDate, toDate);
+      console.log(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'))
+      const response = await ManagementAPI.getBloodDonationReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
+      console.log(response)
       const reportData = response.data || [];
-      const transformedData = reportData.map((item, index) => ({
+      
+      const transformedData = reportData && reportData.map((item, index) => ({
         id: index + 1,
         stt: index + 1,
-        time: item.time || '',
-        location: item.location || '',
-        registered: item.registered || 0,
-        success: item.success || 0,
-        failed: item.failed || 0,
-        totalVolume: item.totalVolume || 0,
+        time: item.reportDate || '',
+        location: item.hospitalAddress|| '',
+        registered: item.numberRegistration || 0,
+        success: item.numberSuccess || 0,
+        failed: item.numberFailed || 0,
+        totalVolume: item.volumeBlood || 0,
       }));
       setRows(transformedData);
     } catch (error) {
@@ -54,7 +57,7 @@ export default function BloodDonationReport() {
     setExporting(true);
     try {
      
-      await ManagementAPI.exportDonationRegistrationReport(fromDate, toDate);
+      await ManagementAPI.exportBloodDonationReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
     } catch (error) {
       console.error('Error exporting report:', error);
     } finally {
@@ -63,10 +66,10 @@ export default function BloodDonationReport() {
   };
 
   useEffect(() => {
-    if (fromDate && toDate) {
+    if (startDate && endDate) {
       fetchBloodDonationReport();
     }
-  }, [fromDate, toDate]);
+  }, [startDate, endDate]);
 
   return (
     <Box sx={{ p: 2, background: '#f5f6fa', minHeight: '100vh' }}>
@@ -108,19 +111,19 @@ export default function BloodDonationReport() {
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" justifyContent="flex-end">
               <DatePicker
                 label="Từ ngày"
-                value={fromDate}
-                onChange={setFromDate}
+                value={startDate}
+                onChange={setStartDate}
                 inputFormat="dd/MM/yy"
                 renderInput={(params) => <TextField {...params} size="small" />}
-                maxDate={toDate}
+                maxDate={endDate}
               />
               <DatePicker
                 label="Đến ngày"
-                value={toDate}
-                onChange={setToDate}
+                value={endDate}
+                onChange={setEndDate}
                 inputFormat="dd/MM/yy"
                 renderInput={(params) => <TextField {...params} size="small" />}
-                minDate={fromDate}
+                minDate={startDate}
               />
               <Button
                 variant="contained"
@@ -133,6 +136,14 @@ export default function BloodDonationReport() {
               </Button>
             </Stack>
           </LocalizationProvider>
+          {/* Show formatted date range if both dates are selected */}
+          {startDate && endDate && (
+            <Box sx={{ mt: 2, textAlign: 'right' }}>
+              <Typography variant="subtitle2" color="text.secondary">
+                Khoảng ngày: {format(startDate, 'yy/MM/dd')} - {format(endDate, 'yy/MM/dd')}
+              </Typography>
+            </Box>
+          )}
         </Paper>
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
@@ -145,6 +156,8 @@ export default function BloodDonationReport() {
             getRowId={row => row.id}
             hideFooter
             density="compact"
+            disableColumnMenu
+            disableSelectionOnClick
             sx={{
               background: 'white',
               borderRadius: 2,

@@ -39,23 +39,7 @@ const cardData = [
     color: 'error.main',
     bg: 'error.lighter',
     key: 'numberFailureDonation',
-  },
-  {
-    label: 'Chưa hoàn thành',
-    icon: <PendingIcon fontSize="large" color="warning" />, 
-    tooltip: 'Số lượt hiến máu chưa hoàn thành',
-    color: 'warning.main',
-    bg: 'warning.lighter',
-    key: 'numberNotCompleteDonation',
-  },
-  {
-    label: 'Không được chấp nhận',
-    icon: <BlockIcon fontSize="large" color="error" />, 
-    tooltip: 'Số lượt hiến máu không được chấp nhận',
-    color: 'error.main',
-    bg: 'error.lighter',
-    key: 'numberNotAcceptedDonation',
-  },
+  }
 ];
 
 const StatisticsCards = ({ values }) => {

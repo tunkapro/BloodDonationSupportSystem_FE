@@ -17,7 +17,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
-import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
+
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
