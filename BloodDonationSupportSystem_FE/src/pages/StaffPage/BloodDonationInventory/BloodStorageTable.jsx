@@ -62,8 +62,9 @@ export default function BloodStorageTable() {
       return [];
     }
   };
-
-
+const handleReloadBloodBagList = async () => {
+  await loadAndSetData();
+};
   const loadAndSetData = async () => {
     const data = await fetchData();
     setRows(data.map((row) => ({ ...row, processId: row.processId })));
@@ -72,7 +73,6 @@ export default function BloodStorageTable() {
   useEffect(() => {
     loadAndSetData();
   }, []);
-
 
   const processRowUpdate = async (newRow) => {
     const {
@@ -127,19 +127,21 @@ export default function BloodStorageTable() {
           responseInventory.data.message ===
             "Update blood volume successfully. User already has a blood type set, no update needed"
         ) {
-          showSnackbar("Đã thêm vào kho máu và cập nhật máu cho hồ sơ người hiến máu!","success")
+          showSnackbar(
+            "Đã thêm vào kho máu và cập nhật máu cho hồ sơ người hiến máu!",
+            "success"
+          );
         }
       } else if (newRow.bloodTest === "KHÔNG ĐẠT") {
-        showSnackbar("Cập nhật trạng thái thành công","success");
+        showSnackbar("Cập nhật trạng thái thành công", "success");
       }
       await loadAndSetData();
       return { ...newRow };
     } catch (err) {
-      showSnackbar("Lỗi cập nhật","error");
+      showSnackbar("Lỗi cập nhật", "error");
       throw err;
     }
   };
-
 
   const handleSaveClick = (id) => async () => {
     setRowModesModel((prev) => ({
@@ -310,11 +312,10 @@ export default function BloodStorageTable() {
           <Box sx={{ flexGrow: 1 }} />
           <Button
             color="inherit"
-            onClick={() =>
-              navigate("/staff/storage/blood-donation-list", {
-                state: { shouldReload: true },
-              })
-            }
+            onClick={(event) => {
+              event.stopPropagation();
+              handleReloadBloodBagList();
+            }}
           >
             Danh sách kiểm tra máu
           </Button>
@@ -330,7 +331,7 @@ export default function BloodStorageTable() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={(err) =>  showSnackbar(err.message,"error")}
+          onProcessRowUpdateError={(err) => showSnackbar(err.message, "error")}
           localeText={vietnameseText}
           disableColumnSelector
           pagination
