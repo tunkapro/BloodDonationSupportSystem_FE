@@ -1,4 +1,3 @@
-// ✅ BloodDonationModal.tsx - version với suggestion chuyên nghiệp (0.1% thẩm mỹ)
 import React, { useState } from "react";
 import {
   Box,
@@ -18,6 +17,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -37,14 +37,13 @@ export default function BloodDonationModal() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [error, setError] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "info",
   });
-  const [suggestions, setSuggestions] = useState([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const { user } = useAuth();
 
   const today = dayjs();
@@ -54,7 +53,6 @@ export default function BloodDonationModal() {
   const handleOpen = () => {
     setStartDate(null);
     setEndDate(null);
-    setError("");
     if (!user) {
       setSnackbar({
         open: true,
@@ -65,16 +63,30 @@ export default function BloodDonationModal() {
     }
     setOpen(true);
   };
+
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
-    if (!startDate || !endDate) {
-      setError("Vui lòng chọn cả hai ngày.");
+    if (
+      !startDate ||
+      !endDate ||
+      !dayjs(startDate).isValid() ||
+      !dayjs(endDate).isValid()
+    ) {
+      setSnackbar({
+        open: true,
+        message: "Vui lòng chọn cả hai ngày hợp lệ.",
+        severity: "error",
+      });
       return;
     }
 
     if (startDate.isAfter(endDate)) {
-      setError("Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.");
+      setSnackbar({
+        open: true,
+        message: "Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.",
+        severity: "error",
+      });
       return;
     }
 
@@ -84,15 +96,16 @@ export default function BloodDonationModal() {
       endDate.isBefore(today, "day") ||
       endDate.isAfter(maxDate, "day")
     ) {
-      setError(
-        `Ngày phải nằm trong khoảng từ hôm nay đến ${maxDate.format(
+      setSnackbar({
+        open: true,
+        message: `Ngày phải nằm trong khoảng từ hôm nay đến ${maxDate.format(
           DATE_FORMAT
-        )}.`
-      );
+        )}.`,
+        severity: "error",
+      });
       return;
     }
 
-    setError("");
     const start = startDate.format("YYYY-MM-DD");
     const end = endDate.format("YYYY-MM-DD");
 
@@ -106,13 +119,16 @@ export default function BloodDonationModal() {
         await handleFinalSubmit({ startDate: start, endDate: end });
       }
     } catch (err) {
-      setError("Lỗi hệ thống khi tìm lịch đề xuất.");
+      setSnackbar({
+        open: true,
+        message: "Lỗi hệ thống khi tìm lịch đề xuất.",
+        severity: "error",
+      });
     }
   };
 
   const handleFinalSubmit = async (data) => {
     try {
-
       const res = await registerDonation({
         ...data,
         status: "CHƯA HIẾN",
@@ -126,11 +142,25 @@ export default function BloodDonationModal() {
           message: "Đăng ký hiến máu thành công!",
           severity: "success",
         });
+      } else if (res.message === "You already have a pending registration!") {
+        setSnackbar({
+          open: true,
+          message: "Bạn đã đăng kí một đơn đang chờ!",
+          severity: "error",
+        });
       } else {
-        setError(res.message || "Đăng ký thất bại. Vui lòng thử lại.");
+        setSnackbar({
+          open: true,
+          message: res.message || "Đăng ký thất bại. Vui lòng thử lại.",
+          severity: "error",
+        });
       }
     } catch (err) {
-      setError("Lỗi hệ thống. Vui lòng thử lại sau.");
+      setSnackbar({
+        open: true,
+        message: "Lỗi hệ thống. Vui lòng thử lại sau.",
+        severity: "error",
+      });
     }
   };
 
@@ -191,127 +221,49 @@ export default function BloodDonationModal() {
               Tìm Hiểu Thêm
             </Button>
           </Box>
+
           <Grid container spacing={2}>
-            <Grid item xs={6} sm={3}>
-              <Paper
-                elevation={0}
-                sx={{ background: "transparent", textAlign: "center", p: 1 }}
-              >
-                <Box
-                  sx={{
-                    mx: "auto",
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "#FFE5E5",
-                    color: "#E53935",
-                    mb: 1,
-                  }}
+            {[
+              ["50,000+", "Người hiến máu", <GroupsIcon />],
+              ["120,000+", "Đơn vị máu", <FavoriteIcon />],
+              ["15+", "Năm kinh nghiệm", <EmojiEventsIcon />],
+              ["25+", "Điểm hiến máu", <LocationOnIcon />],
+            ].map(([value, label, icon], i) => (
+              <Grid item xs={6} sm={3} key={i}>
+                <Paper
+                  elevation={0}
+                  sx={{ background: "transparent", textAlign: "center", p: 1 }}
                 >
-                  <GroupsIcon sx={{ fontSize: 32 }} />
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  50,000+
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Người hiến máu
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={6} sm={3}>
-              <Paper
-                elevation={0}
-                sx={{ background: "transparent", textAlign: "center", p: 1 }}
-              >
-                <Box
-                  sx={{
-                    mx: "auto",
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "#FFE5E5",
-                    color: "#E53935",
-                    mb: 1,
-                  }}
-                >
-                  <FavoriteIcon sx={{ fontSize: 32 }} />
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  120,000+
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Đơn vị máu
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={6} sm={3}>
-              <Paper
-                elevation={0}
-                sx={{ background: "transparent", textAlign: "center", p: 1 }}
-              >
-                <Box
-                  sx={{
-                    mx: "auto",
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "#FFE5E5",
-                    color: "#E53935",
-                    mb: 1,
-                  }}
-                >
-                  <EmojiEventsIcon sx={{ fontSize: 32 }} />
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  15+
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Năm kinh nghiệm
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid item xs={6} sm={3}>
-              <Paper
-                elevation={0}
-                sx={{ background: "transparent", textAlign: "center", p: 1 }}
-              >
-                <Box
-                  sx={{
-                    mx: "auto",
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "#FFE5E5",
-                    color: "#E53935",
-                    mb: 1,
-                  }}
-                >
-                  <LocationOnIcon sx={{ fontSize: 32 }} />
-                </Box>
-                <Typography variant="h5" fontWeight="bold">
-                  25+
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Điểm hiến máu
-                </Typography>
-              </Paper>
-            </Grid>
+                  <Box
+                    sx={{
+                      mx: "auto",
+                      width: 64,
+                      height: 64,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "#FFE5E5",
+                      color: "#E53935",
+                      mb: 1,
+                    }}
+                  >
+                    {icon}
+                  </Box>
+                  <Typography variant="h5" fontWeight="bold">
+                    {value}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {label}
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
         </Box>
       </Box>
-      {/* Modal đăng ký thời gian */}
+
+
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
@@ -339,7 +291,6 @@ export default function BloodDonationModal() {
             maxDate={maxDate}
             slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
           />
-
           <DatePicker
             label="Ngày kết thúc"
             value={endDate}
@@ -350,12 +301,6 @@ export default function BloodDonationModal() {
             slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
           />
 
-          {error && (
-            <Typography color="error" mt={1} textAlign="center">
-              {error}
-            </Typography>
-          )}
-
           <Box mt={3} display="flex" justifyContent="flex-end" gap={1}>
             <Button onClick={handleClose}>Hủy</Button>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
@@ -365,9 +310,23 @@ export default function BloodDonationModal() {
         </Box>
       </Modal>
 
-      {/* Dialog chọn lịch đề xuất */}
+
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>Chọn lịch hiến máu phù hợp</DialogTitle>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Chọn lịch hiến máu phù hợp
+          <Button
+            onClick={() => setDialogOpen(false)}
+            sx={{ minWidth: "auto", padding: 0 }}
+          >
+            <CloseIcon color="error" />
+          </Button>
+        </DialogTitle>
         <DialogContent>
           <List>
             {suggestions.map((s) => (
@@ -392,10 +351,9 @@ export default function BloodDonationModal() {
                     </Typography>
                   }
                   secondary={
-                    <Typography color="text.secondary">{`Giờ: ${s.startTime.slice(
-                      0,
-                      5
-                    )} - ${s.endTime.slice(0, 5)}`}</Typography>
+                    <Typography color="text.secondary">
+                      Giờ: {s.startTime.slice(0, 5)} - {s.endTime.slice(0, 5)}
+                    </Typography>
                   }
                 />
               </ListItem>
@@ -403,9 +361,20 @@ export default function BloodDonationModal() {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Đóng</Button>
+          <Button
+            variant="outlined"
+            onClick={() =>
+              handleFinalSubmit({
+                startDate: startDate.format("YYYY-MM-DD"),
+                endDate: endDate.format("YYYY-MM-DD"),
+              })
+            }
+          >
+            Bỏ qua – Đăng ký không cần lịch cụ thể
+          </Button>
         </DialogActions>
       </Dialog>
+
 
       <Snackbar
         open={snackbar.open}

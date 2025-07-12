@@ -24,7 +24,6 @@ import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
 import UserManagement from "../pages/AdminPage/UserManagement/UserManagement";
 import BloodStoragePage from "../pages/StaffPage/BloodDonationInventory/BloodStoragePage";
 import FindDistancePage from "../pages/StaffPage/FindByDistance/FindDistancePage";
-import DonationRegistration from "../pages/MemberPage/DonationRegistration/DonationRegistration";
 import BloodDonationRequestPage from "../pages/StaffPage/BloodDonationRequestPage/BloodDonationRequestPage";
 import OverViewPage from "../pages/AdminPage/OverviewPage/OverViewPage";
 import BloodDonateHistory from "../pages/MemberPage/BloodDonateHistoryPage/BloodDonateHistory";
@@ -57,7 +56,6 @@ const CustomRoute = () => {
         <Route path="signup" element={<RegisterPage />} />
         <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="registerDonationForm" element={<DonationRegistration />} />
       </Route>
 
       {/* USER ROLE */}
@@ -65,7 +63,6 @@ const CustomRoute = () => {
         <Route path="/user/*" element={<MemberLayout />}>
           <Route path="appointment-histories" element={<AppointmentHistory />} />
           <Route path="appointment-histories/:id" element={<AppointmentDetail />} />
-          <Route path="blood-donation-register" element={<DonationRegistration />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="certificate" element={<CertificatePage/>}/>
           <Route path="donation-histories" element={<BloodDonateHistory />} />
@@ -101,6 +98,7 @@ const CustomRoute = () => {
       {/* ADMIN ROLE */}
       <Route element={<ProtectedRoute allowedRoles={["ROLE_ADMIN"]} />}>
         <Route path="/admin/*" element={<AdminLayout />}>
+          <Route path="" element={<OverViewPage/>}/>
           <Route path="overview" element={<OverViewPage />} />
           <Route path="user-management" element={<UserManagement />} />
           <Route path="posts" element={<AdminPosts />} />
