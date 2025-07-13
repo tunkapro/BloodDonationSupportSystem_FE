@@ -9,12 +9,16 @@ import { format } from 'date-fns';
 
 const columns = [
   { field: 'stt', headerName: 'STT', width: 70, sortable: false },
-  { field: 'time', headerName: 'Thời gian', width: 150, sortable: false },
-  { field: 'location', headerName: 'Địa điểm', width: 150, sortable: false },
-  { field: 'registered', headerName: 'Số người đăng ký', width: 160, sortable: false },
-  { field: 'success', headerName: 'Số người hiến thành công', width: 200, sortable: false },
-  { field: 'failed', headerName: 'Số người hiến máu thất bại', width: 200, sortable: false },
-  { field: 'totalVolume', headerName: 'Lượng máu thu được (ml)', width: 200, sortable: false },
+  { field: 'donorName', headerName: 'Tên người hiến', width: 180, sortable: false },
+  { field: 'donorPhone', headerName: 'SĐT người hiến', width: 150, sortable: false },
+  { field: 'donorEmail', headerName: 'Email người hiến', width: 200, sortable: false },
+  { field: 'donorAddress', headerName: 'Địa chỉ người hiến', width: 200, sortable: false },
+  { field: 'bloodType', headerName: 'Nhóm máu', width: 120, sortable: false },
+  { field: 'volumeMl', headerName: 'Lượng máu (ml)', width: 150, sortable: false },
+  { field: 'donationDate', headerName: 'Ngày hiến máu', width: 150, sortable: false },
+  { field: 'hospital', headerName: 'Nơi hiến máu', width: 150, sortable: false },
+
+  { field: 'status', headerName: 'Trạng thái', width: 150, sortable: false },
 ];
 
 export default function BloodDonationReport() {
@@ -37,12 +41,15 @@ export default function BloodDonationReport() {
       const transformedData = reportData && reportData.map((item, index) => ({
         id: index + 1,
         stt: index + 1,
-        time: item.reportDate || '',
-        location: item.hospitalAddress|| '',
-        registered: item.numberRegistration || 0,
-        success: item.numberSuccess || 0,
-        failed: item.numberFailed || 0,
-        totalVolume: item.volumeBlood || 0,
+        donorName: item.donorName || '',
+        donorPhone: item.donorPhoneNumber || '',
+        donorEmail: item.donorEmail || '',
+        donorAddress: item.donorAddress || '',
+        bloodType: item.bloodType || '',
+        volumeMl: item.sendVolume || 0,
+        donationDate: item.donationDate || '',
+        hospital: item.hospital || '',
+        status: item.status || '',
       }));
       setRows(transformedData);
     } catch (error) {

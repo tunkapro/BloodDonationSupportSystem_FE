@@ -28,7 +28,7 @@ const donationColumns = [
   { field: 'staffPhone', headerName: 'SĐT nhân viên', width: 150, sortable: false },
   { field: 'donorName', headerName: 'Tên người hiến', width: 180, sortable: false },
   { field: 'donorPhone', headerName: 'SĐT người hiến', width: 150, sortable: false },
-  { field: 'volumeMl', headerName: 'Lượng máu (ml)', width: 150, sortable: false },
+  { field: 'donorMail', headerName: 'Email người hiến', width: 200, sortable: false },
   { field: 'donationDate', headerName: 'Ngày hiến máu', width: 150, sortable: false },
   { field: 'status', headerName: 'Trạng thái', width: 150, sortable: false },
 ];
@@ -40,8 +40,11 @@ const emergencyColumns = [
   { field: 'staffPhone', headerName: 'SĐT nhân viên', width: 150, sortable: false },
   { field: 'patientName', headerName: 'Tên bệnh nhân', width: 180, sortable: false },
   { field: 'patientPhone', headerName: 'SĐT bệnh nhân', width: 150, sortable: false },
+  { field: 'note', headerName: 'Ghi chú', width: 180, sortable: false },
   { field: 'donorName', headerName: 'Tên người hiến', width: 180, sortable: false },
   { field: 'donorPhone', headerName: 'SĐT người hiến', width: 150, sortable: false },
+  { field: 'donorMail', headerName: 'Email người hiến', width: 200, sortable: false },
+  { field: 'donationDate', headerName: 'Ngày hiến máu', width: 200, sortable: false },
   { field: 'status', headerName: 'Trạng thái', width: 150, sortable: false },
 ];
 
@@ -93,7 +96,7 @@ export default function StaffReport() {
         staffPhone: item.staffPhone || '',
         donorName: item.donorName || '',
         donorPhone: item.donorPhone || '',
-        volumeMl: item.volumeMl || 0,
+        donorMail: item.donorEmail || '',
         donationDate: item.donationDate || '',
         status: item.status || '',
       }));
@@ -105,11 +108,14 @@ export default function StaffReport() {
         id: index + 1,
         stt: index + 1,
         staffName: item.staffName || '',
-        staffPhone: item.staffPhone || '',
+        staffPhone: item.staffPhoneNumber || '',
         patientName: item.patientName || '',
-        patientPhone: item.patientPhone || '',
+        patientPhone: item.patientPhoneNumber || '',
+        note: item.note || '',
         donorName: item.donorName || '',
-        donorPhone: item.donorPhone || '',
+        donorPhone: item.donorPhoneNumber || '',
+        donorMail: item.donorEmail || '',
+        donationDate: item.donationDate || '',
         status: item.status || '',
       }));
       setEmergencyRows(transformedEmergencyData);

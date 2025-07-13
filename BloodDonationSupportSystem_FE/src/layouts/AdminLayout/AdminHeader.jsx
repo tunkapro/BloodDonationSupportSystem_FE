@@ -15,6 +15,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../api/authService';
 
 
  
@@ -49,7 +50,7 @@ export default function AdminHeader() {
 
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
   };
 
