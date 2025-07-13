@@ -25,6 +25,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import BloodtypeIcon from '@mui/icons-material/Bloodtype';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EmergencyIcon from '@mui/icons-material/Emergency';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/authContext'
@@ -59,7 +60,9 @@ export default function Sidebar() {
             title: 'Báo cáo',
             items: [
                 { text: 'Đơn hiến máu', path: '/admin/donation-report', icon: <VolunteerActivismIcon /> },
-                { text: 'Kho máu', path: '/admin/blood-inventory-report', icon: <BloodtypeIcon /> }
+                { text: 'Kho máu', path: '/admin/blood-inventory-report', icon: <BloodtypeIcon /> },
+                { text: 'Yêu cầu khẩn cấp', path: '/admin/emergency-request-report', icon: <EmergencyIcon /> },
+                { text: 'Nhân viên', path: '/admin/staff-report', icon: <PeopleIcon /> }
             ],
         }, {
             title: 'Cài đặt',

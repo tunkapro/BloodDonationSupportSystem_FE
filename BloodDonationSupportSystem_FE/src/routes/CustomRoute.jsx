@@ -37,6 +37,9 @@ import EmergencyDonationPage from "../pages/StaffPage/EmergencyDonation/Emergenc
 import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
+import EmergencyBloodRequestReport from "../pages/AdminPage/ReportPage/EmergencyBloodRequestReport";
+import StaffReport from "../pages/AdminPage/ReportPage/StaffReport";
+import RegistrationPage from "../pages/StaffPage/RegistrationManagement/RegistrationPage";
 import ProtectedRoute from "../routes/ProtectRoute";
 import CertificatePage from "../pages/MemberPage/CertificatePage/CertificatePage";
 
@@ -78,6 +81,8 @@ const CustomRoute = () => {
           <Route path="overview" element={<Overview />} />
           <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
           <Route path="find-by-distance" element={<FindDistancePage />} />
+          <Route path="emergency" element={<EmergencyDonationPage />} />
+          <Route path="request" element={<RegistrationPage />} />
           <Route path="blood-management/*" element={<Navigation />} >
             <Route path="health-check" element={<DonorHealthCheckPage />} />
             <Route index element={<DonorHealthCheckPage />} />
@@ -87,6 +92,12 @@ const CustomRoute = () => {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="blood-donation-schedule" element={<BloodDonationScheduleComponent />} />
         </Route>
+        {/* <Route path="donation-request" element={<BloodDonationRequestPage />} /> */}
+        <Route path="profile" element={<ProfilePage />} />
+        <Route
+          path="blood-donation-schedule"
+          element={<BloodDonationScheduleComponent />}
+        />
       </Route>
 
       {/* ADMIN ROLE */}
@@ -99,6 +110,8 @@ const CustomRoute = () => {
           <Route path="account" element={<Account />} />
           <Route path="donation-report" element={<BloodDonationReport />} />
           <Route path="blood-inventory-report" element={<BloodInventoryReport />} />
+          <Route path="emergency-request-report" element={<EmergencyBloodRequestReport />} />
+          <Route path="staff-report" element={<StaffReport />} />
         </Route>
       </Route>
 

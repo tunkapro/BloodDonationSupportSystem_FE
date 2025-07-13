@@ -72,7 +72,66 @@ export const ManagementAPI = {
   
   getEmergencyRequestsByYearForChart: async (year, month) => {
     const body = { year, month };
-    const res = await axios.post('/admin/report/emergency-requests-monthly', body);
+    const res = await axios.post('/admin/report/monthly-emergency', body);
     return res.data;
+  },
+
+ 
+
+  getEmergencyBloodRequestReport: async (startDate, endDate) => {
+    const body = { startDate, endDate };
+    const response = await axios.post('/admin/report/emergency-blood-request', body);
+    return response.data;
+  },
+
+  exportEmergencyBloodRequestReport: async (startDate, endDate) => {
+    const body = { startDate, endDate };
+    const response = await axios.post(
+      '/admin/report/emergency-blood-request/export',
+      body,
+      {
+        responseType: 'blob',
+      }
+    );
+  
+    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'emergency_blood_request_report.xlsx');
+    document.body.appendChild(link);
+    link.click();
+  },
+
+ 
+  getStaffDonationReport: async (startDate, endDate) => {
+    const body = { startDate, endDate };
+    const response = await axios.post('/admin/report/staff-donation', body);
+    return response.data;
+  },
+
+  getStaffEmergencyReport: async (startDate, endDate) => {
+    const body = { startDate, endDate };
+    const response = await axios.post('/admin/report/staff-emergency', body);
+    return response.data;
+  },
+
+  exportStaffReport: async (startDate, endDate) => {
+    const body = { startDate, endDate };
+    const response = await axios.post(
+      '/admin/report/staff/export',
+      body,
+      {
+        responseType: 'blob',
+      }
+    );
+  
+    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'staff_report.xlsx');
+    document.body.appendChild(link);
+    link.click();
   }
 }

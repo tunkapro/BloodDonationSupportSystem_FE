@@ -30,7 +30,7 @@ const DonationChart = () => {
         labels.push(label);
         
   
-        const monthData = response.data?.monthlyData?.[month] || {};
+        const monthData = response.data?.[month] || {};
         successData.push(monthData.successCount || 0);
         failedData.push(monthData.failedCount || 0);
       }
@@ -94,7 +94,7 @@ const DonationChart = () => {
   return (
     <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3 }}>
       <Typography variant="h6" mb={2} color="primary.main" fontWeight={600}>
-        Biểu đồ số lượt hiến máu theo tháng
+        Biểu đồ số lượt hiến máu 
       </Typography>
       <Divider sx={{ mb: 3 }} />
       

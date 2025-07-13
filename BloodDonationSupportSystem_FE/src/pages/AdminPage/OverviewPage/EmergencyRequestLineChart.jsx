@@ -22,16 +22,16 @@ const EmergencyRequestLineChart = () => {
       const labels = [];
       const requestData = [];
 
-      // Handle array response format
-      const monthlyDataArray = response.data?.monthlyData || [];
+      
+      const monthlyData = response.data || {};
       
       for (let month = 1; month <= 12; month++) {
         const label = `${year}-${month.toString().padStart(2, '0')}`;
         labels.push(label);
         
-        // Find data for current month from array
-        const monthData = monthlyDataArray.find(item => item.month === month) || {};
-        requestData.push(monthData.requestCount || 0);
+       
+        const requestCount = monthlyData[month] || 0;
+        requestData.push(requestCount);
       }
       
       setChartData({ labels, requestData });
@@ -85,9 +85,9 @@ const EmergencyRequestLineChart = () => {
   ];
 
   return (
-    <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3 }}>
+    <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3, mt : 3 }}>
       <Typography variant="h6" mb={2} color="primary.main" fontWeight={600}>
-        Biểu đồ yêu cầu khẩn cấp theo tháng
+        Biểu đồ yêu cầu khẩn cấp
       </Typography>
       <Divider sx={{ mb: 3 }} />
       
