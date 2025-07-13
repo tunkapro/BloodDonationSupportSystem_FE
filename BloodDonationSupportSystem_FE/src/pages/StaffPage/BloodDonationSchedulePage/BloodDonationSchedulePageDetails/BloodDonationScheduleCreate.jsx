@@ -21,7 +21,7 @@ import { isBefore, isAfter, addDays, startOfToday } from "date-fns";
 import { createSchedule } from "../../../../api/bloodDonationSchedule";
 import dayjs from "dayjs";
 
-const BloodDonationScheduleCreate = () => {
+const BloodDonationScheduleCreate = ( {onClose} ) => {
   const {
     register,
     handleSubmit,
@@ -52,6 +52,7 @@ const BloodDonationScheduleCreate = () => {
           severity: "success",
         });
         reset();
+        if (onClose) onClose();
 
       }
     } catch (err) {
@@ -125,6 +126,7 @@ const BloodDonationScheduleCreate = () => {
     };
 
     addSchedule(formattedData);
+
   };
 
   return (

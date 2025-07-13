@@ -24,7 +24,6 @@ import {
 import { red, orange, yellow } from "@mui/material/colors";
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
-
 const ITEMS_PER_PAGE = 4;
 
 export default function EmergencyRequestList() {
@@ -37,6 +36,7 @@ export default function EmergencyRequestList() {
   });
 
   const [page, setPage] = useState(0);
+
   const getUrgencyStyle = (level) => {
     switch (level) {
       case "CỰC KÌ KHẨN CẤP":
@@ -65,18 +65,42 @@ export default function EmergencyRequestList() {
   };
 
   useEffect(() => {
+    // Load initial emergency list
     getEmergencyCases().then((res) => {
       setRequests(res.data.data);
       setLoading(false);
     });
 
+    // WebSocket
     const socket = new SockJS(SOCKET_URL);
     const stomp = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
         stomp.subscribe("/emergency/emergency-requests", (msg) => {
           const data = JSON.parse(msg.body);
-          setRequests((prev) => [data, ...prev]);
+
+          setRequests((prev) => {
+            const exists = prev.some(
+              (r) => r.emergencyBloodRequestId === data.emergencyBloodRequestId
+            );
+
+            // Nếu đơn đã fulfill thì loại khỏi danh sách
+            if (data.isFulfill || data.fulfill === true) {
+              return prev.filter(
+                (r) => r.emergencyBloodRequestId !== data.emergencyBloodRequestId
+              );
+            }
+
+            // Nếu là đơn mới thì thêm vào
+            if (!exists) {
+              return [data, ...prev];
+            }
+
+            // Nếu đã có thì cập nhật lại thông tin
+            return prev.map((r) =>
+              r.emergencyBloodRequestId === data.emergencyBloodRequestId ? data : r
+            );
+          });
         });
         setLoading(false);
       },
@@ -97,47 +121,33 @@ export default function EmergencyRequestList() {
         });
       }
     } catch (err) {
+      let errorMessage = "";
       if (err.status === 403) {
-        setSnackbar({
-          open: true,
-          message: "Bạn không thể sử dụng chức năng này!",
-          severity: "error",
-        });
+        errorMessage = "Bạn không thể sử dụng chức năng này!";
       } else {
-        let errorMessage = "";
-        if (err.response.data.message === "Donor not found") {
-          errorMessage = "Bạn chưa đăng kí!";
-        } else if (
-          err.response.data.message === "Cannot found emergency request"
-        ) {
+        const msg = err.response?.data?.message || "";
+        if (msg === "Donor not found") errorMessage = "Bạn chưa đăng kí!";
+        else if (msg === "Cannot found emergency request")
           errorMessage = "Không tìm thấy đơn yêu cầu khẩn cấp";
-        } else if (
-          err.response.data.message ===
-          "You already have a pending registration!"
-        ) {
+        else if (msg === "You already have a pending registration!")
           errorMessage = "Bạn đã có 1 đơn đăng kí chờ đợi!";
-        } else if (
-          err.response.data.message ===
-          "You have donated within the last 90 days. Please wait longer!"
-        ) {
-          errorMessage = "Bạn đã hiến máu trong 90 ngày. Hãy đợi hồi phục!!!";
-        } else if (
-          err.response.data.message === "Your blood type mismatch in request"
-        ) {
-          errorMessage = "Nhóm máu của bạn không giống với yêu cầu!!!";
-        } else if (
-          err.response.data.message ===
-          "Your blood type is not compatible with the emergency request"
-        ) {
-          errorMessage = "Nhóm máu của bạn không tương thích với yêu cầu khẩn cấp!";
-
-        }
-        setSnackbar({
-          open: true,
-          message: errorMessage,
-          severity: "error",
-        });
+        else if (
+          msg === "You have donated within the last 90 days. Please wait longer!"
+        )
+          errorMessage = "Bạn đã hiến máu trong 90 ngày. Hãy đợi hồi phục!";
+        else if (
+          msg === "Your blood type mismatch in request" ||
+          msg === "Your blood type is not compatible with the emergency request"
+        )
+          errorMessage = "Nhóm máu của bạn không phù hợp với yêu cầu khẩn cấp!";
+        else errorMessage = "Đã xảy ra lỗi.";
       }
+
+      setSnackbar({
+        open: true,
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 
@@ -170,7 +180,6 @@ export default function EmergencyRequestList() {
           <Grid container spacing={3} justifyContent="center" maxWidth="lg">
             {visibleRequests.map((req) => {
               const urgency = getUrgencyStyle(req.levelOfUrgency);
-
               return (
                 <Grid
                   item
@@ -194,7 +203,6 @@ export default function EmergencyRequestList() {
                     }}
                   >
                     <CardContent>
-
                       <Typography
                         variant="subtitle2"
                         fontWeight="bold"
