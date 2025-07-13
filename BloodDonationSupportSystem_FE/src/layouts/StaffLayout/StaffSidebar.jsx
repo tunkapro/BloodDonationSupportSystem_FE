@@ -50,15 +50,16 @@ const StaffSidebar = () => {
           path: "/staff/blood-management",
           icon: <LocalHospitalIcon />,
         },
-        {
-          text: "Lịch Hiến Máu",
-          path: "/staff/blood-donation-schedule",
-          icon: <CalendarMonthIcon />,
-        },
+        
         {
           text: "Trường hợp khẩn cấp",
           path: "/staff/emergency",
           icon: <EmergencyIcon />,
+        },
+        {
+          text: "Lịch Hiến Máu",
+          path: "/staff/blood-donation-schedule",
+          icon: <CalendarMonthIcon />,
         },
         {
           text: "Kho máu",

@@ -19,7 +19,7 @@ import { Edit, XCircle } from 'lucide-react';
 
 
 export default function RegistrationList({ donors, onEditDonor, onCancelDonor }) {
-    console.log(donors);
+    
     return (
         <Card>
             <CardHeader
@@ -34,7 +34,7 @@ export default function RegistrationList({ donors, onEditDonor, onCancelDonor })
                                 <TableCell>Ngày ĐK</TableCell>
                                 <TableCell>Mức độ</TableCell>
                                 <TableCell>Thông tin liên hệ</TableCell>
-                                <TableCell>Địa chỉ bệnh viện</TableCell>
+                                <TableCell>Địa chỉ</TableCell>
                                 <TableCell>Trạng thái đơn</TableCell>
                                 <TableCell>Duyệt đơn</TableCell>
                                 <TableCell>Hủy đơn</TableCell>

@@ -5,7 +5,9 @@ import RegistrationList from './RegistrationList';
 import CancelDonor from './CancelDonor';
 import ApproveDonor from './ApproveDonor';
 import { getRegistrationList } from '../../../api/donationRegistration';
-
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 export default function RegistrationPage() {
   const [donors, setDonors] = useState([]);
   const [error, setError] = useState(null);
@@ -41,6 +43,23 @@ export default function RegistrationPage() {
 
   useEffect(() => {
     fetchDonors();
+
+    const socket = new SockJS(SOCKET_URL);
+    const stomp = new Client({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        stomp.subscribe('/emergency/unassigned-list', (message) => {
+          const newDonor = JSON.parse(message.body);
+          setDonors((prev) => [newDonor, ...prev]);
+        });
+      },
+    });
+
+    stomp.activate();
+
+    return () => {
+      stomp.deactivate();
+    };
   }, []);
 
   const [searchTerm, setSearchTerm] = useState('');

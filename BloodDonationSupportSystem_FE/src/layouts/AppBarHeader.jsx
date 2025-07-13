@@ -45,7 +45,6 @@ function AppBarHeader() {
   ];
   // Register User
   const manage = [
-    { title: "Đơn Đăng Ký", path: "/user/blood-donation-register" },
     { title: "Lịch Hẹn Đã Đặt", path: "/user/appointment-histories" }
   ]
   //'Profile', 'Account', 'Logout'
