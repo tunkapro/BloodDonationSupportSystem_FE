@@ -29,6 +29,7 @@ import EmergencyIcon from '@mui/icons-material/Emergency';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/authContext'
+import { logout } from '../../api/authService';
 
 export default function Sidebar() {
     const navigate = useNavigate();
@@ -36,10 +37,9 @@ export default function Sidebar() {
     const { loadUser } = useAuth();
 
     const handleLogout = async () => {
-        localStorage.removeItem("token");
+        logout();
         await loadUser();
         navigate("/");
-
     };
 
     const menuItems = [
@@ -69,7 +69,7 @@ export default function Sidebar() {
             items: [
 
                 
-                { text: 'Đăng xuất', path: '/admin/logout', icon: <LogoutIcon /> },
+                { text: 'Đăng xuất', onClick: handleLogout, icon: <LogoutIcon /> },
 
             ],
         },

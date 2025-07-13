@@ -43,14 +43,14 @@ export default function EmergencyBloodRequestReport() {
         stt: index + 1,
         registrationDate: item.registrationDate || '',
         patientName: item.patientName || '',
-        phoneNumber: item.phoneNumber || '',
+        phoneNumber: item.patientPhone || '',
         location: item.locationOfPatient || '',
         bloodType: item.bloodType || '',
-        needVolume: item.volumeMl || 0,
+        needVolume: item.requestedVolume || 0,
         note: item.note || '',
         donorName: item.donorName || '',
         donorPhone: item.donorPhone || '',
-        volumeSend: item.volumeSend || 0,
+        volumeSend: item.donatedVolume || 0,
       }));
       setRows(transformedData);
     } catch (error) {

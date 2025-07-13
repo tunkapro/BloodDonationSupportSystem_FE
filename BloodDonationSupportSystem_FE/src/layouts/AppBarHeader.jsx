@@ -15,6 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { logout } from "../api/authService";
 
 
 
@@ -70,10 +71,9 @@ function AppBarHeader() {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
+    logout();
     await loadUser();
     navigate("/");
-
   };
 
   //  handle UI

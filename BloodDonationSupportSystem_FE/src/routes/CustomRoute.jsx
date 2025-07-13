@@ -101,6 +101,7 @@ const CustomRoute = () => {
         <Route path="/admin/*" element={<AdminLayout />}>
           <Route path="" element={<OverViewPage/>}/>
           <Route path="overview" element={<OverViewPage />} />
+          <Route path="" element={<OverViewPage />} />
           <Route path="user-management" element={<UserManagement />} />
           <Route path="posts" element={<AdminPosts />} />
           <Route path="profile" element={<ProfilePage />} />

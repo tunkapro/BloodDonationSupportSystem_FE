@@ -28,11 +28,12 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 
 import { useLocation } from "react-router-dom";
+import { logout } from "../../api/authService";
 const StaffSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const handleLogout = async () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
   };
   const menuItems = [

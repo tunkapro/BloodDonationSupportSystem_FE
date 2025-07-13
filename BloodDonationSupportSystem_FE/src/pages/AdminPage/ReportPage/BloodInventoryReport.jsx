@@ -110,7 +110,12 @@ export default function BloodInventoryReport() {
             rows={rows}
             columns={columns}
             getRowId={row => row.id}
-          
+            disableColumnMenu
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            disableRowSelectionOnClick
+            disableColumnSorting
             hideFooter
             density="compact"
             sx={{
