@@ -2,51 +2,59 @@ import { useState, useEffect } from 'react';
 import { Box, Paper, Typography, FormControl, InputLabel, Select, MenuItem, Stack, Chip, CircularProgress, Button, Card, CardContent, Avatar, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { ManagementAPI } from '../../../api/ManagementAPI';
-import { LocalHospital } from '@mui/icons-material';
+import { Emergency } from '@mui/icons-material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { format } from 'date-fns';
 
 const columns = [
   { field: 'stt', headerName: 'STT', width: 70, sortable: false },
-  { field: 'time', headerName: 'Thời gian', width: 150, sortable: false },
-  { field: 'location', headerName: 'Địa điểm', width: 150, sortable: false },
-  { field: 'registered', headerName: 'Số người đăng ký', width: 160, sortable: false },
-  { field: 'success', headerName: 'Số người hiến thành công', width: 200, sortable: false },
-  { field: 'failed', headerName: 'Số người hiến máu thất bại', width: 200, sortable: false },
-  { field: 'totalVolume', headerName: 'Lượng máu thu được (ml)', width: 200, sortable: false },
+  { field: 'registrationDate', headerName: 'Ngày đăng ký', width: 150, sortable: false },
+  { field: 'patientName', headerName: 'Tên bệnh nhân', width: 180, sortable: false },
+  { field: 'phoneNumber', headerName: 'Số điện thoại', width: 150, sortable: false },
+  { field: 'location', headerName: 'Địa điểm', width: 200, sortable: false },
+  { field: 'bloodType', headerName: 'Nhóm máu', width: 120, sortable: false },
+  { field: 'needVolume', headerName: 'Lượng máu cần (ml)', width: 180, sortable: false },
+  { field: 'note', headerName: 'Ghi chú', width: 200, sortable: false },
+  { field: 'donorName', headerName: 'Tên người hiến', width: 180, sortable: false },
+  { field: 'donorPhone', headerName: 'SĐT người hiến', width: 150, sortable: false },
+  { field: 'volumeSend', headerName: 'Lượng máu gửi (ml)', width: 180, sortable: false },
 ];
 
-export default function BloodDonationReport() {
+export default function EmergencyBloodRequestReport() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const fetchBloodDonationReport = async () => {
+  const fetchEmergencyBloodRequestReport = async () => {
     if (!startDate || !endDate) return;
  
     setLoading(true);
     try {
       console.log(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'))
-      const response = await ManagementAPI.getBloodDonationReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
+      const response = await ManagementAPI.getEmergencyBloodRequestReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
       console.log(response)
       const reportData = response.data || [];
       
       const transformedData = reportData && reportData.map((item, index) => ({
         id: index + 1,
         stt: index + 1,
-        time: item.reportDate || '',
-        location: item.hospitalAddress|| '',
-        registered: item.numberRegistration || 0,
-        success: item.numberSuccess || 0,
-        failed: item.numberFailed || 0,
-        totalVolume: item.volumeBlood || 0,
+        registrationDate: item.registrationDate || '',
+        patientName: item.patientName || '',
+        phoneNumber: item.phoneNumber || '',
+        location: item.locationOfPatient || '',
+        bloodType: item.bloodType || '',
+        needVolume: item.volumeMl || 0,
+        note: item.note || '',
+        donorName: item.donorName || '',
+        donorPhone: item.donorPhone || '',
+        volumeSend: item.volumeSend || 0,
       }));
       setRows(transformedData);
     } catch (error) {
-      console.error('Error fetching blood donation report:', error);
+      console.error('Error fetching emergency blood request report:', error);
       setRows([]);
     } finally {
       setLoading(false);
@@ -56,10 +64,9 @@ export default function BloodDonationReport() {
   const handleExport = async () => {
     setExporting(true);
     try {
-     
-      await ManagementAPI.exportBloodDonationReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
+      await ManagementAPI.exportEmergencyBloodRequestReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
     } catch (error) {
-      console.error('Error exporting report:', error);
+      console.error('Error exporting emergency blood request report:', error);
     } finally {
       setExporting(false);
     }
@@ -67,7 +74,7 @@ export default function BloodDonationReport() {
 
   useEffect(() => {
     if (startDate && endDate) {
-      fetchBloodDonationReport();
+      fetchEmergencyBloodRequestReport();
     }
   }, [startDate, endDate]);
 
@@ -77,7 +84,7 @@ export default function BloodDonationReport() {
         elevation={0}
         sx={{
           mb: 4,
-          background: theme => `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          background: theme => `linear-gradient(135deg, ${theme.palette.error.main} 0%, ${theme.palette.error.dark} 100%)`,
           color: 'white',
           borderRadius: 3
         }}
@@ -91,21 +98,20 @@ export default function BloodDonationReport() {
                 height: 56
               }}
             >
-              <LocalHospital sx={{ fontSize: 32 }} />
+              <Emergency sx={{ fontSize: 32 }} />
             </Avatar>
             <div>
               <Typography variant="h4" fontWeight={700} gutterBottom>
-                Báo Cáo Hiến Máu
+                Báo Cáo Yêu Cầu Hiến Máu Khẩn Cấp
               </Typography>
               <Typography variant="body1" sx={{ opacity: 0.9 }}>
-                Lọc, xuất file và xem chi tiết các lượt hiến máu theo khoảng ngày.
+                Lọc, xuất file và xem chi tiết các yêu cầu hiến máu khẩn cấp theo khoảng ngày.
               </Typography>
             </div>
           </Stack>
         </CardContent>
       </Card>
-      <Paper elevation={3} sx={{ p: 4, maxWidth: 1200, margin: '32px auto' }}>
-        
+      <Paper elevation={3} sx={{ p: 4, maxWidth: 1400, margin: '32px auto' }}>
         <Paper elevation={1} sx={{ p: 2, mb: 3, background: '#f8fafc' }}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" justifyContent="flex-end">
@@ -127,7 +133,7 @@ export default function BloodDonationReport() {
               />
               <Button
                 variant="contained"
-                color="primary"
+                color="error"
                 onClick={handleExport}
                 disabled={loading || exporting}
                 startIcon={exporting ? <CircularProgress size={16} color="inherit" /> : null}
@@ -140,7 +146,7 @@ export default function BloodDonationReport() {
           {startDate && endDate && (
             <Box sx={{ mt: 2, textAlign: 'right' }}>
               <Typography variant="subtitle2" color="text.secondary">
-                Khoảng ngày: {format(startDate, 'yy/MM/dd')} - {format(endDate, 'yy/MM/dd')}
+                Khoảng ngày: {format(startDate, 'dd/MM/yyyy')} - {format(endDate, 'dd/MM/yyyy')}
               </Typography>
             </Box>
           )}
@@ -162,7 +168,7 @@ export default function BloodDonationReport() {
               background: 'white',
               borderRadius: 2,
               '& .MuiDataGrid-row:hover': {
-                backgroundColor: '#e3f2fd',
+                backgroundColor: '#ffebee',
               },
             }}
           />

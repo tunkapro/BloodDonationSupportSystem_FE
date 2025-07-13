@@ -17,7 +17,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
-import BloodDonorReport from "../pages/AdminPage/OverviewPage/BloodDonorReport";
+
 import AdminPosts from "../pages/AdminPage/managementhomepage/AdminPosts";
 
 import ProfilePage from "../pages/MemberPage/ProfilePage/ProfilePage";
@@ -36,6 +36,8 @@ import EmergencyDonationPage from "../pages/StaffPage/EmergencyDonation/Emergenc
 import Account from "../pages/AdminPage/Account";
 import BloodDonationReport from "../pages/AdminPage/ReportPage/BloodDonationReport";
 import BloodInventoryReport from "../pages/AdminPage/ReportPage/BloodInventoryReport";
+import EmergencyBloodRequestReport from "../pages/AdminPage/ReportPage/EmergencyBloodRequestReport";
+import StaffReport from "../pages/AdminPage/ReportPage/StaffReport";
 import RegistrationPage from "../pages/StaffPage/RegistrationManagement/RegistrationPage";
 import ProtectedRoute from "../routes/ProtectRoute";
 import CertificatePage from "../pages/MemberPage/CertificatePage/CertificatePage";
@@ -105,6 +107,8 @@ const CustomRoute = () => {
           <Route path="account" element={<Account />} />
           <Route path="donation-report" element={<BloodDonationReport />} />
           <Route path="blood-inventory-report" element={<BloodInventoryReport />} />
+          <Route path="emergency-request-report" element={<EmergencyBloodRequestReport />} />
+          <Route path="staff-report" element={<StaffReport />} />
         </Route>
       </Route>
 

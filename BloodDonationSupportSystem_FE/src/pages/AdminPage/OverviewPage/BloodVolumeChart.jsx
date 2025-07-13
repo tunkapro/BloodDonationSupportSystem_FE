@@ -22,15 +22,15 @@ const BloodVolumeChart = () => {
   const fetchBloodVolumeData = async (year, month) => {
     setLoading(true);
     try {
-      // Fetch data for the selected year and month
-      const response = await ManagementAPI.getOverviewStatistics(year, month);
       
-      // Process the data to create chart format
+      const response = await ManagementAPI.getBloodDataByYearAndMonthForChart(year, month);
+      
+      
       const allBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
       const labels = allBloodTypes;
       
-      // Extract blood volume data from API response - adjust these property names based on your API
-      const bloodVolumeData = response.data?.bloodVolumeData || {};
+      
+      const bloodVolumeData = response.data || {};
       const data = allBloodTypes.map(bt => bloodVolumeData[bt] || 0);
       
       const newSeries = [{
@@ -41,7 +41,7 @@ const BloodVolumeChart = () => {
       setMonthlyBloodVolumeData({ labels, series: newSeries });
     } catch (error) {
       console.error('Error fetching blood volume data:', error);
-      // Fallback to empty data on error
+      
       const allBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
       const labels = allBloodTypes;
       const data = allBloodTypes.map(() => 0);
@@ -62,7 +62,7 @@ const BloodVolumeChart = () => {
   return (
     <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3, mt: 3 }}>
       <Typography variant="h6" mb={2} color="primary.main" fontWeight={600}>
-        Thống kê thể tích máu theo tháng
+        Thống kê thể tích máu 
       </Typography>
       <Divider sx={{ mb: 3 }} />
       

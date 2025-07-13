@@ -5,6 +5,7 @@ import StatisticsCards from './StatisticsCards';
 import DonationChart from './DonationChart';
 import BloodVolumeChart from './BloodVolumeChart';
 import { ManagementAPI } from '../../../api/ManagementAPI';
+import EmergencyRequestLineChart from './EmergencyRequestLineChart';
 
 const OverViewPage = () => {
   const [numberAccount, setNumberAccount] = useState(0);
@@ -138,6 +139,7 @@ const OverViewPage = () => {
       <StatisticsCards values={values} />
       <DonationChart />
       <BloodVolumeChart />
+      <EmergencyRequestLineChart/>
     </Box>
   );
 };

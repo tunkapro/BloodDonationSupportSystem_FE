@@ -3,66 +3,62 @@ import { Paper, Typography, Box, Divider, FormControl, InputLabel, Select, MenuI
 import { LineChart } from '@mui/x-charts/LineChart';
 import { ManagementAPI } from '../../../api/ManagementAPI';
 
-const DonationChart = () => {
+const EmergencyRequestLineChart = () => {
   const theme = useTheme();
 
-  const [chartData, setChartData] = useState({ labels: [], successData: [], failedData: [] });
-  const [filteredChartData, setFilteredChartData] = useState({ labels: [], successData: [], failedData: [] });
+  const [chartData, setChartData] = useState({ labels: [], requestData: [] });
+  const [filteredChartData, setFilteredChartData] = useState({ labels: [], requestData: [] });
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
 
   const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(y => ({ value: y, label: y }));
 
-  const fetchDonationData = async (year) => {
+  const fetchEmergencyRequestsByYear = async (year) => {
     setLoading(true);
     try {
- 
-      const response = await ManagementAPI.getDonationDataByYearForChart(year, 1);
+      const response = await ManagementAPI.getEmergencyRequestsByYearForChart(year, 1);
       
-      console.log(response)
+      console.log('Emergency requests response:', response);
       const labels = [];
-      const successData = [];
-      const failedData = [];
-      
+      const requestData = [];
 
+      
+      const monthlyData = response.data || {};
+      
       for (let month = 1; month <= 12; month++) {
         const label = `${year}-${month.toString().padStart(2, '0')}`;
         labels.push(label);
         
-  
-        const monthData = response.data?.[month] || {};
-        successData.push(monthData.successCount || 0);
-        failedData.push(monthData.failedCount || 0);
+       
+        const requestCount = monthlyData[month] || 0;
+        requestData.push(requestCount);
       }
       
-      setChartData({ labels, successData, failedData });
+      setChartData({ labels, requestData });
     } catch (error) {
-      console.error('Error fetching donation data:', error);
+      console.error('Error fetching emergency request data:', error);
 
       const labels = [];
-      const successData = [];
-      const failedData = [];
+      const requestData = [];
       
       for (let month = 1; month <= 12; month++) {
         const label = `${selectedYear}-${month.toString().padStart(2, '0')}`;
         labels.push(label);
-        successData.push(0);
-        failedData.push(0);
+        requestData.push(0);
       }
       
-      setChartData({ labels, successData, failedData });
+      setChartData({ labels, requestData });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchDonationData(selectedYear);
+    fetchEmergencyRequestsByYear(selectedYear);
   }, [selectedYear]);
 
   useEffect(() => {
-    let filteredSuccessData = [...chartData.successData];
-    let filteredFailedData = [...chartData.failedData];
+    let filteredRequestData = [...chartData.requestData];
     let filteredLabels = [...chartData.labels];
 
     if (selectedYear !== 'all') {
@@ -71,19 +67,16 @@ const DonationChart = () => {
       if (newFilteredLabels.length > 0) {
         const startIndex = filteredLabels.indexOf(newFilteredLabels[0]);
         filteredLabels = newFilteredLabels;
-        filteredSuccessData = chartData.successData.slice(startIndex, startIndex + newFilteredLabels.length);
-        filteredFailedData = chartData.failedData.slice(startIndex, startIndex + newFilteredLabels.length);
+        filteredRequestData = chartData.requestData.slice(startIndex, startIndex + newFilteredLabels.length);
       } else {
         filteredLabels = [];
-        filteredSuccessData = [];
-        filteredFailedData = [];
+        filteredRequestData = [];
       }
     }
 
     setFilteredChartData({ 
       labels: filteredLabels, 
-      successData: filteredSuccessData, 
-      failedData: filteredFailedData 
+      requestData: filteredRequestData
     });
   }, [selectedYear, chartData]);
 
@@ -92,9 +85,9 @@ const DonationChart = () => {
   ];
 
   return (
-    <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3 }}>
+    <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: 3, background: theme.palette.background.paper, boxShadow: 3, mt : 3 }}>
       <Typography variant="h6" mb={2} color="primary.main" fontWeight={600}>
-        Biểu đồ số lượt hiến máu 
+        Biểu đồ yêu cầu khẩn cấp
       </Typography>
       <Divider sx={{ mb: 3 }} />
       
@@ -130,13 +123,8 @@ const DonationChart = () => {
             xAxis={[{ scaleType: 'point', data: filteredChartData.labels }]}
             series={[
               { 
-                data: filteredChartData.successData, 
-                label: 'Hiến máu thành công', 
-                color: theme.palette.success.main 
-              },
-              { 
-                data: filteredChartData.failedData, 
-                label: 'Hiến máu thất bại', 
+                data: filteredChartData.requestData, 
+                label: 'Số yêu cầu khẩn cấp', 
                 color: theme.palette.error.main 
               }
             ]}
@@ -149,4 +137,4 @@ const DonationChart = () => {
   );
 };
 
-export default DonationChart; 
+export default EmergencyRequestLineChart; 

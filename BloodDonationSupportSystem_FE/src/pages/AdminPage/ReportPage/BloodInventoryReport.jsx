@@ -18,13 +18,13 @@ export default function BloodInventoryReport() {
     setLoading(true);
     try {
       const response = await ManagementAPI.getBloodInventory();
-      
-      const inventoryData = response.data?.bloodInventory || [];
-      
+        console.log(response)
+      const inventoryData = response.data || [];
+      console.log(inventoryData)
       const transformedData = inventoryData.map((item, index) => ({
         id: index + 1,
-        bloodType: item.bloodType || '',
-        volume: item.volume || item.quantity || 0,
+        bloodType: item.bloodBagId || '',
+        volume: item.totalVolmeMl || item.quantity || 0,
       }));
       
       setRows(transformedData);

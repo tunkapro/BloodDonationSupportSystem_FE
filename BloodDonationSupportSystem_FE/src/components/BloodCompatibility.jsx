@@ -21,11 +21,17 @@ import {
   LocalHospital,
   Science,
   Search,
+  Favorite,
 } from '@mui/icons-material';
 
 // Dữ liệu tương thích máu toàn diện (Vietnamese)
 const bloodCompatibilityData = {
   'A+': {
+    wholeBlood: {
+      canReceive: ['A+'],
+      canDonate: ['A+', 'AB+'],
+      description: 'Nhận toàn bộ máu từ A+. Cho toàn bộ máu cho A+, AB+.'
+    },
     redBloodCells: {
       canReceive: ['A+', 'A-', 'O+', 'O-'],
       canDonate: ['A+', 'AB+'],
@@ -48,6 +54,11 @@ const bloodCompatibilityData = {
     }
   },
   'A-': {
+    wholeBlood: {
+      canReceive: ['A-'],
+      canDonate: ['A+', 'A-', 'AB+', 'AB-'],
+      description: 'Nhận toàn bộ máu từ A-. Cho toàn bộ máu cho A+, A-, AB+, AB-.'
+    },
     redBloodCells: {
       canReceive: ['A-', 'O-'],
       canDonate: ['A+', 'A-', 'AB+', 'AB-'],
@@ -70,6 +81,11 @@ const bloodCompatibilityData = {
     }
   },
   'B+': {
+    wholeBlood: {
+      canReceive: ['B+'],
+      canDonate: ['B+', 'AB+'],
+      description: 'Nhận toàn bộ máu từ B+. Cho toàn bộ máu cho B+, AB+.'
+    },
     redBloodCells: {
       canReceive: ['B+', 'B-', 'O+', 'O-'],
       canDonate: ['B+', 'AB+'],
@@ -92,6 +108,11 @@ const bloodCompatibilityData = {
     }
   },
   'B-': {
+    wholeBlood: {
+      canReceive: ['B-'],
+      canDonate: ['B+', 'B-', 'AB+', 'AB-'],
+      description: 'Nhận toàn bộ máu từ B-. Cho toàn bộ máu cho B+, B-, AB+, AB-.'
+    },
     redBloodCells: {
       canReceive: ['B-', 'O-'],
       canDonate: ['B+', 'B-', 'AB+', 'AB-'],
@@ -114,6 +135,11 @@ const bloodCompatibilityData = {
     }
   },
   'AB+': {
+    wholeBlood: {
+      canReceive: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      canDonate: ['AB+'],
+      description: 'Nhận toàn bộ máu từ tất cả các nhóm máu. Chỉ cho toàn bộ máu cho AB+.'
+    },
     redBloodCells: {
       canReceive: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
       canDonate: ['AB+'],
@@ -136,6 +162,11 @@ const bloodCompatibilityData = {
     }
   },
   'AB-': {
+    wholeBlood: {
+      canReceive: ['A-', 'B-', 'AB-', 'O-'],
+      canDonate: ['AB+', 'AB-'],
+      description: 'Nhận toàn bộ máu từ A-, B-, AB-, O-. Cho toàn bộ máu cho AB+, AB-.'
+    },
     redBloodCells: {
       canReceive: ['A-', 'B-', 'AB-', 'O-'],
       canDonate: ['AB+', 'AB-'],
@@ -158,6 +189,11 @@ const bloodCompatibilityData = {
     }
   },
   'O+': {
+    wholeBlood: {
+      canReceive: ['O+', 'O-'],
+      canDonate: ['A+', 'B+', 'AB+', 'O+'],
+      description: 'Nhận toàn bộ máu từ O+, O-. Cho toàn bộ máu cho A+, B+, AB+, O+.'
+    },
     redBloodCells: {
       canReceive: ['O+', 'O-'],
       canDonate: ['A+', 'B+', 'AB+', 'O+'],
@@ -180,6 +216,11 @@ const bloodCompatibilityData = {
     }
   },
   'O-': {
+    wholeBlood: {
+      canReceive: ['O-'],
+      canDonate: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      description: 'Chỉ nhận toàn bộ máu từ O-. Cho toàn bộ máu cho tất cả các nhóm máu.'
+    },
     redBloodCells: {
       canReceive: ['O-'],
       canDonate: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
@@ -203,7 +244,7 @@ const bloodCompatibilityData = {
   }
 };
 
-const tabLabels = ['Hồng cầu', 'Huyết tương', 'Tiểu cầu', 'Bạch cầu'];
+const tabLabels = ['Toàn Phần', 'Hồng cầu', 'Huyết tương', 'Tiểu cầu', 'Bạch cầu'];
 
 const BloodCompatibility = () => {
   const theme = useTheme();
@@ -219,7 +260,7 @@ const BloodCompatibility = () => {
   };
 
   const getComponentData = (bloodType, componentIndex) => {
-    const components = ['redBloodCells', 'plasma', 'platelets', 'whiteBloodCells'];
+    const components = ['wholeBlood', 'redBloodCells', 'plasma', 'platelets', 'whiteBloodCells'];
     return bloodCompatibilityData[bloodType]?.[components[componentIndex]];
   };
 
@@ -311,10 +352,11 @@ const BloodCompatibility = () => {
                   }
                 }}
               >
-                <Tab icon={<Bloodtype />} label={tabLabels[0]} />
-                <Tab icon={<LocalHospital />} label={tabLabels[1]} />
-                <Tab icon={<Science />} label={tabLabels[2]} />
-                <Tab icon={<LocalHospital />} label={tabLabels[3]} />
+                <Tab icon={<Favorite />} label={tabLabels[0]} />
+                <Tab icon={<Bloodtype />} label={tabLabels[1]} />
+                <Tab icon={<LocalHospital />} label={tabLabels[2]} />
+                <Tab icon={<Science />} label={tabLabels[3]} />
+                <Tab icon={<LocalHospital />} label={tabLabels[4]} />
               </Tabs>
 
               <Box sx={{ p: 3 }}>
@@ -327,51 +369,62 @@ const BloodCompatibility = () => {
                   if (!componentData) return null;
 
                   return (
-                    <Grid container spacing={3}>
-                      {/* Can Receive */}
-                      <Grid item xs={12} md={6}>
-                        <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'success.light', borderRadius: 2 }}>
-                          <CardContent>
-                            <Typography variant="h6" gutterBottom fontWeight={600} color="success.main">
-                              Có thể nhận từ:
-                            </Typography>
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                              {componentData.canReceive.map((type) => (
-                                <Chip
-                                  key={type}
-                                  label={type}
-                                  color="success"
-                                  variant="filled"
-                                  sx={{ fontWeight: 600 }}
-                                />
-                              ))}
-                            </Box>
-                          </CardContent>
-                        </Card>
+                    <>
+                      <Grid container spacing={3}>
+                        {/* Can Receive */}
+                        <Grid item xs={12} md={6}>
+                          <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'success.light', borderRadius: 2 }}>
+                            <CardContent>
+                              <Typography variant="h6" gutterBottom fontWeight={600} color="success.main">
+                                Có thể nhận từ:
+                              </Typography>
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                                {componentData.canReceive.map((type) => (
+                                  <Chip
+                                    key={type}
+                                    label={type}
+                                    color="success"
+                                    variant="filled"
+                                    sx={{ fontWeight: 600 }}
+                                  />
+                                ))}
+                              </Box>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+
+                        {/* Can Donate */}
+                        <Grid item xs={12} md={6}>
+                          <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'info.light', borderRadius: 2 }}>
+                            <CardContent>
+                              <Typography variant="h6" gutterBottom fontWeight={600} color="info.main">
+                                Có thể cho:
+                              </Typography>
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                                {componentData.canDonate.map((type) => (
+                                  <Chip
+                                    key={type}
+                                    label={type}
+                                    color="info"
+                                    variant="filled"
+                                    sx={{ fontWeight: 600 }}
+                                  />
+                                ))}
+                              </Box>
+                            </CardContent>
+                          </Card>
+                        </Grid>
                       </Grid>
 
-                      {/* Can Donate */}
-                      <Grid item xs={12} md={6}>
-                        <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'info.light', borderRadius: 2 }}>
-                          <CardContent>
-                            <Typography variant="h6" gutterBottom fontWeight={600} color="info.main">
-                              Có thể cho:
-                            </Typography>
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                              {componentData.canDonate.map((type) => (
-                                <Chip
-                                  key={type}
-                                  label={type}
-                                  color="info"
-                                  variant="filled"
-                                  sx={{ fontWeight: 600 }}
-                                />
-                              ))}
-                            </Box>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    </Grid>
+                      {/* Description */}
+                      <Box sx={{ mt: 3 }}>
+                        <Alert severity="info" sx={{ borderRadius: 2 }}>
+                          <Typography variant="body1" fontWeight={500}>
+                            {componentData.description}
+                          </Typography>
+                        </Alert>
+                      </Box>
+                    </>
                   );
                 })()}
               </Box>
