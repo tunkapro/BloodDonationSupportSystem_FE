@@ -55,7 +55,7 @@ export default function CancelDonor({ open, onClose, donor, onReload }) {
 
     <Snackbar
         open={snackbarOpen}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >

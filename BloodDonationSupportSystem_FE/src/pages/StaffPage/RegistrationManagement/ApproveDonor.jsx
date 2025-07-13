@@ -11,7 +11,6 @@ import {
   Alert,
 } from '@mui/material';
 import { approveDonationRegistration } from '../../../api/donationRegistration'; 
-
 export default function ApproveDonor({ open, onClose, donor, onReload }) {
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -35,6 +34,10 @@ export default function ApproveDonor({ open, onClose, donor, onReload }) {
       setLoading(false);
     }
   };
+
+  
+
+  
 
   return (
     <>

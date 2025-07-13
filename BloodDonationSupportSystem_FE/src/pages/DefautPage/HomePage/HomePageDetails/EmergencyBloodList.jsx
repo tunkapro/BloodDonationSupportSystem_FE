@@ -125,6 +125,12 @@ export default function EmergencyRequestList() {
           err.response.data.message === "Your blood type mismatch in request"
         ) {
           errorMessage = "Nhóm máu của bạn không giống với yêu cầu!!!";
+        } else if (
+          err.response.data.message ===
+          "Your blood type is not compatible with the emergency request"
+        ) {
+          errorMessage = "Nhóm máu của bạn không tương thích với yêu cầu khẩn cấp!";
+
         }
         setSnackbar({
           open: true,
