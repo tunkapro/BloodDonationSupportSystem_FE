@@ -58,13 +58,13 @@ export default function BloodStorageTable() {
       const res = await bloodCheckProcessListApi();
       return res.data.data;
     } catch (err) {
-      console.error("Lỗi khi tải dữ liệu hiến máu:", err.message);
+      showSnackbar("Lỗi khi tải dữ liệu hiến máu:", "error");
       return [];
     }
   };
-const handleReloadBloodBagList = async () => {
-  await loadAndSetData();
-};
+  const handleReloadBloodBagList = async () => {
+    await loadAndSetData();
+  };
   const loadAndSetData = async () => {
     const data = await fetchData();
     setRows(data.map((row) => ({ ...row, processId: row.processId })));
@@ -120,6 +120,7 @@ const handleReloadBloodBagList = async () => {
             "success"
           );
         }
+
         if (
           responseInventory.data.message ===
             "Update blood volume successfully. User has been updated with blood type from process" ||
