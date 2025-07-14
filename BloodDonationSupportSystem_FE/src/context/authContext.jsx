@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
       }
 
       const res = await getCurrentUser();
-      console.log(res)
       setUser(res.data);
     } catch (error) {
       console.error("Error load user:", error);

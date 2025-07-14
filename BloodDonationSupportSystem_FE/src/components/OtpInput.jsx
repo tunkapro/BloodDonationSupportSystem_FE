@@ -12,7 +12,7 @@ const OtpInput = ({ length = 6, onChangeOtp }) => {
         setOtp(newOtp);
         if (onChangeOtp) onChangeOtp(newOtp.join(''));
 
-        // Move focus to next input field
+        
         const nextInput = document.getElementById(`otp-input-${index + 1}`);
         if (value && nextInput) {
             nextInput.focus();

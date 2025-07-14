@@ -140,8 +140,6 @@ export function EmergencyRegistrationDialog({ open, onClose, onSubmit }) {
       registeredByStaff:user.id,
     };
 
-    console.log(payload);
-
     try {
       await createEmergencyRequest(payload);
       showSnackbar("Tạo đơn thành công!", "success");

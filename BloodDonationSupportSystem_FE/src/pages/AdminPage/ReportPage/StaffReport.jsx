@@ -76,7 +76,6 @@ export default function StaffReport() {
  
     setLoading(true);
     try {
-      console.log(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'))
       
       
       const [donationResponse, emergencyResponse] = await Promise.all([
@@ -84,10 +83,7 @@ export default function StaffReport() {
         ManagementAPI.getStaffEmergencyReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'))
       ]);
 
-      console.log('Donation response:', donationResponse);
-      console.log('Emergency response:', emergencyResponse);
       
-    
       const donationData = donationResponse.data || [];
       const transformedDonationData = donationData.map((item, index) => ({
         id: index + 1,

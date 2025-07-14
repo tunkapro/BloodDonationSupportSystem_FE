@@ -18,7 +18,6 @@ const EmergencyRequestLineChart = () => {
     try {
       const response = await ManagementAPI.getEmergencyRequestsByYearForChart(year, 1);
       
-      console.log('Emergency requests response:', response);
       const labels = [];
       const requestData = [];
 

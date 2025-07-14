@@ -120,7 +120,6 @@ const handleReloadBloodBagList = async () => {
             "success"
           );
         }
-        console.log("truoc dong này thi thì ko lỗi 5");
         if (
           responseInventory.data.message ===
             "Update blood volume successfully. User has been updated with blood type from process" ||

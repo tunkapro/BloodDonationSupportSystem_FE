@@ -33,9 +33,7 @@ export default function EmergencyBloodRequestReport() {
  
     setLoading(true);
     try {
-      console.log(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'))
       const response = await ManagementAPI.getEmergencyBloodRequestReport(format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'));
-      console.log(response)
       const reportData = response.data || [];
       
       const transformedData = reportData && reportData.map((item, index) => ({

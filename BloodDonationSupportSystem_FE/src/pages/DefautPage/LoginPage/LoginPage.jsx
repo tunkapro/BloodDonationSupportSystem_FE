@@ -48,7 +48,6 @@ export default function LoginPage() {
 
       const userRes = await getCurrentUser();
       const role = userRes.data.role;
-      console.log("ROLE:", role);
 
       if (role === "ROLE_MEMBER") navigate("/");
       else if (role === "ROLE_STAFF") navigate("/staff");

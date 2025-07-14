@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import AdminNavBar from "./AdminNavBar";
 import RequireAuth from "../../components/RequireAuth";
-import AdminHeader from "./AdminHeader";
+
 export default function AdminLayout() {
   const HEADER_HEIGHT = 72; 
 const SIDEBAR_WIDTH = 280; 
@@ -27,7 +27,7 @@ const SIDEBAR_WIDTH = 280;
       >
         <AdminNavBar />
       </Box>
-      {/* Main Content */}
+     
       <Box
         sx={{
           marginLeft: `${SIDEBAR_WIDTH}px`,

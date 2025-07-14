@@ -37,9 +37,6 @@ export default function ArticleForm({
 
   const [selectedImage, setSelectedImage] = useState( initialValues  ? "http://localhost:8090/" + initialValues.imageUrl : null);
 
-  console.log(initialValues)
-
-
   const [fileName, setFileName] = useState("");
 
   // Convert File → base64
@@ -55,7 +52,6 @@ export default function ArticleForm({
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log(file)
       setFileName(file.name)
       setSelectedImage(file);
       const base64 = await toBase64(file);       // Chuyển ảnh sang base64
@@ -63,7 +59,6 @@ export default function ArticleForm({
     }
   };
   const onSubmitForm = (data) => {
-    console.log(selectedImage);
     onSubmit(data, selectedImage, fileName);
 
   };

@@ -71,7 +71,6 @@ export default function ForgotPasswordPage() {
         
         // Xử lý thành công
         setIsSubmitted(true);
-        console.log(`Gửi yêu cầu reset mật khẩu cho ${accountType === 'phone' ? 'số điện thoại' : 'email'}: ${account}`);
         
       } catch (error) {
         console.error('Lỗi khi gửi yêu cầu:', error);
