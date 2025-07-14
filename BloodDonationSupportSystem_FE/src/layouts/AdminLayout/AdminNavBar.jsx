@@ -181,10 +181,7 @@ export default function Sidebar() {
                         )}
                     </Box>
                 ))}
-            </Box>
-
-
-            <Box sx={{ 
+                <Box sx={{ 
                 borderTop: '1px solid #e2e8f0',
                 textAlign: 'center',
                 bgcolor: '#f8fafc',
@@ -196,6 +193,10 @@ export default function Sidebar() {
                     © 2024 Blood Donation System
                 </Typography>
             </Box>
+            </Box>
+
+
+            
         </Box>
     );
 }

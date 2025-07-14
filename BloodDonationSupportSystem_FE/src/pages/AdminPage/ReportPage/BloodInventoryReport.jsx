@@ -18,9 +18,7 @@ export default function BloodInventoryReport() {
     setLoading(true);
     try {
       const response = await ManagementAPI.getBloodInventory();
-        console.log(response)
       const inventoryData = response.data || [];
-      console.log(inventoryData)
       const transformedData = inventoryData.map((item, index) => ({
         id: index + 1,
         bloodType: item.bloodBagId || '',

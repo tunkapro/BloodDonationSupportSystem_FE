@@ -19,7 +19,6 @@ import { Edit, XCircle } from 'lucide-react';
 
 
 export default function DonorTableHealthCheck({ donors, onEditDonor, onCancelDonor }) {
-  console.log(donors);
   return (
     <Card>
       <CardHeader

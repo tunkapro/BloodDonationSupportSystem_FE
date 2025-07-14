@@ -15,10 +15,8 @@ export default function BloodDonationScheduleList () {
                 
                 if(res.data){
                     setBloodDonationScheduleList(res.data);
-                    console.log(res.data);
                 }
             }catch(err){
-                console.log("error")
             }
         }
         getBloodDonationScheduleList()

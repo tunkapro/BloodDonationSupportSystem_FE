@@ -82,7 +82,6 @@ export default function DonorHealthCheckPage() {
     );
   };
 
-  console.log('Filtered Donors:', filteredDonors);
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 

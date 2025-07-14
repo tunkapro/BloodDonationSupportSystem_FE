@@ -6,7 +6,6 @@ export const ManagementAPI = {
       getOverviewStatistics: async (year, month) => {
   
     const body = { year, month };
-    console.log(body)
     const res = await axios.post('/admin/report/overview', body);
     return res.data;
   },
@@ -27,7 +26,6 @@ export const ManagementAPI = {
   },
   exportBloodDonationReport :async (startDate, endDate) => {
     const body = { startDate, endDate };
-    console.log(body)
     const response = await axios.post(
       '/admin/report/blood-donation/export',
       body,

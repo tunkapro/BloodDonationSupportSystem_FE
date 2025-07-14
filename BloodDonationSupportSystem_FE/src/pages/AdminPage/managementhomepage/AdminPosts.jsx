@@ -36,7 +36,6 @@ export default function ArticlePage() {
 
   const loadArticles = async () => {
     const res = await getAllArticles();
-    console.log(res.data);
     setArticles(res.data.data);
   };
 
@@ -65,7 +64,6 @@ export default function ArticlePage() {
   };
 
   const handleSubmit = async (data, imageData, fileName) => {
-    console.log(imageData)
     data.imageData = imageData;
     data.fileName = fileName;
 
@@ -78,15 +76,12 @@ export default function ArticlePage() {
       articleType: data.articleType,
       createdByAdminId: user.id,
     };
-    console.log(cleanData);
 
     try {
       if (selectedArticle) {
         const res = await updateArticle(selectedArticle.id, cleanData);
-        console.log(res);
       } else {
         const res =await createArticle(cleanData);
-         console.log(res);
       }
 
       setOpenForm(false);
@@ -94,7 +89,6 @@ export default function ArticlePage() {
       loadArticles();
     } catch (error) {
       console.error("Submit error:", error);
-      console.log(error.response?.data?.message);
     }
   };
 

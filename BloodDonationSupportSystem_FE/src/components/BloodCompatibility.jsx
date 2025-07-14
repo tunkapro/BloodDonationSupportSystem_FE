@@ -24,7 +24,7 @@ import {
   Favorite,
 } from '@mui/icons-material';
 
-// Dữ liệu tương thích máu toàn diện (Vietnamese)
+
 const bloodCompatibilityData = {
   'A+': {
     wholeBlood: {
@@ -267,7 +267,7 @@ const BloodCompatibility = () => {
   return (
     <Box sx={{ py: 6, px: 2, bgcolor: '#f8f9fa' }}>
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-        {/* Header */}
+      
         <Box textAlign="center" sx={{ mb: 5 }}>
           <Box
             sx={{
@@ -291,7 +291,7 @@ const BloodCompatibility = () => {
           </Typography>
         </Box>
 
-        {/* Blood Type Selection */}
+     
         <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, borderRadius: 4 }}>
           <Typography variant="h5" gutterBottom fontWeight={600}>
             Chọn nhóm máu của bạn
@@ -305,12 +305,14 @@ const BloodCompatibility = () => {
             placeholder="Tìm kiếm nhóm máu..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              },
             }}
             sx={{ mb: 3 }}
           />
@@ -337,7 +339,7 @@ const BloodCompatibility = () => {
 
         {selectedBloodType && (
           <Box mt={5}>
-            {/* Component Tabs */}
+            
             <Paper elevation={3} sx={{ borderRadius: 4, overflow: 'hidden' }}>
               <Tabs
                 value={activeTab}
@@ -371,7 +373,7 @@ const BloodCompatibility = () => {
                   return (
                     <>
                       <Grid container spacing={3}>
-                        {/* Can Receive */}
+                       
                         <Grid item xs={12} md={6}>
                           <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'success.light', borderRadius: 2 }}>
                             <CardContent>
@@ -393,7 +395,7 @@ const BloodCompatibility = () => {
                           </Card>
                         </Grid>
 
-                        {/* Can Donate */}
+                       
                         <Grid item xs={12} md={6}>
                           <Card elevation={0} sx={{ height: '100%', border: '1px solid', borderColor: 'info.light', borderRadius: 2 }}>
                             <CardContent>
@@ -416,7 +418,7 @@ const BloodCompatibility = () => {
                         </Grid>
                       </Grid>
 
-                      {/* Description */}
+                    
                       <Box sx={{ mt: 3 }}>
                         <Alert severity="info" sx={{ borderRadius: 2 }}>
                           <Typography variant="body1" fontWeight={500}>

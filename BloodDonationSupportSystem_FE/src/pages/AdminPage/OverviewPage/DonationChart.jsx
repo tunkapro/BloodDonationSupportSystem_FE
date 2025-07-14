@@ -19,7 +19,6 @@ const DonationChart = () => {
  
       const response = await ManagementAPI.getDonationDataByYearForChart(year, 1);
       
-      console.log(response)
       const labels = [];
       const successData = [];
       const failedData = [];
