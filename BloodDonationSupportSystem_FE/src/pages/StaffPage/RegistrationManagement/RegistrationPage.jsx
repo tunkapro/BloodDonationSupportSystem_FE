@@ -17,7 +17,7 @@ export default function RegistrationPage() {
       const response = await getRegistrationList();
 
       const urgencyPriority = {
-        "CỰC KỲ KHẨN CẤP": 1,
+        "CỰC KÌ KHẨN CẤP": 1,
         "RẤT KHẨN CẤP": 2,
         "KHẨN CẤP": 3,
         "BÌNH THƯỜNG": 4,

@@ -62,7 +62,7 @@ export default function FilterBarHealthCheck({
               onChange={(e) => setPriorityFilter(e.target.value)}
             >
               <MenuItem value="all">Tất cả</MenuItem>
-              <MenuItem value="CỰC KỲ KHẨN CẤP">Cực kỳ khẩn cấp</MenuItem>
+              <MenuItem value="CỰC KÌ KHẨN CẤP">Cực kì khẩn cấp</MenuItem>
               <MenuItem value="RẤT KHẨN CẤP">Rất khẩn cấp</MenuItem>
               <MenuItem value="KHẨN CẤP">Khẩn cấp</MenuItem>
               <MenuItem value="BÌNH THƯỜNG">Bình thường</MenuItem>
