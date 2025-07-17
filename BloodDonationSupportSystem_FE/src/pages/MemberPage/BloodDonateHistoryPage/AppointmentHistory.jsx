@@ -305,7 +305,7 @@ export default function AppointmentHistory() {
                 </Typography>
               </Paper>
 
-              {pendingAppointments.map((item, index) => (
+              {pendingAppointments.map((item) => (
                 <Card
                   key={item.donationRegistrationId}
                   elevation={0}

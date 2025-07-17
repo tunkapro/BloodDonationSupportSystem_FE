@@ -17,7 +17,13 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { vi } from "date-fns/locale";
-import { isBefore, isAfter, addDays, startOfToday } from "date-fns";
+import { 
+  isBefore, 
+  isAfter, 
+  addDays, 
+  startOfToday,
+  isSameDay
+ } from "date-fns";
 import { createSchedule } from "../../../../api/bloodDonationSchedule";
 import dayjs from "dayjs";
 
@@ -56,9 +62,10 @@ const BloodDonationScheduleCreate = ( {onClose} ) => {
 
       }
     } catch (err) {
+      console.log("Data submitted:", err.response?.data.message);
       if (
-        err.response?.status === 500 &&
-        err.response?.data?.message === "Schedule already exists"
+        err.response?.status === 404 &&
+        err.response?.data.message === "Schedule already exists"
       ) {
         setSnackbar({
           open: true,
@@ -68,7 +75,7 @@ const BloodDonationScheduleCreate = ( {onClose} ) => {
       } else {
         setSnackbar({
           open: true,
-          message: "Đã xảy ra lỗi khi tạo lịch" + err,
+          message: "Đã xảy ra lỗi khi tạo lịch. Vui lòng thử lại sau.",
           severity: "error",
         });
       }
@@ -79,6 +86,7 @@ const BloodDonationScheduleCreate = ( {onClose} ) => {
     const today = startOfToday();
     const maxAllowedDate = addDays(today, 90);
     const date = data.operatingDate;
+    const now = new Date();
 
     // validate ngày hoạt động
     if (!date) {
@@ -103,6 +111,53 @@ const BloodDonationScheduleCreate = ( {onClose} ) => {
         message: "Ngày hoạt động không được quá 90 ngày kể từ hôm nay",
       });
       return;
+    }
+
+    if (!data.startTime) {
+      setError("startTime", {
+        type: "manual",
+        message: "Giờ bắt đầu là bắt buộc",
+      });
+      return;
+    }
+
+    if (!data.endTime) {
+      setError("endTime", {
+        type: "manual",
+        message: "Giờ kết thúc là bắt buộc",
+      });
+      return;
+    }
+
+    const startTime = dayjs(data.startTime);
+    const endTime = dayjs(data.endTime);
+
+    if (endTime.isBefore(startTime) || endTime.isSame(startTime)) {
+      setError("endTime", {
+        type: "manual",
+        message: "Giờ kết thúc phải sau giờ bắt đầu",
+      });
+      return;
+    }
+
+    if (isSameDay(date, now)) {
+      const currentTime = dayjs();
+      
+      if (startTime.isBefore(currentTime)) {
+        setError("startTime", {
+          type: "manual",
+          message: "Giờ bắt đầu không được là thời gian trong quá khứ",
+        });
+        return;
+      }
+
+      if (endTime.isBefore(currentTime)) {
+        setError("endTime", {
+          type: "manual",
+          message: "Giờ kết thúc không được là thời gian trong quá khứ",
+        });
+        return;
+      }
     }
 
     if (data.capcity <= 0) {

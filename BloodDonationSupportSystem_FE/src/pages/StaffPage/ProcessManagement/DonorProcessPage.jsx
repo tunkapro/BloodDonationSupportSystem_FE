@@ -18,7 +18,7 @@ export default function DonorProcessPage() {
       const response = await getDonationProcessApi();
 
       const urgencyPriority = {
-        "CỰC KỲ KHẨN CẤP": 1,
+        "CỰC KÌ KHẨN CẤP": 1,
         "RẤT KHẨN CẤP": 2,
         "KHẨN CẤP": 3,
         "THÔNG THƯỜNG": 4,
