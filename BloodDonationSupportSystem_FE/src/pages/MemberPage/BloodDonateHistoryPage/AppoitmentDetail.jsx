@@ -134,6 +134,7 @@ export default function AppointmentDetail() {
   };
 
   const canCancel = appointment?.status === "CHƯA HIẾN";
+  const isEmergencyDonation = appointment?.emergencyBloodRequestId != null;
 
   if (loading) {
     return (
@@ -197,26 +198,30 @@ export default function AppointmentDetail() {
             </Typography>
 
             <Stack spacing={3}>
-              <Box display="flex" alignItems="center">
-                <Schedule sx={{ color: "primary.main", mr: 2 }} />
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Thời gian hiến máu
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    fontWeight={500}
-                    sx={{
-                      color: (!appointment.startTime && !appointment.endTime) ? "text.secondary" : "text.primary",
-                      fontStyle: (!appointment.startTime && !appointment.endTime) ? "italic" : "normal"
-                    }}
-                  >
-                    {getTimeDisplay(appointment.startTime, appointment.endTime)}
-                  </Typography>
-                </Box>
-              </Box>
+              {!isEmergencyDonation && (
+                <>
+                  <Box display="flex" alignItems="center">
+                    <Schedule sx={{ color: "primary.main", mr: 2 }} />
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        Thời gian hiến máu
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        fontWeight={500}
+                        sx={{
+                          color: (!appointment.startTime && !appointment.endTime) ? "text.secondary" : "text.primary",
+                          fontStyle: (!appointment.startTime && !appointment.endTime) ? "italic" : "normal"
+                        }}
+                      >
+                        {getTimeDisplay(appointment.startTime, appointment.endTime)}
+                      </Typography>
+                    </Box>
+                  </Box>
 
-              <Divider />
+                  <Divider />
+                </>
+              )}
 
               <Box display="flex" alignItems="center">
                 <LocationOn sx={{ color: "error.main", mr: 2 }} />
@@ -271,17 +276,24 @@ export default function AppointmentDetail() {
                 <CalendarToday sx={{ color: "info.main", mr: 2 }} />
                 <Box>
                   <Typography variant="body2" color="text.secondary">
-                    Ngày hiến máu
+                    {isEmergencyDonation ? "Ngày đăng ký hiến máu" : "Ngày hiến máu"}
                   </Typography>
                   <Typography
                     variant="body1"
                     fontWeight={500}
                     sx={{
-                      color: !appointment.donationDate ? "text.secondary" : "text.primary",
-                      fontStyle: !appointment.donationDate ? "italic" : "normal"
+                      color: isEmergencyDonation 
+                        ? (!appointment.registrationDate ? "text.secondary" : "text.primary")
+                        : (!appointment.donationDate ? "text.secondary" : "text.primary"),
+                      fontStyle: isEmergencyDonation 
+                        ? (!appointment.registrationDate ? "italic" : "normal")
+                        : (!appointment.donationDate ? "italic" : "normal")
                     }}
                   >
-                    {getDateDisplay(appointment.donationDate)}
+                    {isEmergencyDonation 
+                      ? getDateDisplay(appointment.registrationDate)
+                      : getDateDisplay(appointment.donationDate)
+                    }
                   </Typography>
                 </Box>
               </Box>
