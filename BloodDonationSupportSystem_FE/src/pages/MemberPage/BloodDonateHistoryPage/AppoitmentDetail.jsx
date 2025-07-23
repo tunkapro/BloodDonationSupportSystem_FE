@@ -124,7 +124,7 @@ export default function AppointmentDetail() {
         month: 'long',
         day: 'numeric'
       });
-    } catch (error) {
+    } catch {
       return "Chưa cập nhật";
     }
   };
@@ -276,24 +276,17 @@ export default function AppointmentDetail() {
                 <CalendarToday sx={{ color: "info.main", mr: 2 }} />
                 <Box>
                   <Typography variant="body2" color="text.secondary">
-                    {isEmergencyDonation ? "Ngày đăng ký hiến máu" : "Ngày hiến máu"}
+                    Ngày hiến máu
                   </Typography>
                   <Typography
                     variant="body1"
                     fontWeight={500}
                     sx={{
-                      color: isEmergencyDonation 
-                        ? (!appointment.registrationDate ? "text.secondary" : "text.primary")
-                        : (!appointment.donationDate ? "text.secondary" : "text.primary"),
-                      fontStyle: isEmergencyDonation 
-                        ? (!appointment.registrationDate ? "italic" : "normal")
-                        : (!appointment.donationDate ? "italic" : "normal")
+                      color:  !appointment.donationDate ? "text.secondary" : "text.primary",
+                      fontStyle: !appointment.donationDate ? "italic" : "normal"
                     }}
                   >
-                    {isEmergencyDonation 
-                      ? getDateDisplay(appointment.registrationDate)
-                      : getDateDisplay(appointment.donationDate)
-                    }
+                    {getDateDisplay(appointment.donationDate)}
                   </Typography>
                 </Box>
               </Box>
