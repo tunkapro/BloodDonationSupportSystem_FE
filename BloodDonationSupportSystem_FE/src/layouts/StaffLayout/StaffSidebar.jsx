@@ -11,16 +11,13 @@ import {
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import RoomIcon from "@mui/icons-material/Room";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+
 import LogoutIcon from "@mui/icons-material/Logout";
 import EmergencyIcon from "@mui/icons-material/Emergency";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 
+import HistoryIcon from '@mui/icons-material/History';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import InventoryIcon from "@mui/icons-material/Inventory";
@@ -70,6 +67,11 @@ const StaffSidebar = () => {
           text: "Tìm theo khoảng cách",
           path: "/staff/find-by-distance",
           icon: <LocationOnIcon />,
+        },
+        {
+          text: "Lịch sử hiến máu",
+          path: "/staff/blood-donation-history",
+          icon: <HistoryIcon />,
         },
       ],
     },

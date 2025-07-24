@@ -41,7 +41,7 @@ import StaffReport from "../pages/AdminPage/ReportPage/StaffReport";
 import RegistrationPage from "../pages/StaffPage/RegistrationManagement/RegistrationPage";
 import ProtectedRoute from "../routes/ProtectRoute";
 import CertificatePage from "../pages/MemberPage/CertificatePage/CertificatePage";
-
+import BloodDonationHistoryStaffPage from "../pages/StaffPage/bloodDonationHistory/BloodDonationHistoryStaffPage";
 
 const CustomRoute = () => {
   return (
@@ -77,6 +77,7 @@ const CustomRoute = () => {
           <Route path="" element={<RegistrationPage />}/>
           <Route path="storage/blood-bag-list" element={<BloodStoragePage />} />
           <Route path="find-by-distance" element={<FindDistancePage />} />
+          <Route path="blood-donation-history" element={<BloodDonationHistoryStaffPage />} />
           <Route path="emergency" element={<EmergencyDonationPage />} />
           <Route path="request" element={<RegistrationPage />} />
           <Route path="blood-management/*" element={<Navigation />} >
