@@ -92,6 +92,20 @@ function BloodDonationHistoryStaffTable() {
   }, [searchInput, statusFilter, donationTypeFilter, rows]);
 
   const columns = [
+    {
+      field: 'stt',
+      headerName: 'STT',
+      width: 50,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => {
+        const api = params.api;
+        const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id);
+        const page = api.state.pagination.paginationModel.page;
+        const pageSize = api.state.pagination.paginationModel.pageSize;
+        return page * pageSize + rowIndex + 1;
+      },
+    },
     { field: "fullName", headerName: "Tên người hiến", width: 200,editable:false, filterable: false, },
     {
       field: "phoneNumber",
