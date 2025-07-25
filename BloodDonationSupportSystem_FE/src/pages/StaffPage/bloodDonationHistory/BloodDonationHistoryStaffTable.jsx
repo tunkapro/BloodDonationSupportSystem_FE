@@ -248,8 +248,6 @@ function BloodDonationHistoryStaffTable() {
               <MenuItem value="Tất cả">Tất cả</MenuItem>
               <MenuItem value="BÌNH THƯỜNG">Bình thường</MenuItem>
               <MenuItem value="KHẨN CẤP">Khẩn cấp</MenuItem>
-              <MenuItem value="RẤT KHẨN CẤP">Rất khẩn cấp</MenuItem>
-              <MenuItem value="CỰC KÌ KHẨN CẤP">Cực kì khẩn cấp</MenuItem>
             </Select>
           </Grid>
         </Grid>
