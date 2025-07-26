@@ -44,11 +44,13 @@ const UserFilterBar = ({ roleFilter, onRoleChange, searchText, onSearchChange, c
               Tất cả
             </Typography>
           </MenuItem>
+          
           <MenuItem value="ROLE_MEMBER">
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
               Thành viên
             </Typography>
           </MenuItem>
+
           <MenuItem value="ROLE_STAFF">
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
               Nhân viên
