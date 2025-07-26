@@ -54,11 +54,6 @@ const UserFilterBar = ({ roleFilter, onRoleChange, searchText, onSearchChange, c
               Nhân viên
             </Typography>
           </MenuItem>
-          <MenuItem value="ROLE_ADMIN">
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              Quản trị viên
-            </Typography>
-          </MenuItem>
         </Select>
       </FormControl>
 
