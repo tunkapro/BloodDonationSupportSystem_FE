@@ -9,6 +9,7 @@ import {
   MenuItem,
   Tooltip
 } from "@mui/material";
+
 import {
   Phone as PhoneIcon,
   Person as PersonIcon,
@@ -19,7 +20,8 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 
 const STATUS_OPTIONS = ["HOẠT ĐỘNG", "BỊ CẤM", "VÔ HIỆU HÓA"];
-const STATUS_OPTIONS_Role = ["ROLE_ADMIN", "ROLE_STAFF", "ROLE_MEMBER"];
+
+const STATUS_OPTIONS_Role = ["ROLE_STAFF", "ROLE_MEMBER"];
 
 const STATUS_COLORS = {
   "HOẠT ĐỘNG": { color: "success", bgColor: "#e8f5e8" },

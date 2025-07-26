@@ -5,8 +5,7 @@ import {
   Stack,
   Avatar,
   Paper,
-  useTheme,
-  alpha,
+  useTheme
 } from '@mui/material';
 import {
   History,

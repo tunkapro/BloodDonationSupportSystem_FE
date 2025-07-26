@@ -6,6 +6,7 @@ import UserTableHeader from "./UserTableHeader";
 import axios from "../../../config/axios";
 
 const UserManagement = () => {
+
   const [users, setUsers] = useState([]);
   const [roleFilter, setRoleFilter] = useState("all");
   const [loading, setLoading] = useState(true);
@@ -57,6 +58,7 @@ const UserManagement = () => {
       .toLowerCase();
 
   const filteredUsers = users.filter((user) => {
+
     const matchRole = roleFilter === "all" || user.role === roleFilter;
     const name = removeVietnameseTones(user.fullName || "");
     const phone = user.phoneNumber || "";
@@ -78,7 +80,9 @@ const UserManagement = () => {
             onSearchChange={(e) => setSearchText(e.target.value)}
             count={filteredUsers.length}
           />
+
         </CardContent>
+        
       </Card>
 
       <UserDataGrid
