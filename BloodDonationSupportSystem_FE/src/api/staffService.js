@@ -29,3 +29,7 @@ export const sendInviteSmSApi = (bloodType, contact) =>
     bloodType:bloodType,
     contact:contact
   });
+
+
+
+  export const getAllHistoryForStaffApi=()=> axios.get("/staff/get-all-list-donation-history");
