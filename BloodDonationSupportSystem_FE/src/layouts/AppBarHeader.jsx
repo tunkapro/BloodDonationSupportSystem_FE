@@ -111,7 +111,19 @@ function AppBarHeader() {
       <Container maxWidth="xl">
         <Toolbar disableGutters >
           {/* logo */}
-          <Box sx={{ margin: "10px 50px 10px 10px", display: 'flex', alignItems: 'center', gap: 1, mr: 4 }}>
+          <Box 
+            component={Link}
+            to="/home"
+            sx={{ 
+              margin: "10px 50px 10px 10px", 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1, 
+              mr: 4,
+              textDecoration: "none",
+              cursor: "pointer", 
+            }}
+          >
             <img src="/logo/logo.png" alt="Logo" style={{ height: 60 }} />
             <Typography color="error" variant="h6">Trung Tâm Hiến Máu</Typography>
           </Box>
