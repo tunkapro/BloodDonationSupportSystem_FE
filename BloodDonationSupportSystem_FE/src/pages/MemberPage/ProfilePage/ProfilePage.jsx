@@ -9,7 +9,6 @@ import {
   CircularProgress, 
   Box, 
   Container,
-  Toolbar
 } from '@mui/material';
 
 const ProfilePage = () => {
@@ -78,7 +77,6 @@ const ProfilePage = () => {
           backgroundColor: '#f5f5f5',
         }}
       >
-        <Toolbar />
         
         <Container maxWidth="md">
           {editing ? (

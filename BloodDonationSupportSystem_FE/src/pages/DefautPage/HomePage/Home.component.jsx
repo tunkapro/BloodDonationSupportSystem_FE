@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, Button } from "@mui/material";
 
 import BloodInformation from "./HomePageDetails/BloodInformation";
 import Blog from "./HomePageDetails/Blog";
@@ -10,8 +10,14 @@ import QuestionAndAnswer from "../Q&APage/Q&APage";
 
 import BloodTypeSearch from "../../../components/BloodTypeSearch";
 import BloodCompatibility from "../../../components/BloodCompatibility";
+import { importantNotes } from "../Q&APage/importantNotes";
+import ImportantNotes from "../../../components/ImportantNotes1";
+
 
 export default function Home() {
+
+  const previewNotes = importantNotes.slice(0, 4);
+
   return (
     <>
       <Container maxWidth={false} style={{ padding: 0 }}>
@@ -62,7 +68,10 @@ export default function Home() {
         </Box>
 
         {/* <Blog></Blog> */}
-        <QuestionAndAnswer />
+        <Box sx={{ px: 2, mt: 4 }}>
+          <ImportantNotes data={previewNotes} />
+        </Box>
+        
 
         <Box
           sx={{

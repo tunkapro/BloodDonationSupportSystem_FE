@@ -282,11 +282,11 @@ export default function AppointmentDetail() {
                     variant="body1"
                     fontWeight={500}
                     sx={{
-                      color:  !appointment.donationDate ? "text.secondary" : "text.primary",
-                      fontStyle: !appointment.donationDate ? "italic" : "normal"
+                      color:  !appointment.dateCompleteDonation ? "text.secondary" : "text.primary",
+                      fontStyle: !appointment.dateCompleteDonation ? "italic" : "normal"
                     }}
                   >
-                    {getDateDisplay(appointment.donationDate)}
+                    {getDateDisplay(appointment.dateCompleteDonation)}
                   </Typography>
                 </Box>
               </Box>

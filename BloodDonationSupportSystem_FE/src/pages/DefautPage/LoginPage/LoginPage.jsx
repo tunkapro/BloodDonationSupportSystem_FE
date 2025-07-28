@@ -55,12 +55,14 @@ export default function LoginPage() {
       else navigate("/");
 
     } catch (error) {
-      const message =
-        error?.response?.data?.message != null
-          ? "Số điện thoại hoặc mật khẩu sai !"
-          : error?.response?.data?.message;
+      const serverMessage = error.response?.data?.message;
 
-      setLoginError(message);
+      if (serverMessage === "Incorrect username or password!!!") {
+        setLoginError("Số điện thoại hoặc mật khẩu sai!");
+      } else if (serverMessage === "Account is locked or inactive!"){
+        setLoginError("Tài khoản bị khóa hoặc không hoạt động!");
+      }
+      
     }
   };
   const handleGoogleSuccess = async (credentialResponse) => {
