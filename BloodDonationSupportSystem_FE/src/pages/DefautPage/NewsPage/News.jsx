@@ -66,7 +66,7 @@ export default function News() {
 							>
 								<CardMedia
 									component="img"
-									image={"http://localhost:8090/" + news.imageUrl}
+									image={`${import.meta.env.VITE_ARTICLE_BASE_URL}/${news.imageUrl}`}
 									alt="News Thumbnail"
 									sx={{
 										width: "100%",

@@ -43,7 +43,7 @@ export default function NewsDetail() {
         {newsData.imageUrl && (
           <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
             <img
-              src={`http://localhost:8090/${newsData.imageUrl}`}
+              src={`${import.meta.env.VITE_ARTICLE_BASE_URL}/${newsData.imageUrl}`}
               alt={newsData.title}
               style={{
                 maxWidth: "100%",
