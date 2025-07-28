@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import OtpInput from '../../../components/OTPInput';
 
 
 export default function ForgotPasswordPage() {
