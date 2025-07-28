@@ -65,7 +65,13 @@ export default function BloodDonateItem({ donation }) {
                 </Avatar>
                 <Box>
                     <Typography fontWeight="bold">
-                        {donation.donationDate ? new Date(donation.donationDate).toLocaleDateString('vi-VN') : 'Chưa cập nhật'}
+                        {donation.emergencyBloodRequestId
+                            ? (donation.dateCompleteDonation
+                                ? new Date(donation.dateCompleteDonation).toLocaleDateString('vi-VN')
+                                : 'Chưa cập nhật')
+                            : (donation.donationDate
+                                ? new Date(donation.donationDate).toLocaleDateString('vi-VN')
+                                : 'Chưa cập nhật')}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Địa điểm: {donation.addressHospital || 'Trung tâm hiến máu'}
