@@ -25,7 +25,7 @@ export default function ArticleForm({
     setValue,
   } = useForm();
 
-
+  const API = import.meta.env.VITE_ARTICLE_BASE_URL;
 
   const articleTypes = ["TIN TỨC", "HỎI ĐÁP", "LỜI KHUYÊN", "BLOG"];
 
@@ -35,7 +35,7 @@ export default function ArticleForm({
 
   const [selectedStatus, setSelectedStatus] = useState(initialValues ? initialValues.status : null);
 
-  const [selectedImage, setSelectedImage] = useState( initialValues  ? "http://localhost:8090/" + initialValues.imageUrl : null);
+  const [selectedImage, setSelectedImage] = useState( initialValues  ? API + initialValues.imageUrl : null);
 
   const [fileName, setFileName] = useState("");
 
