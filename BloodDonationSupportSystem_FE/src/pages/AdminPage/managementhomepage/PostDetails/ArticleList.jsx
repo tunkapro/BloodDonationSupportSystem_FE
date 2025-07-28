@@ -14,8 +14,8 @@ import { Edit, Delete } from "@mui/icons-material";
 
 
 export default function ArticleList({articles,  onEdit, onDelete }) {
-
-
+ 
+  const API = import.meta.env.VITE_ARTICLE_BASE_URL;
 
   if (!articles || articles.length === 0) {
     return (
@@ -49,7 +49,7 @@ export default function ArticleList({articles,  onEdit, onDelete }) {
             <TableRow key={article.id}>
               <TableCell align="center">
 
-                <Avatar variant="rounded" src={"http://localhost:8090/" + article.imageUrl} alt={article.title} />
+                <Avatar variant="rounded" src={API + article.imageUrl} alt={article.title} />
 
               </TableCell>
               <TableCell align="center">{article.title}</TableCell>
