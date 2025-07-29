@@ -49,7 +49,7 @@ export default function ArticleList({articles,  onEdit, onDelete }) {
             <TableRow key={article.id}>
               <TableCell align="center">
 
-                <Avatar variant="rounded" src={API + article.imageUrl} alt={article.title} />
+                <Avatar variant="rounded" src={`${API}/` + article.imageUrl} alt={article.title} />
 
               </TableCell>
               <TableCell align="center">{article.title}</TableCell>
