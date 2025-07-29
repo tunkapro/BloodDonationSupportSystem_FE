@@ -35,7 +35,7 @@ export default function ArticleForm({
 
   const [selectedStatus, setSelectedStatus] = useState(initialValues ? initialValues.status : null);
 
-  const [selectedImage, setSelectedImage] = useState( initialValues  ? API + initialValues.imageUrl : null);
+  const [selectedImage, setSelectedImage] = useState( initialValues  ? `/${API}` + initialValues.imageUrl : null);
 
   const [fileName, setFileName] = useState("");
 
