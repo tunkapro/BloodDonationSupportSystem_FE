@@ -85,11 +85,28 @@ export default function BloodStorageTable() {
     } = newRow;
     const validBloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-    if (bloodTest === "ĐÃ ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
-      throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra!");
-    }
-    if (bloodTest === "KHÔNG ĐẠT" && !validBloodTypes.includes(bloodTypeId)) {
-      throw new Error("Bạn phải chọn nhóm máu khi đã kiểm tra dù không đạt!");
+    if (
+      bloodTest !== "CHƯA KIỂM TRA" &&
+      !validBloodTypes.includes(bloodTypeId)
+    ) {
+      throw new Error(
+        "Bạn phải chọn nhóm máu khi đã kiểm tra " +
+          (bloodTest === "ĐÃ ĐẠT" ? "!" : "dù không đạt !")
+      );
+    } else if (
+      bloodTest === "CHƯA KIỂM TRA" &&
+      validBloodTypes.includes(bloodTypeId)
+    ) {
+      showSnackbar(
+        "Bạn phải cập nhật trạng thái kiểm tra khi đã có nhóm máu!",
+        "warning"
+      );
+      return {
+        ...newRow,
+        bloodTypeId: null,
+      };
+    } else if (bloodTest === "CHƯA KIỂM TRA") {
+      return newRow;
     }
 
     try {
@@ -331,7 +348,7 @@ export default function BloodStorageTable() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={(err) => showSnackbar(err.message, "error")}
+          onProcessRowUpdateError={(err) => showSnackbar(err?.response?.data?.message || err.message, "error")}
           localeText={vietnameseText}
           disableColumnSelector
           pagination
