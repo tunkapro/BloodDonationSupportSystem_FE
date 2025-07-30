@@ -23,7 +23,7 @@ export default function EmerFilterBar({
     <Card sx={{ width: '100%' }}>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
-          {/* 🔍 Tìm kiếm theo tên bệnh nhân */}
+          {/* Tìm kiếm theo tên bệnh nhân */}
           <Grid item xs={12} md={6} width={470}>
             <TextField
               fullWidth
@@ -41,7 +41,7 @@ export default function EmerFilterBar({
             />
           </Grid>
 
-          {/* 📅 Lọc theo ngày tạo đơn */}
+          {/* Lọc theo ngày tạo đơn */}
           <Grid item xs={12} md={3} width={200}>
             <TextField
               type="date"
@@ -53,7 +53,7 @@ export default function EmerFilterBar({
             />
           </Grid>
 
-          {/* 🚨 Lọc theo mức độ khẩn cấp */}
+          {/* Lọc theo mức độ khẩn cấp */}
           <Grid item xs={12} md={3} width={200}>
             <TextField
               select
@@ -69,20 +69,7 @@ export default function EmerFilterBar({
             </TextField>
           </Grid>
 
-          {/* Lọc theo trạng thái đơn */}
-          <Grid item xs={12} md={3} width={200}>
-            <TextField
-              select
-              fullWidth
-              label="Trạng thái"
-              value={fulfillFilter}
-              onChange={(e) => setFulfillFilter(e.target.value)}
-            >
-              <MenuItem value="all">Tất cả</MenuItem>
-              <MenuItem value="false">Chưa hoàn thành</MenuItem>
-              <MenuItem value="true">Đã hoàn thành</MenuItem>
-            </TextField>
-          </Grid>
+          
         </Grid>
       </CardContent>
     </Card>
