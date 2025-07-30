@@ -7,7 +7,6 @@ const DonationChart = () => {
   const theme = useTheme();
 
   const [chartData, setChartData] = useState({ labels: [], successData: [], failedData: [] });
-  const [filteredChartData, setFilteredChartData] = useState({ labels: [], successData: [], failedData: [] });
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
 
@@ -59,32 +58,7 @@ const DonationChart = () => {
     fetchDonationData(selectedYear);
   }, [selectedYear]);
 
-  useEffect(() => {
-    let filteredSuccessData = [...chartData.successData];
-    let filteredFailedData = [...chartData.failedData];
-    let filteredLabels = [...chartData.labels];
 
-    if (selectedYear !== 'all') {
-      const yearStr = selectedYear.toString();
-      const newFilteredLabels = filteredLabels.filter(label => label.startsWith(yearStr));
-      if (newFilteredLabels.length > 0) {
-        const startIndex = filteredLabels.indexOf(newFilteredLabels[0]);
-        filteredLabels = newFilteredLabels;
-        filteredSuccessData = chartData.successData.slice(startIndex, startIndex + newFilteredLabels.length);
-        filteredFailedData = chartData.failedData.slice(startIndex, startIndex + newFilteredLabels.length);
-      } else {
-        filteredLabels = [];
-        filteredSuccessData = [];
-        filteredFailedData = [];
-      }
-    }
-
-    setFilteredChartData({ 
-      labels: filteredLabels, 
-      successData: filteredSuccessData, 
-      failedData: filteredFailedData 
-    });
-  }, [selectedYear, chartData]);
 
   const filters = [
     { id: 'year', label: 'Năm', value: selectedYear, options: years, handler: setSelectedYear },
@@ -126,20 +100,20 @@ const DonationChart = () => {
           </Box>
         ) : (
           <LineChart
-            xAxis={[{ scaleType: 'point', data: filteredChartData.labels }]}
+            xAxis={[{ scaleType: 'point', data: chartData.labels }]}
             series={[
               { 
-                data: filteredChartData.successData, 
+                data: chartData.successData, 
                 label: 'Hiến máu thành công', 
                 color: theme.palette.success.main 
               },
               { 
-                data: filteredChartData.failedData, 
+                data: chartData.failedData, 
                 label: 'Hiến máu thất bại', 
                 color: theme.palette.error.main 
               }
             ]}
-            width={Math.max(600, filteredChartData.labels.length * 80)}
+            width={Math.max(600, chartData.labels.length * 80)}
             height={320}
           />
         )}
