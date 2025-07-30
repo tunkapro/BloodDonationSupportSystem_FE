@@ -24,7 +24,7 @@ export default function UpdateProcess({ isOpen, onClose, donor, onSave, onDonorC
 
   const handleConfirmSave = () => {
     if (donor.processStatus === "ĐÃ HIẾN") {
-      if (!donor.volumeMl || Number(donor.volumeMl) <= 0) {
+      if (!donor.volumeMl || Number(donor.volumeMl) <= 0 || Number(donor.volumeMl) > 450) {
         setErrorMessage('Vui lòng nhập lượng máu đã hiến (ml) hợp lệ.');
         setSnackbarType('error');
         setSnackbarOpen(true);
