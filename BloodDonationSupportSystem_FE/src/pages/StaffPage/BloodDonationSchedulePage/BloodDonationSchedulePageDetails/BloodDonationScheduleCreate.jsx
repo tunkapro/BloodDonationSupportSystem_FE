@@ -174,8 +174,8 @@ const BloodDonationScheduleCreate = ( {onClose} ) => {
 
     const formattedData = {
       addressHospital: data.address,
-      donationDate: date.toISOString().split("T")[0],
-      startTime: parseTime(data.startTime),
+      donationDate: dayjs(data.operatingDate).format("YYYY-MM-DD"),
+      startTime: parseTime(data.startTime),t
       endTime: parseTime(data.endTime),
       amountRegistration: parseInt(data.capcity),
     };
