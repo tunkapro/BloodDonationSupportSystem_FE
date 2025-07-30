@@ -14,7 +14,6 @@ import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import StaffLayout from "../layouts/StaffLayout/StaffLayout";
 import Overview from "../pages/StaffPage/Overview";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import BloodDonationScheduleList from "../pages/DefautPage/BloodDonationSchedulePage/BloodDonationScheduleList";
 import BloodDonationScheduleComponent from "../pages/StaffPage/BloodDonationSchedulePage/BloodDonationSchedule.Component";
 import AppointmentDetail from "../pages/MemberPage/BloodDonateHistoryPage/AppoitmentDetail";
 
@@ -56,7 +55,6 @@ const CustomRoute = () => {
         <Route path="login" element={<LoginPage />} />
         <Route path="reset-password" element={<ForgotPasswordPage />} />
         <Route path="signup" element={<RegisterPage />} />
-        <Route path="event" element={<BloodDonationScheduleList />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>
 
