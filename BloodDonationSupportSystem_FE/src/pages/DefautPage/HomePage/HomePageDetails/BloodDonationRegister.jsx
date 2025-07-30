@@ -212,14 +212,6 @@ export default function BloodDonationModal() {
             >
               Đăng Ký Hiến Máu
             </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              size="large"
-              sx={{ borderRadius: 2, fontWeight: "bold", px: 4 }}
-            >
-              Tìm Hiểu Thêm
-            </Button>
           </Box>
 
           <Grid container spacing={2}>
