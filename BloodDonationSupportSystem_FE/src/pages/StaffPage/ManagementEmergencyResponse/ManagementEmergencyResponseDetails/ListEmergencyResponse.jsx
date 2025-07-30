@@ -18,9 +18,10 @@ export default function ListEmergencyResponse() {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" });
-
+  const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+  
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8090/emergencies-notification");
+    const socket = new SockJS(SOCKET_URL);
     const stomp = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
