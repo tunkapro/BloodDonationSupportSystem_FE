@@ -198,7 +198,7 @@ export default function BloodDonationModal() {
             Hiến Máu <span style={{ color: "#E53935" }}>Cứu Người</span>
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-            Mỗi giọt máu bạn hiến tặng có thể cứu sống 3 người. Hãy cùng chúng
+            Mỗi lần bạn hiến tặng máu có thể cứu sống 3 người. Hãy cùng chúng
             tôi lan tỏa yêu thương và chia sẻ sự sống.
           </Typography>
           <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
