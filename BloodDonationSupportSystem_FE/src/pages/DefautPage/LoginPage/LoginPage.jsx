@@ -61,6 +61,8 @@ export default function LoginPage() {
         setLoginError("Số điện thoại hoặc mật khẩu sai!");
       } else if (serverMessage === "Account is locked or inactive!"){
         setLoginError("Tài khoản bị khóa hoặc không hoạt động!");
+      } else if (serverMessage === "PhoneNumber doesn't exist") {
+        setLoginError("Số điện thoại không tồn tại!");
       }
       
     }
