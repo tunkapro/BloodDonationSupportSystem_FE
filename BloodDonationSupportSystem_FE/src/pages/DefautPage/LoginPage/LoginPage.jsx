@@ -190,13 +190,7 @@ export default function LoginPage() {
             >
               Đăng nhập
             </Button>
-            <Grid container justifyContent="space-between">
-              <Grid>
-                <Link href="/reset-password" variant="body2">
-                  Quên mật khẩu?
-                </Link>
-              </Grid>
-            </Grid>
+            
           </Box>
 
           <Divider sx={{ my: 3 }}>Hoặc tiếp tục với</Divider>
