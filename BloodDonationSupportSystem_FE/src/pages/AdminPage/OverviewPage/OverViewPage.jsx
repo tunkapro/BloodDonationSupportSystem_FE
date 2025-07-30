@@ -12,8 +12,7 @@ const OverViewPage = () => {
   const [numberBloodDonationsRegistration, setNumberBloodDonationsRegistration] = useState(0);
   const [numberSuccessDonation, setNumberSuccessDonation] = useState(0);
   const [numberFailureDonation, setNumberFailureDonation] = useState(0);
-  const [numberNotCompleteDonation, setNumberNotCompleteDonation] = useState(0);
-  const [numberNotAcceptedDonation, setNumberNotAcceptedDonation] = useState(0);
+
 
   
   const currentYear = new Date().getFullYear();
@@ -46,15 +45,12 @@ const OverViewPage = () => {
         setNumberBloodDonationsRegistration(res.data.numberBloodDonationsRegistration || 0);
         setNumberSuccessDonation(res.data.numberSuccessDonation || 0);
         setNumberFailureDonation(res.data.numberFailureDonation || 0);
-        setNumberNotCompleteDonation(res.data.numberNotCompleteDonation || 0);
-        setNumberNotAcceptedDonation(res.data.numberNotAcceptedDonation || 0);
+
       } catch (error) {
         setNumberAccount(0);
         setNumberBloodDonationsRegistration(0);
         setNumberSuccessDonation(0);
         setNumberFailureDonation(0);
-        setNumberNotCompleteDonation(0);
-        setNumberNotAcceptedDonation(0);
       }
     };
     fetchData();
@@ -64,9 +60,7 @@ const OverViewPage = () => {
     numberAccount,
     numberBloodDonationsRegistration,
     numberSuccessDonation,
-    numberFailureDonation,
-    numberNotCompleteDonation,
-    numberNotAcceptedDonation,
+    numberFailureDonation
   };
 
   return (
