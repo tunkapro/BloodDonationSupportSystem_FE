@@ -148,7 +148,14 @@ export default function BloodDonationModal() {
           message: "Bạn đã đăng kí một đơn đang chờ!",
           severity: "error",
         });
-      } else {
+      } else if (res.message === "You have donated within the last 90 days. Please wait a little longer !!!") {
+        setSnackbar({
+          open: true,
+          message: "Bạn đã hiến máu trong vòng 90 ngày qua. Vui lòng đợi thêm một chút nữa!!!",
+          severity: "error",
+        });
+      } 
+      else {
         setSnackbar({
           open: true,
           message: res.message || "Đăng ký thất bại. Vui lòng thử lại.",
