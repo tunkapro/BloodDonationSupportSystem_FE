@@ -7,7 +7,6 @@ const EmergencyRequestLineChart = () => {
   const theme = useTheme();
 
   const [chartData, setChartData] = useState({ labels: [], requestData: [] });
-  const [filteredChartData, setFilteredChartData] = useState({ labels: [], requestData: [] });
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
 
@@ -56,29 +55,7 @@ const EmergencyRequestLineChart = () => {
     fetchEmergencyRequestsByYear(selectedYear);
   }, [selectedYear]);
 
-  useEffect(() => {
-    let filteredRequestData = [...chartData.requestData];
-    let filteredLabels = [...chartData.labels];
-
-    if (selectedYear !== 'all') {
-      const yearStr = selectedYear.toString();
-      const newFilteredLabels = filteredLabels.filter(label => label.startsWith(yearStr));
-      if (newFilteredLabels.length > 0) {
-        const startIndex = filteredLabels.indexOf(newFilteredLabels[0]);
-        filteredLabels = newFilteredLabels;
-        filteredRequestData = chartData.requestData.slice(startIndex, startIndex + newFilteredLabels.length);
-      } else {
-        filteredLabels = [];
-        filteredRequestData = [];
-      }
-    }
-
-    setFilteredChartData({ 
-      labels: filteredLabels, 
-      requestData: filteredRequestData
-    });
-  }, [selectedYear, chartData]);
-
+  
   const filters = [
     { id: 'year', label: 'Năm', value: selectedYear, options: years, handler: setSelectedYear },
   ];
@@ -119,15 +96,15 @@ const EmergencyRequestLineChart = () => {
           </Box>
         ) : (
           <LineChart
-            xAxis={[{ scaleType: 'point', data: filteredChartData.labels }]}
+            xAxis={[{ scaleType: 'point', data: chartData.labels }]}
             series={[
               { 
-                data: filteredChartData.requestData, 
+                data: chartData.requestData, 
                 label: 'Số yêu cầu khẩn cấp', 
                 color: theme.palette.error.main 
               }
             ]}
-            width={Math.max(600, filteredChartData.labels.length * 80)}
+            width={Math.max(600, chartData.labels.length * 80)}
             height={320}
           />
         )}
